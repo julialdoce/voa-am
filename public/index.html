@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Voa AM — Vestibulares do Amazonas</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Fraunces:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ========== ONBOARDING ========== -->
+<div class="onboarding" id="onboarding" style="background:var(--bg)">
+  <div class="ob-logo">
+    <div class="ob-logo-icon">🚀</div>
+    <div class="ob-title">Voa<span>AM</span></div>
+    <div class="ob-sub">Vestibulares do Amazonas</div>
+  </div>
+
+  <div class="ob-progress">
+    <div class="ob-dot active" id="dot-0"></div>
+    <div class="ob-dot" id="dot-1"></div>
+    <div class="ob-dot" id="dot-2"></div>
+    <div class="ob-dot" id="dot-3"></div>
+  </div>
+
+  <!-- Passo 0: Nome -->
+  <div class="ob-step active" id="ob-step-0">
+    <div class="ob-step-title">Qual é o seu nome? 👋</div>
+    <div class="ob-step-sub">Vamos personalizar sua jornada de estudos</div>
+    <input class="ob-input" id="ob-nome" type="text" placeholder="Digite seu nome" oninput="obValidar(0)">
+    <button class="ob-btn" id="ob-btn-0" onclick="obProximo(1)" disabled>Continuar →</button>
+  </div>
+
+  <!-- Passo 1: Série -->
+  <div class="ob-step" id="ob-step-1">
+    <div class="ob-step-title">Qual série você está? 📚</div>
+    <div class="ob-step-sub">Isso define o conteúdo programático do seu estudo</div>
+    <div class="ob-options">
+      <div class="ob-option" onclick="obSelecionarSerie(1, this)">
+        <span class="ob-option-icon">1️⃣</span>
+        <div><div style="font-weight:700">1ª Série</div><div style="font-size:12px;color:var(--text2)">PSC 1 • SIS 1</div></div>
+      </div>
+      <div class="ob-option" onclick="obSelecionarSerie(2, this)">
+        <span class="ob-option-icon">2️⃣</span>
+        <div><div style="font-weight:700">2ª Série</div><div style="font-size:12px;color:var(--text2)">PSC 2 • SIS 2</div></div>
+      </div>
+      <div class="ob-option" onclick="obSelecionarSerie(3, this)">
+        <span class="ob-option-icon">3️⃣</span>
+        <div><div style="font-weight:700">3ª Série</div><div style="font-size:12px;color:var(--text2)">PSC 3 • SIS 3</div></div>
+      </div>
+      <div class="ob-option" onclick="obSelecionarSerie(4, this)">
+        <span class="ob-option-icon">🎓</span>
+        <div><div style="font-weight:700">Já terminei o EM</div><div style="font-size:12px;color:var(--text2)">ENEM • MACRO</div></div>
+      </div>
+    </div>
+    <button class="ob-btn" id="ob-btn-1" onclick="obProximo(2)" disabled>Continuar →</button>
+  </div>
+
+  <!-- Passo 2: Vestibular alvo -->
+  <div class="ob-step" id="ob-step-2">
+    <div class="ob-step-title">Qual vestibular é seu foco? 🎯</div>
+    <div class="ob-step-sub">Você pode mudar isso depois. Pode escolher mais de um!</div>
+    <div class="ob-options" id="ob-vest-opts">
+      <div class="ob-option" onclick="obSelecionarVest('SIS', this)">
+        <span class="ob-option-icon">⭐</span>
+        <div><div style="font-weight:700">SIS — UEA</div><div style="font-size:12px;color:var(--text2)">Sistema de Ingresso Seriado</div></div>
+      </div>
+      <div class="ob-option" onclick="obSelecionarVest('PSC', this)">
+        <span class="ob-option-icon">🎓</span>
+        <div><div style="font-weight:700">PSC — UFAM</div><div style="font-size:12px;color:var(--text2)">Processo Seletivo Contínuo</div></div>
+      </div>
+      <div class="ob-option" onclick="obSelecionarVest('MACRO', this)">
+        <span class="ob-option-icon">🔥</span>
+        <div><div style="font-weight:700">MACRO — UEA</div><div style="font-size:12px;color:var(--text2)">Vestibular tradicional</div></div>
+      </div>
+      <div class="ob-option" onclick="obSelecionarVest('ENEM', this)">
+        <span class="ob-option-icon">🌿</span>
+        <div><div style="font-weight:700">ENEM</div><div style="font-size:12px;color:var(--text2)">Nacional — MEC/INEP</div></div>
+      </div>
+    </div>
+    <button class="ob-btn" id="ob-btn-2" onclick="obProximo(3)" disabled>Continuar →</button>
+  </div>
+
+  <!-- Passo 3: Dificuldade -->
+  <div class="ob-step" id="ob-step-3">
+    <div class="ob-step-title">Sua maior dificuldade? 💡</div>
+    <div class="ob-step-sub">Vamos focar nisso nas suas primeiras aulas</div>
+    <div class="ob-options">
+      <div class="ob-option" onclick="obSelecionarDific('mat', this)">
+        <span class="ob-option-icon">📐</span>
+        <div><div style="font-weight:700">Matemática</div><div style="font-size:12px;color:var(--text2)">Cálculos, funções, geometria...</div></div>
+      </div>
+      <div class="ob-option" onclick="obSelecionarDific('red', this)">
+        <span class="ob-option-icon">✍️</span>
+        <div><div style="font-weight:700">Redação</div><div style="font-size:12px;color:var(--text2)">Argumentação, estrutura...</div></div>
+      </div>
+      <div class="ob-option" onclick="obSelecionarDific('ambos', this)">
+        <span class="ob-option-icon">💪</span>
+        <div><div style="font-weight:700">Os dois</div><div style="font-size:12px;color:var(--text2)">Quero melhorar em tudo</div></div>
+      </div>
+    </div>
+    <button class="ob-btn" id="ob-btn-3" onclick="obFinalizar()" disabled>Começar a estudar 🚀</button>
+  </div>
+</div>
+
+<!-- Header -->
+<div class="header">
+  <div class="logo">
+    <div class="logo-icon">🚀</div>
+    <div class="logo-text">Voa<span>AM</span></div>
+  </div>
+  <div class="header-right">
+    <div class="header-xp" id="xp-display">⭐ <span id="xp-count">0</span> XP</div>
+    <div class="theme-toggle-container">
+  <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Alternar tema">
+    <div class="toggle-circle">🌙</div>
+  </button>
+</div>
+</div>
+
+<!-- XP Toast -->
+<div class="xp-toast" id="xp-toast"></div>
+
+<!-- Achievement Popup -->
+<div class="achievement-popup" id="ach-popup">
+  <div class="ach-icon" id="ach-icon">🏆</div>
+  <div class="ach-title">Conquista Desbloqueada!</div>
+  <div class="ach-name" id="ach-name">Primeiros Passos</div>
+</div>
+
+<!-- ========== HOME ========== -->
+<div class="screen active" id="screen-home">
+  <div class="home-hero">
+    <div class="home-greeting" id="home-greeting">Olá, estudante! 👋</div>
+    <div class="home-title">Bora <span class="hi">voar</span> no vestibular do Amazonas?</div>
+  </div>
+
+  <div class="progress-card" style="margin: 0 20px 20px;">
+    <div class="progress-header">
+      <span class="progress-label">Seu progresso geral</span>
+      <span class="progress-pct" id="home-pct">0%</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="home-bar" style="width:0%"></div></div>
+    <div class="progress-stats">
+      <div class="pstat">
+        <div class="pstat-val" id="stat-aulas">0</div>
+        <div class="pstat-lbl">Aulas vistas</div>
+      </div>
+      <div class="pstat">
+        <div class="pstat-val" id="stat-quiz">0</div>
+        <div class="pstat-lbl">Questões feitas</div>
+      </div>
+      <div class="pstat">
+        <div class="pstat-val" id="stat-correct">0</div>
+        <div class="pstat-lbl">Acertos</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title" id="home-vest-title">Meu vestibular</div>
+  <div class="vestibulares-row" id="home-vest-cards">
+    <!-- preenchido dinamicamente -->
+  </div>
+
+  <div class="section-title">Estudar agora</div>
+  <div class="action-cards">
+    <div class="action-card" onclick="goTo('materia')">
+      <div class="action-icon mat">📐</div>
+      <div class="action-info">
+        <div class="action-name">Matemática</div>
+        <div class="action-sub" id="home-mat-sub">Comece pelo 1º conteúdo</div>
+      </div>
+      <div class="action-arrow">›</div>
+    </div>
+    <div class="action-card" onclick="goTo('materia')">
+      <div class="action-icon red">✏️</div>
+      <div class="action-info">
+        <div class="action-name">Redação</div>
+        <div class="action-sub">Estrutura e repertório</div>
+      </div>
+      <div class="action-arrow">›</div>
+    </div>
+    <div class="action-card" onclick="goTo('praticar')">
+      <div class="action-icon sim">🎯</div>
+      <div class="action-info">
+        <div class="action-name">Simulado</div>
+        <div class="action-sub" id="home-sim-sub">Questões reais do seu vestibular</div>
+      </div>
+      <div class="action-arrow">›</div>
+    </div>
+  </div>
+
+  <div class="streak-banner" style="margin-top: 16px;">
+    <div class="streak-fire">🔥</div>
+    <div class="streak-text">
+      <div class="streak-days" id="streak-days">0 dias seguidos</div>
+      <div class="streak-sub">Não perca sua sequência — estude hoje!</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== VESTIBULARES ========== -->
+<div class="screen" id="screen-vestibulares">
+  <div class="vest-screen">
+    <div class="vest-screen-title">Vestibulares</div>
+    <div class="vest-screen-sub">Conteúdo programático e datas de 2025</div>
+
+    <!-- PSC -->
+    <div class="vest-full-card" id="vest-psc">
+      <div class="vest-full-header" onclick="toggleVest('vest-psc')">
+        <div class="vest-badge badge-psc">🎓</div>
+        <div class="vest-full-info">
+          <div class="vest-full-name">PSC — UFAM</div>
+          <div class="vest-full-inst">Processo Seletivo Contínuo • Seriado</div>
+        </div>
+        <div class="vest-expand-btn">▾</div>
+      </div>
+      <div class="vest-full-body">
+        <div class="vest-info-row">
+          <span class="vest-pill pill-blue">PSC 1 — 1º ano</span>
+          <span class="vest-pill pill-blue">PSC 2 — 2º ano</span>
+          <span class="vest-pill pill-blue">PSC 3 — 3º ano</span>
+        </div>
+        <div class="vest-section">
+          <div class="vest-section-title">📐 Matemática — PSC 1 (1º ano)</div>
+          <ul class="conteudo-list">
+            <li>Conjuntos Numéricos (Naturais, Inteiros, Racionais)</li>
+            <li>Funções: Definição e Representações</li>
+            <li>Função Afim (1º grau)</li>
+            <li>Função Quadrática (2º grau)</li>
+            <li>Progressão Aritmética (PA)</li>
+            <li>Progressão Geométrica (PG)</li>
+            <li>Trigonometria no Triângulo Retângulo</li>
+            <li>Geometria Plana: áreas e perímetros</li>
+          </ul>
+        </div>
+        <div class="vest-section">
+          <div class="vest-section-title">✏️ Redação</div>
+          <ul class="conteudo-list">
+            <li>Tipos textuais: Narração, Descrição e Dissertação</li>
+            <li>Artigo de Opinião</li>
+            <li>Coerência e Coesão Textual</li>
+            <li>Argumentação e Contra-argumentação</li>
+          </ul>
+        </div>
+        <div class="vest-section">
+          <div class="vest-section-title">📅 Calendário 2025</div>
+          <ul class="conteudo-list">
+            <li>PSC 1 — Novembro 2025 (1ª fase)</li>
+            <li>PSC 2 — Novembro 2025 (2ª fase)</li>
+            <li>PSC 3 — Novembro 2025 (3ª fase)</li>
+            <li>Inscrições — Agosto a Outubro 2025</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIS -->
+    <div class="vest-full-card" id="vest-sis">
+      <div class="vest-full-header" onclick="toggleVest('vest-sis')">
+        <div class="vest-badge badge-sis">⭐</div>
+        <div class="vest-full-info">
+          <div class="vest-full-name">SIS — UEA</div>
+          <div class="vest-full-inst">Sistema de Ingresso Seriado • Seriado</div>
+        </div>
+        <div class="vest-expand-btn">▾</div>
+      </div>
+      <div class="vest-full-body">
+        <div class="vest-info-row">
+          <span class="vest-pill pill-gold">SIS 1 — 1º ano</span>
+          <span class="vest-pill pill-gold">SIS 2 — 2º ano</span>
+          <span class="vest-pill pill-gold">SIS 3 — 3º ano</span>
+        </div>
+        <div class="vest-section">
+          <div class="vest-section-title">📐 Matemática — SIS 1</div>
+          <ul class="conteudo-list">
+            <li>Números Reais e Operações</li>
+            <li>Potenciação e Radiciação</li>
+            <li>Equações e Inequações do 1º e 2º Grau</li>
+            <li>Sistemas de Equações</li>
+            <li>Geometria Plana Básica</li>
+            <li>Estatística: médias, moda e mediana</li>
+          </ul>
+        </div>
+        <div class="vest-section">
+          <div class="vest-section-title">📅 Calendário 2025</div>
+          <ul class="conteudo-list">
+            <li>Provas — Julho e Janeiro</li>
+            <li>Inscrições — Maio a Junho 2025</li>
+            <li>Resultado — Fevereiro 2026</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- MACRO -->
+    <div class="vest-full-card" id="vest-macro">
+      <div class="vest-full-header" onclick="toggleVest('vest-macro')">
+        <div class="vest-badge badge-macro">🔥</div>
+        <div class="vest-full-info">
+          <div class="vest-full-name">MACRO — UEA</div>
+          <div class="vest-full-inst">Vestibular Tradicional • Concorrido</div>
+        </div>
+        <div class="vest-expand-btn">▾</div>
+      </div>
+      <div class="vest-full-body">
+        <div class="vest-info-row">
+          <span class="vest-pill pill-red">1ª Fase — Objetiva</span>
+          <span class="vest-pill pill-red">2ª Fase — Redação</span>
+        </div>
+        <div class="vest-section">
+          <div class="vest-section-title">📐 Matemática — Conteúdo</div>
+          <ul class="conteudo-list">
+            <li>Todo o Ensino Médio (1º ao 3º ano)</li>
+            <li>Trigonometria Completa e Círculo Trigonométrico</li>
+            <li>Geometria Espacial: volumes e áreas</li>
+            <li>Matrizes, Determinantes e Sistemas Lineares</li>
+            <li>Análise Combinatória e Probabilidade</li>
+            <li>Logaritmos e Exponenciais</li>
+          </ul>
+        </div>
+        <div class="vest-section">
+          <div class="vest-section-title">📅 Calendário 2025/2026</div>
+          <ul class="conteudo-list">
+            <li>Inscrições — Outubro/Novembro 2025</li>
+            <li>1ª Fase — Janeiro 2026</li>
+            <li>2ª Fase — Fevereiro 2026</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENEM -->
+    <div class="vest-full-card" id="vest-enem">
+      <div class="vest-full-header" onclick="toggleVest('vest-enem')">
+        <div class="vest-badge badge-enem">🌿</div>
+        <div class="vest-full-info">
+          <div class="vest-full-name">ENEM</div>
+          <div class="vest-full-inst">Exame Nacional do Ensino Médio</div>
+        </div>
+        <div class="vest-expand-btn">▾</div>
+      </div>
+      <div class="vest-full-body">
+        <div class="vest-info-row">
+          <span class="vest-pill pill-green">Dia 1 — Humanas + Redação</span>
+          <span class="vest-pill pill-green">Dia 2 — Exatas + Nat.</span>
+        </div>
+        <div class="vest-section">
+          <div class="vest-section-title">📐 Matemática — Eixos ENEM</div>
+          <ul class="conteudo-list">
+            <li>Eixo 1: Álgebra — Funções e Equações</li>
+            <li>Eixo 2: Geometria — Plana, Espacial e Analítica</li>
+            <li>Eixo 3: Estatística e Probabilidade</li>
+            <li>Eixo 4: Números — Razão, Proporção, Porcentagem</li>
+            <li>Matemática Financeira</li>
+            <li>Grandezas e Medidas</li>
+          </ul>
+        </div>
+        <div class="vest-section">
+          <div class="vest-section-title">✏️ Redação ENEM</div>
+          <ul class="conteudo-list">
+            <li>Texto Dissertativo-Argumentativo</li>
+            <li>5 competências avaliadas (0 a 200 pts cada)</li>
+            <li>Proposta de Intervenção obrigatória</li>
+            <li>Proibido: textos em verso, narrativos ou descritivos</li>
+          </ul>
+        </div>
+        <div class="vest-section">
+          <div class="vest-section-title">📅 ENEM 2025</div>
+          <ul class="conteudo-list">
+            <li>Inscrições — Maio 2025</li>
+            <li>Dia 1 — 9 de Novembro 2025</li>
+            <li>Dia 2 — 16 de Novembro 2025</li>
+            <li>Gabarito — Novembro 2025</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========== MATÉRIA ========== -->
+<div class="screen" id="screen-materia">
+  <div class="materia-screen">
+    <div class="subject-tabs">
+      <div class="subject-tab active" id="tab-mat" onclick="selectSubject('mat')">
+        <span>📐</span>Matemática
+      </div>
+      <div class="subject-tab" id="tab-red" onclick="selectSubject('red')">
+        <span>✏️</span>Redação
+      </div>
+    </div>
+
+    <div class="serie-selector" id="serie-selector-mat">
+      <button class="serie-btn active" onclick="selectSerie(1)">1º ano</button>
+      <button class="serie-btn" onclick="selectSerie(2)">2º ano</button>
+      <button class="serie-btn" onclick="selectSerie(3)">3º ano</button>
+    </div>
+
+    <div class="serie-selector" id="serie-selector-red" style="display:none">
+      <button class="serie-btn active" onclick="selectSerieRed(1)">Fundamentos</button>
+      <button class="serie-btn" onclick="selectSerieRed(2)">Estrutura</button>
+      <button class="serie-btn" onclick="selectSerieRed(3)">ENEM/PSC</button>
+    </div>
+
+    <div class="topics-list" id="topics-list"></div>
+  </div>
+</div>
+
+<!-- ========== TREINO ========== -->
+<!-- ========== PRATICAR ========== -->
+<div class="screen" id="screen-praticar">
+  <div style="padding:20px 20px 10px">
+    <div style="font-family:var(--font-display);font-size:22px;font-weight:900;margin-bottom:2px;letter-spacing:-0.5px">⚡ Praticar</div>
+    <div style="font-size:13px;color:var(--text2);margin-bottom:20px">Questões reais dos vestibulares do Amazonas</div>
+
+    <!-- Card Simulado -->
+    <div onclick="abrirModalSimulado()" class="action-card" style="margin-bottom:10px;border-color:var(--border-accent);gap:16px;padding:18px 16px;"
+      onmousedown="this.style.transform='scale(0.98)'" onmouseup="this.style.transform='scale(1)'">
+      <div class="action-icon sim" style="width:52px;height:52px;border-radius:14px;font-size:26px;">🎯</div>
+      <div style="flex:1">
+        <div style="font-size:16px;font-weight:800;color:var(--text);margin-bottom:3px;letter-spacing:-0.2px">Simulado</div>
+        <div style="font-size:12px;color:var(--text2)">Prova completa • Cronometrado • Igual ao vestibular</div>
+      </div>
+      <div style="color:var(--accent2);font-size:20px">›</div>
+    </div>
+
+    <!-- Card Exercícios -->
+    <div onclick="abrirExercicios()" class="action-card" style="border-color:rgba(245,158,11,0.25);gap:16px;padding:18px 16px;"
+      onmousedown="this.style.transform='scale(0.98)'" onmouseup="this.style.transform='scale(1)'">
+      <div class="action-icon" style="width:52px;height:52px;border-radius:14px;font-size:26px;background:rgba(245,158,11,0.12);">⚡</div>
+      <div style="flex:1">
+        <div style="font-size:16px;font-weight:800;color:var(--text);margin-bottom:3px;letter-spacing:-0.2px">Exercícios</div>
+        <div style="font-size:12px;color:var(--text2)">Questões por tema • XP • 3 vidas por dia</div>
+      </div>
+      <div style="color:var(--amber);font-size:20px">›</div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Simulado -->
+<div id="modal-simulado" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:300;align-items:flex-end;justify-content:center">
+  <div style="background:var(--surface);border-radius:24px 24px 0 0;padding:24px 20px 32px;width:100%;max-width:480px;border-top:1px solid var(--border)">
+    <div style="width:36px;height:4px;background:rgba(255,255,255,0.15);border-radius:2px;margin:0 auto 20px"></div>
+    <div style="font-size:18px;font-weight:800;margin-bottom:4px">🎯 Escolha o simulado</div>
+    <div style="font-size:13px;color:var(--text2);margin-bottom:20px">Questões reais • Cronometrado igual à prova</div>
+
+    <!-- SIS -->
+    <div style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">⭐ SIS — UEA</div>
+    <button onclick="startSimuladoComEtapa('SIS','dia1');fecharModalSimulado()" style="width:100%;padding:14px 16px;border-radius:12px;border:1px solid rgba(245,158,11,0.2);background:rgba(245,158,11,0.05);color:var(--text);font-family:var(--font);font-size:14px;cursor:pointer;text-align:left;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div><div style="font-weight:700;color:var(--gold)">Dia 1 — Linguagens + Humanas</div><div style="font-size:11px;color:var(--text2);margin-top:2px">⏱️ 180 min • Português, Inglês, História, Geo...</div></div>
+      <span style="color:var(--text2)">›</span>
+    </button>
+    <button onclick="startSimuladoComEtapa('SIS','dia2');fecharModalSimulado()" style="width:100%;padding:14px 16px;border-radius:12px;border:1px solid rgba(245,158,11,0.2);background:rgba(245,158,11,0.05);color:var(--text);font-family:var(--font);font-size:14px;cursor:pointer;text-align:left;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <div><div style="font-weight:700;color:var(--gold)">Dia 2 — Exatas + Redação</div><div style="font-size:11px;color:var(--text2);margin-top:2px">⏱️ 180 min • Matemática, Física, Química, Bio...</div></div>
+      <span style="color:var(--text2)">›</span>
+    </button>
+
+    <!-- PSC -->
+    <div style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">🎓 PSC — UFAM</div>
+    <button onclick="startSimuladoComEtapa('PSC','tudo');fecharModalSimulado()" style="width:100%;padding:14px 16px;border-radius:12px;border:1px solid rgba(0,180,216,0.2);background:rgba(0,180,216,0.05);color:var(--text);font-family:var(--font);font-size:14px;cursor:pointer;text-align:left;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <div><div style="font-weight:700;color:var(--cyan)">Prova Única — Todas as matérias</div><div style="font-size:11px;color:var(--text2);margin-top:2px">⏱️ 240 min • Questões do banco PSC</div></div>
+      <span style="color:var(--text2)">›</span>
+    </button>
+
+    <!-- Só Mat -->
+    <div style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">📐 Foco</div>
+    <button onclick="startSimulado('mat-sis');fecharModalSimulado()" style="width:100%;padding:14px 16px;border-radius:12px;border:1px solid rgba(21,101,192,0.25);background:rgba(21,101,192,0.08);color:var(--text);font-family:var(--font);font-size:14px;cursor:pointer;text-align:left;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div><div style="font-weight:700;color:var(--cyan2)">Só Matemática</div><div style="font-size:11px;color:var(--text2);margin-top:2px">⏱️ 30 min • 10 questões do banco SIS</div></div>
+      <span style="color:var(--text2)">›</span>
+    </button>
+
+    <button onclick="fecharModalSimulado()" style="width:100%;padding:13px;border-radius:12px;border:1px solid var(--border);background:var(--surface2);color:var(--text2);font-family:var(--font);font-size:14px;cursor:pointer">Cancelar</button>
+  </div>
+</div>
+
+<!-- Tela de Exercícios (estilo Duolingo) -->
+<div class="aula-view" id="exercicios-view">
+  <div class="aula-header" style="flex-direction:column;gap:0;padding:0;background:var(--card2)">
+    <!-- Barra superior: X + progresso + coração -->
+    <div style="display:flex;align-items:center;gap:10px;padding:14px 16px 10px;width:100%">
+      <button onclick="fecharExercicios()" style="width:36px;height:36px;border-radius:10px;background:var(--surface2);border:none;color:var(--text);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">✕</button>
+      <div style="flex:1;height:8px;background:var(--surface2);border-radius:4px;overflow:hidden">
+        <div id="ex-progress-bar" style="height:100%;background:linear-gradient(90deg,var(--amber),var(--amber2));border-radius:4px;width:0%;transition:width 0.4s"></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:4px;flex-shrink:0">
+        <span id="ex-c1" style="font-size:20px">❤️</span>
+        <span id="ex-c2" style="font-size:20px">❤️</span>
+        <span id="ex-c3" style="font-size:20px">❤️</span>
+      </div>
+    </div>
+    <!-- Tabs mat/red -->
+    <div style="display:flex;gap:6px;padding:0 16px 12px;width:100%">
+      <button id="extab-mat" onclick="exTrocarTab('Matemática')" style="flex:1;padding:8px;border-radius:10px;border:1.5px solid var(--border-accent);background:rgba(59,130,246,0.1);color:var(--accent2);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer">📐 Matemática</button>
+      <button id="extab-red" onclick="exTrocarTab('Redação')" style="flex:1;padding:8px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--text2);font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer">✍️ Redação</button>
+    </div>
+  </div>
+  <div class="aula-content" id="ex-questao-area" style="padding:20px"></div>
+</div>
+
+<!-- Tela bloqueada (sem vidas) -->
+<div class="aula-view" id="bloqueado-view" style="display:none;background:var(--bg)">
+  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:32px;text-align:center">
+    <div style="font-size:64px;margin-bottom:16px">💔</div>
+    <div style="font-size:22px;font-weight:800;color:var(--red);margin-bottom:8px">Sem vidas!</div>
+    <div style="font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:20px">Você usou todos os corações hoje.<br>Volte amanhã ou estude um conteúdo novo para ganhar uma vida extra.</div>
+    <div id="bloqueado-timer" style="font-size:28px;font-weight:700;color:var(--gold);margin-bottom:24px"></div>
+    <button onclick="fecharBloqueado();goTo('materia')" style="padding:14px 28px;border-radius:12px;border:none;background:var(--accent);color:#fff;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;margin-bottom:12px;width:100%">📚 Estudar conteúdo (+1 vida)</button>
+    <button onclick="fecharBloqueado()" style="padding:12px;border-radius:12px;border:1px solid var(--border);background:var(--surface2);color:var(--text2);font-family:var(--font);font-size:14px;cursor:pointer;width:100%">← Voltar</button>
+  </div>
+</div>
+
+<!-- ========== PERFIL ========== -->
+<div class="screen" id="screen-perfil">
+  <div style="padding:24px 20px">
+    <div style="text-align:center;margin-bottom:20px">
+      <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--violet));display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 12px">🎓</div>
+      <div style="font-family:var(--font-display);font-size:20px;font-weight:800" id="perfil-nome">—</div>
+      <div style="font-size:13px;color:var(--text2);margin-top:3px" id="perfil-info">—</div>
+    </div>
+
+    <!-- Stats -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:20px">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center">
+        <div style="font-size:22px;font-weight:700;color:var(--gold)" id="perfil-xp">0</div>
+        <div style="font-size:10px;color:var(--text2)">XP total</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center">
+        <div style="font-size:22px;font-weight:700;color:var(--green)" id="perfil-acertos">0%</div>
+        <div style="font-size:10px;color:var(--text2)">acertos</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center">
+        <div style="font-size:22px;font-weight:700;color:var(--red)" id="perfil-streak">🔥0</div>
+        <div style="font-size:10px;color:var(--text2)">streak</div>
+      </div>
+    </div>
+
+    <!-- Dificuldades observadas -->
+    <div style="background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.15);border-radius:14px;padding:16px;margin-bottom:14px">
+      <div style="font-size:12px;font-weight:700;color:var(--red);margin-bottom:10px">⚠️ Pontos a reforçar</div>
+      <div id="perfil-dificuldades" style="font-size:13px;color:var(--text2);line-height:1.9">
+        <span style="color:var(--text2);font-size:12px">Nenhum erro registrado ainda. Continue praticando!</span>
+      </div>
+    </div>
+
+    <!-- Ranking -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px">
+      <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:12px">🏆 Ranking da semana</div>
+      <div class="ranking-list">
+        <div class="rank-item"><div class="rank-pos gold">🥇</div><div class="rank-avatar">👩</div><div class="rank-name">Ana Paula M.</div><div class="rank-xp">1.240 XP</div></div>
+        <div class="rank-item"><div class="rank-pos silver">🥈</div><div class="rank-avatar">👦</div><div class="rank-name">Carlos R.</div><div class="rank-xp">980 XP</div></div>
+        <div class="rank-item"><div class="rank-pos bronze">🥉</div><div class="rank-avatar">👧</div><div class="rank-name">Isabela S.</div><div class="rank-xp">875 XP</div></div>
+        <div class="rank-item" style="border-color:var(--border-accent);background:rgba(59,130,246,0.05)">
+          <div class="rank-pos" style="color:var(--cyan)">—</div>
+          <div class="rank-avatar">😎</div>
+          <div class="rank-name" id="rank-nome">Você</div>
+          <div class="rank-xp" id="rank-xp">0 XP</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Editar perfil -->
+    <button onclick="editarPerfil()" style="width:100%;padding:14px;border-radius:12px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font);font-size:14px;cursor:pointer">✏️ Editar série e vestibular</button>
+  </div>
+</div>
+
+<!-- ========== AULA VIEW ========== -->
+<div class="aula-view" id="aula-view">
+  <div class="aula-header">
+    <button class="back-btn" onclick="closeAula()">←</button>
+    <div class="aula-title" id="aula-title">Função Afim</div>
+    <div id="cronometro" style="display:none;font-size:13px;font-weight:700;color:var(--gold);padding:4px 10px;border-radius:8px;background:rgba(244,168,51,0.12)">00:00</div>
+  </div>
+  <div class="aula-content" id="aula-content"></div>
+</div>
+
+<!-- ========== BOTTOM NAV ========== -->
+<nav class="bottom-nav">
+  <button class="nav-btn active" id="nav-home" onclick="goTo('home')">
+    <div class="nav-icon">🏠</div>
+    Início
+  </button>
+  <button class="nav-btn" id="nav-materia" onclick="goTo('materia')">
+    <div class="nav-icon">📚</div>
+    Estudar
+  </button>
+  <button class="nav-btn" id="nav-praticar" onclick="goTo('praticar')">
+    <div class="nav-icon">⚡</div>
+    Praticar
+  </button>
+  <button class="nav-btn" id="nav-perfil" onclick="goTo('perfil')">
+    <div class="nav-icon">👤</div>
+    Perfil
+  </button>
+</nav>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
