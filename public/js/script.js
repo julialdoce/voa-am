@@ -1782,30 +1782,14 @@ function editarPerfil() {
 }
 
 // ─── THEME TOGGLE ───
-// --- Lógica de Troca de Tema ---
 function toggleTheme() {
   const html = document.documentElement;
-  const current = html.getAttribute('data-theme');
-  const next = current === 'dark' ? 'light' : 'dark';
-  
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   html.setAttribute('data-theme', next);
-  localStorage.setItem('voaam_theme', next); // Nome da chave que você já usa
-  updateToggleUI(next);
+  localStorage.setItem('voaam_theme', next);
 }
-
-// Atualiza o visual do botão (ícone e posição)
-function updateToggleUI(theme) {
-  const circle = document.querySelector('.toggle-circle');
-  if (circle) {
-    circle.textContent = theme === 'dark' ? '🌙' : '☀️';
-  }
-}
-
-// Inicialização (Executa ao carregar a página)
 (function() {
-  const saved = localStorage.getItem('voaam_theme') || 'dark';
-  document.documentElement.setAttribute('data-theme', saved);
-  updateToggleUI(saved);
+  document.documentElement.setAttribute('data-theme', localStorage.getItem('voaam_theme') || 'dark');
 })();
 
 // ─── INIT ───
@@ -1817,4 +1801,5 @@ if (!perfil) {
   aplicarPerfil();
 }
 renderTopics();
+
 
