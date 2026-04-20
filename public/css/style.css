@@ -90,53 +90,270 @@ body {
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
-  max-width: 480px;
-  margin: 0 auto;
   overflow-x: hidden;
-  padding-bottom: 80px;
   transition: background 0.3s, color 0.3s;
-  position: relative;
 }
 
-/* Desktop layout: max-width on fixed/sticky elements */
+/* ─── APP WRAPPER (envolve tudo no body) ─── */
+#app-wrapper {
+  max-width: 480px;
+  margin: 0 auto;
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVO — TABLET (640px+)
+   App centralizado com fundo diferente
+═══════════════════════════════════════════ */
 @media (min-width: 640px) {
   body {
     background: var(--bg2);
   }
-  .header, .screen, nav.bottom-nav {
+  #app-wrapper {
+    box-shadow: 0 0 0 1px var(--border);
+    min-height: 100vh;
+  }
+  /* Overlays e modais: centralizar com max-width no tablet */
+  .aula-view, #exercicios-view, #bloqueado-view {
     max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+  }
+  #modal-simulado, #modal-etapa {
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 480px;
+    width: 100%;
   }
 }
 
+/* ═══════════════════════════════════════════
+   RESPONSIVO — DESKTOP (1024px+)
+   Sidebar lateral + conteúdo principal
+═══════════════════════════════════════════ */
+@media (min-width: 1024px) {
+  body {
+    background: var(--bg2);
+    display: block;
+  }
+
+  #app-wrapper {
+    max-width: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    grid-template-areas:
+      "sidebar header"
+      "sidebar main";
+    min-height: 100vh;
+    padding-bottom: 0;
+    box-shadow: none;
+    gap: 0;
+    align-items: start;
+  }
+
+  .header {
+    grid-area: header;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-left: 1px solid var(--border);
+  }
+
+  .screen {
+    grid-area: main;
+    border-left: 1px solid var(--border);
+    min-height: calc(100vh - 64px);
+    padding-bottom: 40px;
+  }
+
+  /* ── SIDEBAR ── */
+  .bottom-nav {
+    grid-area: sidebar;
+    position: sticky !important;
+    top: 0 !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
+    transform: none !important;
+    width: 240px !important;
+    max-width: none !important;
+    height: 100vh;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: stretch !important;
+    padding: 0 !important;
+    padding-bottom: 0 !important;
+    border-top: none !important;
+    border-right: 1px solid var(--border);
+    background: var(--card2) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    overflow-y: auto;
+    z-index: 100;
+  }
+
+  .bottom-nav::before {
+    content: 'Voa AM';
+    display: flex;
+    align-items: center;
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 900;
+    font-style: italic;
+    color: var(--accent2);
+    padding: 28px 20px 24px;
+    border-bottom: 1px solid var(--border);
+    letter-spacing: -0.5px;
+    flex-shrink: 0;
+  }
+
+  .nav-btn {
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px !important;
+    font-size: 14px;
+    font-weight: 600;
+    width: 100%;
+    border-radius: 0;
+    flex: 0 0 auto !important;
+  }
+
+  .nav-btn .nav-icon {
+    width: 20px; height: 20px;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .nav-btn.active::after {
+    top: 0; bottom: 0;
+    left: 0; right: auto;
+    width: 3px; height: auto;
+    transform: none;
+    border-radius: 0 2px 2px 0;
+  }
+
+  .header .logo { display: none; }
+
+  /* Overlays ocupam só a área de conteúdo */
+  .aula-view, #exercicios-view, #bloqueado-view {
+    left: 240px !important;
+    width: calc(100% - 240px) !important;
+    max-width: none !important;
+    transform: none !important;
+  }
+
+  #modal-simulado, #modal-etapa {
+    left: 240px !important;
+    width: calc(100% - 240px) !important;
+    max-width: none !important;
+    transform: none !important;
+  }
+
+  .home-title { font-size: 34px; }
+
+  /* Grid 2 colunas para cards na home */
+  .vestibulares-row { grid-template-columns: repeat(4, 1fr); }
+  .action-cards { display: grid !important; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .action-cards .action-card:last-child { grid-column: span 2; }
+
+  /* Conteúdo principal com max-width confortável mas usando espaço */
+  .home-hero, .materia-screen, .vest-screen, .corretor-screen,
+  .treino-screen, .progress-card, .vestibulares-row, .action-cards,
+  .streak-banner, .section-title, .coracoes-bar, .bloqueado-banner {
+    max-width: none;
+  }
+
+  /* Padding interno nas screens para respirar */
+  .screen > div,
+  .screen > .home-hero {
+    padding-left: 40px;
+    padding-right: 40px;
+    max-width: 1000px;
+  }
+
+  .xp-toast { left: calc(240px + ((100vw - 240px) / 2)) !important; transform: translateX(-50%) translateY(-10px) !important; }
+  .xp-toast.show { transform: translateX(-50%) translateY(0) !important; }
+  .achievement-popup { left: calc(240px + ((100vw - 240px) / 2)) !important; transform: translateX(-50%) translateY(20px) !important; }
+  .achievement-popup.show { transform: translateX(-50%) translateY(0) !important; }
+
+  .onboarding { background: rgba(0,0,0,0.7) !important; backdrop-filter: blur(8px); }
+}
+
 /* Subtle grain texture on dark */
-[data-theme="dark"] body::before {
+[data-theme="dark"] body::after {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 0;
-  opacity: 0.4;
+  opacity: 1;
 }
 
 /* ═══════════════════════════════════════════
    THEME TOGGLE BUTTON
 ═══════════════════════════════════════════ */
+/* ── Toggle neumórfico ── */
 .theme-toggle {
-  width: 36px; height: 36px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: var(--surface2);
-  color: var(--text2);
+  position: relative;
+  width: 88px;
+  height: 36px;
+  border-radius: 36px;
+  border: none;
   cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 16px;
-  transition: all var(--transition);
   flex-shrink: 0;
+  padding: 0;
+  outline: none;
+  transition: background 0.35s ease, box-shadow 0.35s ease;
 }
-.theme-toggle:hover { border-color: var(--border-accent); color: var(--accent2); }
+[data-theme="dark"] .theme-toggle {
+  background: #1a1c26;
+  box-shadow: inset 3px 3px 8px rgba(0,0,0,0.65), inset -2px -2px 5px rgba(255,255,255,0.04);
+}
+[data-theme="light"] .theme-toggle {
+  background: #dde3f0;
+  box-shadow: inset 3px 3px 8px rgba(170,180,205,0.8), inset -2px -2px 5px rgba(255,255,255,0.9);
+}
+.theme-toggle::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  transition: left 0.35s cubic-bezier(.4,0,.2,1), background 0.35s, box-shadow 0.35s;
+}
+[data-theme="dark"] .theme-toggle::before {
+  left: 4px;
+  background: radial-gradient(circle at 35% 35%, #4a4f6a, #1e2130);
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.7), -1px -1px 3px rgba(255,255,255,0.05);
+}
+[data-theme="light"] .theme-toggle::before {
+  left: 56px;
+  background: radial-gradient(circle at 35% 35%, #ffffff, #ccd4ec);
+  box-shadow: 2px 2px 6px rgba(130,145,180,0.6), -1px -1px 3px rgba(255,255,255,0.95);
+}
+.theme-toggle-label {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  pointer-events: none;
+  transition: opacity 0.25s;
+  font-family: var(--font);
+  white-space: nowrap;
+}
+[data-theme="dark"]  .theme-toggle-label-dark  { left: 36px; opacity: 1; color: #8b9bb4; }
+[data-theme="dark"]  .theme-toggle-label-light { left: 10px; opacity: 0; color: #d97706; }
+[data-theme="light"] .theme-toggle-label-dark  { left: 36px; opacity: 0; color: #8b9bb4; }
+[data-theme="light"] .theme-toggle-label-light { left: 10px; opacity: 1; color: #d97706; }
 
 /* ═══════════════════════════════════════════
    ONBOARDING
@@ -149,11 +366,17 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 32px 24px;
-  max-width: 480px;
-  left: 50%;
-  transform: translateX(-50%);
+  align-items: center;
+}
+
+.onboarding > * {
   width: 100%;
+  max-width: 480px;
+  padding: 0 24px;
+}
+
+.onboarding .ob-logo {
+  padding: 0 24px;
 }
 .onboarding.hidden { display: none; }
 
@@ -783,9 +1006,6 @@ body {
   z-index: 200;
   display: none;
   flex-direction: column;
-  max-width: 480px;
-  left: 50%;
-  transform: translateX(-50%);
   overflow-y: auto;
   width: 100%;
 }
@@ -1182,15 +1402,44 @@ body {
   background: var(--surface) !important;
   border-top: 1px solid var(--border) !important;
   color: var(--text) !important;
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* ─── RESPONSIVE CONTENT MAX-WIDTH ─── */
+@media (min-width: 640px) {
+  #modal-simulado > div, #modal-etapa > div {
+    max-width: 480px !important;
+    border-radius: 24px !important;
+    margin-bottom: 20px;
+  }
+}
+@media (min-width: 1024px) {
+  #modal-simulado > div, #modal-etapa > div {
+    max-width: 560px !important;
+  }
+  /* Aula content max-width para leitura confortável */
+  .aula-content {
+    max-width: 720px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .aula-header {
+    max-width: none;
+  }
+  /* exercicios e bloqueado: inner content max-width */
+  #exercicios-view .aula-content,
+  #bloqueado-view > div {
+    max-width: 640px;
+    margin: 0 auto;
+    width: 100%;
+  }
 }
 
 /* ═══════════════════════════════════════════
    MOBILE FIRST — Desktop tweaks
 ═══════════════════════════════════════════ */
-@media (min-width: 640px) {
-  .home-title { font-size: 30px; }
-  .vestibulares-row { grid-template-columns: repeat(2, 1fr); }
-}
+
 
 /* ═══════════════════════════════════════════
    SCROLLBAR
@@ -1199,3 +1448,5 @@ body {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 2px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--border-accent); }
+
+
