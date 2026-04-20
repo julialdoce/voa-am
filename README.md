@@ -25,20 +25,5 @@ O projeto está organizado da seguinte forma:
 2. Vá em `File > Open Folder...` e selecione a pasta raiz deste projeto.
 3. Para uma melhor experiência, instale a extensão **Live Server** no VS Code para ver as alterações em tempo real.
 
-## 📤 Como subir para o GitHub
 
-Siga estes passos para colocar seu projeto no ar:
-
-1. Crie um novo repositório no [GitHub](https://github.com/new).
-2. No seu terminal (dentro da pasta do projeto), execute:
-   ```bash
-   git init
-   git add .
-   git commit -m "Primeiro commit: Estrutura organizada"
-   git branch -M main
-   git remote add origin SEU_LINK_DO_GITHUB_AQUI
-   git push -u origin main
-   ```
-
----
-Desenvolvido para o CPC Enem e Macro.
+Desenvolvido para o PSC, SIS Enem e Macro.
