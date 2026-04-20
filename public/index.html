@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 <title>Voa AM — Vestibulares do Amazonas</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Fraunces:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -105,6 +105,8 @@
 </div>
 
 <!-- Header -->
+
+<div id="app-wrapper">
 <div class="header">
   <div class="logo">
     <div class="logo-icon">🚀</div>
@@ -112,11 +114,11 @@
   </div>
   <div class="header-right">
     <div class="header-xp" id="xp-display">⭐ <span id="xp-count">0</span> XP</div>
-    <div class="theme-toggle-container">
-  <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Alternar tema">
-    <div class="toggle-circle">🌙</div>
-  </button>
-</div>
+    <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Alternar tema" aria-label="Alternar tema">
+      <span class="theme-toggle-label theme-toggle-label-light">☀️ CLARO</span>
+      <span class="theme-toggle-label theme-toggle-label-dark">🌙 ESCURO</span>
+    </button>
+  </div>
 </div>
 
 <!-- XP Toast -->
@@ -442,7 +444,7 @@
 
 <!-- Modal Simulado -->
 <div id="modal-simulado" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:300;align-items:flex-end;justify-content:center">
-  <div style="background:var(--surface);border-radius:24px 24px 0 0;padding:24px 20px 32px;width:100%;max-width:480px;border-top:1px solid var(--border)">
+  <div style="background:var(--surface);border-radius:24px 24px 0 0;padding:24px 20px 32px;width:100%;border-top:1px solid var(--border)">
     <div style="width:36px;height:4px;background:rgba(255,255,255,0.15);border-radius:2px;margin:0 auto 20px"></div>
     <div style="font-size:18px;font-weight:800;margin-bottom:4px">🎯 Escolha o simulado</div>
     <div style="font-size:13px;color:var(--text2);margin-bottom:20px">Questões reais • Cronometrado igual à prova</div>
@@ -595,7 +597,11 @@
     Perfil
   </button>
 </nav>
+</div><!-- /app-wrapper -->
 
-  <script src="js/script.js"></script>
+
+
+<script src="js/script.js"></script>
 </body>
 </html>
+
