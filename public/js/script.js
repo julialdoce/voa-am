@@ -461,7 +461,7 @@ function renderQuestion() {
   }
   answered = false;
   const q = quiz.questions[currentQuizIdx];
-  const letters = ['A','B','C','D'];
+  const letters = ['A','B','C','D','E'];
   const quizArea = document.getElementById('quiz-area') || document.getElementById('aula-content');
 
   // Update progress text
@@ -745,7 +745,11 @@ function simModoAba(modo) {
     ? '⚡ Escolha o vestibular — Modo Simples'
     : '🏆 Escolha o vestibular — Modo Completo';
 
-  grid.innerHTML = Object.entries(simConfig).map(([key, cfg]) => {
+  // Ordem visual: PSC1/SIS1, PSC2/SIS2, PSC3/SIS3, ENEM/MACRO
+  const ordemVest = ['PSC1','SIS1','PSC2','SIS2','PSC3','SIS3','ENEM','MACRO'];
+  grid.innerHTML = ordemVest.map(key => {
+    const cfg = simConfig[key];
+    if (!cfg) return '';
     const qs   = modo === 'simples' ? Math.ceil(cfg.qs / 2) : cfg.qs;
     const mins = modo === 'simples' ? Math.ceil(cfg.horas * 60 / 2) : cfg.horas * 60;
     const horasStr = mins >= 60 ? (mins/60).toFixed(1).replace('.0','')+'h' : mins+'min';
@@ -904,7 +908,37 @@ function pratAba(aba) {
   if (panelSim) panelSim.style.display = isSim ? 'block' : 'none';
   if (panelEx)  panelEx.style.display  = !isSim ? 'block' : 'none';
 
-  if (!isSim) renderListaEx();
+  if (isSim) {
+    // Reset sim state: hide vest picker and cards, go back to mode selection
+    const picker = document.getElementById('sim-vest-picker');
+    const cards  = document.getElementById('sim-cards-container');
+    if (picker) picker.style.display = 'none';
+    if (cards)  cards.innerHTML = '';
+    simModoAtual = null;
+    const btnSimples  = document.getElementById('simtab-simples');
+    const btnCompleto = document.getElementById('simtab-completo');
+    if (btnSimples) {
+      btnSimples.style.borderColor = 'var(--border-accent)';
+      btnSimples.style.background  = 'rgba(59,130,246,0.12)';
+      btnSimples.style.color       = 'var(--accent2)';
+    }
+    if (btnCompleto) {
+      btnCompleto.style.borderColor = 'var(--border)';
+      btnCompleto.style.background  = 'var(--surface)';
+      btnCompleto.style.color       = 'var(--text2)';
+    }
+  } else {
+    // Reset exercise sub-panels — always show Assuntos first
+    exAssuntoAtual = null;
+    exNivelAtual   = null;
+    const assPanel   = document.getElementById('ex-assuntos-panel');
+    const nivelPanel = document.getElementById('ex-nivel-panel');
+    const questPanel = document.getElementById('ex-questoes-panel');
+    if (assPanel)   assPanel.style.display   = 'block';
+    if (nivelPanel) nivelPanel.style.display  = 'none';
+    if (questPanel) questPanel.style.display  = 'none';
+    renderListaEx();
+  }
 }
 
 // ─── SIMULADOS POR VESTIBULAR ───
@@ -1123,89 +1157,221 @@ function iniciarSimuladoCatalogo(id) {
 function abrirModalSimulado() { goTo('praticar'); pratAba('sim'); }
 function fecharModalSimulado() {}
 
-// ─── EXERCÍCIOS — LISTA 10 QUESTÕES ───
-let exVestAtualLista = 'ENEM';
+// ─── EXERCÍCIOS — FLUXO POR ASSUNTO → NÍVEL → QUESTÕES ───
 
-function exVestFiltro(vest, el) {
-  exVestAtualLista = vest;
-  document.querySelectorAll('#prat-ex-panel .sim-vest-btn').forEach(b => b.classList.remove('active'));
-  if (el) el.classList.add('active');
-  renderListaEx();
+// Catálogo de assuntos para exercícios
+// Dificuldade dos assuntos: 1=Fácil(verde), 2=Médio(amarelo), 3=Difícil(vermelho)
+// Definidas por nível de abstração e exigência nos vestibulares do AM
+const EX_DIF_COR     = ['','rgba(34,197,94,0.13)','rgba(245,158,11,0.13)','rgba(239,68,68,0.12)'];
+const EX_DIF_BORDA   = ['','rgba(34,197,94,0.35)','rgba(245,158,11,0.4)','rgba(239,68,68,0.35)'];
+const EX_DIF_NUM     = ['','#22c55e','var(--amber)','var(--red)'];
+const EX_DIF_LABEL   = ['','Fácil','Médio','Difícil'];
+const EX_DIF_ICON    = ['','🟢','🟡','🔴'];
+
+const exAssuntos = [
+  // ── FÁCIL ──────────────────────────────────────────────────────────────────
+  { id:'financ',    emoji:'💰', titulo:'Mat. Financeira',    sub:'Juros simples, compostos, porcentagem',
+    dif:1,
+    keywords:['juro','financ','porcentagem','desconto','prestação','montante','taxa'] },
+  { id:'estat',     emoji:'📊', titulo:'Estatística',        sub:'Média, moda, mediana, desvio, gráficos',
+    dif:1,
+    keywords:['estatística','média','moda','mediana','desvio','variância','gráfico','frequência'] },
+  { id:'funcoes',   emoji:'📈', titulo:'Funções',            sub:'Afim, quadrática, exponencial, logarítmica',
+    dif:1,
+    keywords:['função','afim','quadrática','exponencial','logarit','inversa','composta'] },
+  // ── MÉDIO ──────────────────────────────────────────────────────────────────
+  { id:'algebra',   emoji:'🔡', titulo:'Álgebra',            sub:'Equações, sistemas, matrizes, PA e PG',
+    dif:2,
+    keywords:['equação','sistema','matrize','determinante','pa','pg','progressão','produto notável','polinôm'] },
+  { id:'geometria', emoji:'📐', titulo:'Geometria',          sub:'Plana, espacial e analítica',
+    dif:2,
+    keywords:['geometr','área','volume','perímetro','pitágoras','triângl','polígon','cilindro','cone','esfera','pirâmide'] },
+  { id:'log',       emoji:'🔢', titulo:'Logaritmos & Exp.',  sub:'Propriedades, equações logarítmicas',
+    dif:2,
+    keywords:['logarit','exponencial','potência','base natural'] },
+  // ── DIFÍCIL ────────────────────────────────────────────────────────────────
+  { id:'trigon',    emoji:'📏', titulo:'Trigonometria',      sub:'Seno, cosseno, tangente, identidades',
+    dif:3,
+    keywords:['trigonometr','seno','cosseno','tangente','radianos','identidade trigon'] },
+  { id:'prob',      emoji:'🎲', titulo:'Probabilidade',      sub:'Eventos, combinatória, análise combinatória',
+    dif:3,
+    keywords:['probabilidade','combinação','permutação','arranjo','fatorial','evento'] },
+  { id:'comb',      emoji:'🧩', titulo:'Combinatória',       sub:'Princípio multiplicativo, combinações',
+    dif:3,
+    keywords:['combinatória','princípio multiplicativo','binômio de newton','combinação','arranjo','permutação'] },
+  { id:'geoAnal',   emoji:'🔷', titulo:'Geo. Analítica',     sub:'Pontos, retas, cônicas, circunferências',
+    dif:3,
+    keywords:['analítica','ponto médio','distância','reta','cônica','parábola','elipse','hipérbole','circunferência'] },
+];
+// Garante ordem crescente de dificuldade (já definida acima, mas sort para segurança)
+exAssuntos.sort((a,b) => a.dif - b.dif);
+
+// Níveis: 1=Fácil, 2=Médio, 3=Difícil
+// A dificuldade é mapeada de _dif (1-4) para o nível escolhido:
+//   Fácil  → _dif 1
+//   Médio  → _dif 2-3
+//   Difícil → _dif 4 (ou 3-4 se houver poucas)
+
+let exAssuntoAtual = null;
+let exNivelAtual   = null;
+
+function exMostrarAssuntos() {
+  const grid = document.getElementById('ex-assuntos-grid');
+  if (!grid) return;
+
+  // Agrupa por dificuldade para inserir cabeçalhos de seção
+  let html = '';
+  let difAtual = 0;
+
+  exAssuntos.forEach(a => {
+    const n = bancoDB.filter(q => q.opcoes && q.opcoes.length > 0 &&
+      a.keywords.some(k => (q.contexto||'').toLowerCase().includes(k) || (q.enunciado||'').toLowerCase().includes(k))
+    ).length;
+
+    const cor     = EX_DIF_COR[a.dif];
+    const borda   = EX_DIF_BORDA[a.dif];
+    const num     = EX_DIF_NUM[a.dif];
+    const icon    = EX_DIF_ICON[a.dif];
+    const label   = EX_DIF_LABEL[a.dif];
+
+    // Cabeçalho de seção ao mudar de nível
+    if (a.dif !== difAtual) {
+      difAtual = a.dif;
+      // Fechar grid anterior se não for o primeiro
+      if (difAtual > 1) html += '</div>';
+      html += `
+        <div style="grid-column:1/-1;display:flex;align-items:center;gap:8px;margin-top:${difAtual>1?'10px':'0'};margin-bottom:4px">
+          <span style="font-size:14px">${icon}</span>
+          <span style="font-size:11px;font-weight:800;color:${num};text-transform:uppercase;letter-spacing:0.08em">${label}</span>
+          <div style="flex:1;height:1px;background:${borda}"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;grid-column:1/-1">`;
+    }
+
+    html += `<button onclick="exSelecionarAssunto('${a.id}')" style="
+      padding:14px 12px;border-radius:14px;border:1.5px solid ${borda};
+      background:${cor};color:var(--text);font-family:var(--font);
+      cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:5px;transition:all 0.15s;
+      position:relative;overflow:hidden">
+      <div style="position:absolute;top:8px;right:8px;font-size:10px;font-weight:700;color:${num};
+        background:rgba(0,0,0,0.18);padding:2px 6px;border-radius:5px">${icon} ${label}</div>
+      <div style="font-size:22px">${a.emoji}</div>
+      <div style="font-size:12px;font-weight:700;color:${num};line-height:1.2">${a.titulo}</div>
+      <div style="font-size:10px;color:var(--text2);line-height:1.3">${a.sub}</div>
+      <div style="font-size:10px;color:${num};margin-top:2px;font-weight:600">${n} questões</div>
+    </button>`;
+  });
+
+  // Fechar último grupo
+  if (difAtual > 0) html += '</div>';
+
+  // O grid pai não precisa mais de grid-template-columns pois cada grupo tem o seu
+  grid.style.display = 'block';
+  grid.innerHTML = html;
 }
 
-// Mapa simples de dificuldade por tema (contexto) — quanto mais avançado o tema, mais difícil
-function getDificuldade(q) {
-  const ctx = (q.contexto||'').toLowerCase();
-  const enun = (q.enunciado||'').toLowerCase();
-  // Mais difíceis: cálculo, cônicas, números complexos, poisson, matrizes 3x3, integral, limite
-  if (['integral','derivada','limite','cônica','complexo','poisson','normal','homotetia','binômio de newton','equação da circunferência'].some(t=>ctx.includes(t))) return 4;
-  // Difíceis: combinatória, logaritmo, trigonometria completa, probabilidade condicional, geo analítica
-  if (['combinação','permutação','arranjo','logarit','trigonometr','geo. analítica','analítica','probabilidade','pg infinita','inequação modular'].some(t=>ctx.includes(t))) return 3;
-  // Médios: funções, PA/PG, matrizes simples, geometria espacial, porcentagem composta
-  if (['função quadrática','função afim','pa','pg','matrizes','sistemas lineares','espacial','porcentagem','juros'].some(t=>ctx.includes(t))) return 2;
-  // Fáceis: aritmética básica, conjuntos, frações, geometria plana simples
-  return 1;
+function exSelecionarAssunto(id) {
+  exAssuntoAtual = exAssuntos.find(a => a.id === id);
+  if (!exAssuntoAtual) return;
+  // Mostra painel de nível
+  document.getElementById('ex-assuntos-panel').style.display = 'none';
+  document.getElementById('ex-questoes-panel').style.display = 'none';
+  const nivelPanel = document.getElementById('ex-nivel-panel');
+  nivelPanel.style.display = 'block';
+  // Header do assunto selecionado
+  const header = document.getElementById('ex-nivel-header');
+  if (header) header.innerHTML = `
+    <div style="font-size:28px">${exAssuntoAtual.emoji}</div>
+    <div>
+      <div style="font-size:14px;font-weight:800;color:${exAssuntoAtual.corNum}">${exAssuntoAtual.titulo}</div>
+      <div style="font-size:11px;color:var(--text2);margin-top:2px">${exAssuntoAtual.sub}</div>
+    </div>`;
 }
 
-function renderListaEx() {
+function exVoltarAssuntos() {
+  exAssuntoAtual = null;
+  exNivelAtual   = null;
+  document.getElementById('ex-nivel-panel').style.display   = 'none';
+  document.getElementById('ex-questoes-panel').style.display = 'none';
+  document.getElementById('ex-assuntos-panel').style.display = 'block';
+}
+
+function exSelecionarNivel(nivel) {
+  exNivelAtual = nivel;
+  document.getElementById('ex-nivel-panel').style.display   = 'none';
+  document.getElementById('ex-assuntos-panel').style.display = 'none';
+  const questPanel = document.getElementById('ex-questoes-panel');
+  questPanel.style.display = 'block';
+  exRenderQuestoesFiltradas();
+}
+
+function exVoltarNivel() {
+  exNivelAtual = null;
+  document.getElementById('ex-questoes-panel').style.display  = 'none';
+  document.getElementById('ex-assuntos-panel').style.display  = 'none';
+  document.getElementById('ex-nivel-panel').style.display     = 'block';
+}
+
+function exAtualizarQuestoes() {
+  exRenderQuestoesFiltradas();
+  showXPToast('🔄 Lista atualizada!');
+}
+
+function exRenderQuestoesFiltradas() {
   const container = document.getElementById('ex-lista-10');
-  const info = document.getElementById('ex-lista-info');
-  if (!container) return;
+  const info      = document.getElementById('ex-lista-info');
+  if (!container || !exAssuntoAtual) return;
 
-  const vest = exVestAtualLista;
-  let pool;
-  if (vest === 'PSC') {
-    pool = bancoDB.filter(q => q.vest === 'PSC' && q.opcoes.length > 0);
-  } else if (vest === 'SIS') {
-    pool = bancoDB.filter(q => q.vest === 'SIS' && q.opcoes.length > 0);
-  } else {
-    pool = bancoDB.filter(q => q.vest === vest && q.opcoes.length > 0);
-  }
+  const a = exAssuntoAtual;
+  // Filtra banco por keywords do assunto
+  let pool = bancoDB.filter(q =>
+    q.opcoes && q.opcoes.length > 0 &&
+    a.keywords.some(k => (q.contexto||'').toLowerCase().includes(k) || (q.enunciado||'').toLowerCase().includes(k))
+  );
 
-  if (!pool.length) {
-    container.innerHTML = `<div style="text-align:center;color:var(--text2);padding:32px;font-size:14px">Nenhuma questão disponível para ${vest}.</div>`;
+  // Aplica função de dificuldade
+  pool = pool.map(q => ({ ...q, _dif: getDificuldade(q) }));
+
+  // Mapeia nível escolhido → faixas de _dif (1=fácil, 2=médio, 3=difícil, 4=avançado)
+  let difMin, difMax;
+  if (exNivelAtual === 1)      { difMin = 1; difMax = 1; }  // Fácil
+  else if (exNivelAtual === 2) { difMin = 2; difMax = 2; }  // Médio
+  else                          { difMin = 3; difMax = 4; }  // Difícil/Avançado
+
+  let filtrado = pool.filter(q => q._dif >= difMin && q._dif <= difMax);
+  // Fallback: se pouco, expande faixa
+  if (filtrado.length < 3) filtrado = pool;
+
+  filtrado = filtrado.sort(() => Math.random() - 0.5).slice(0, 10);
+  filtrado.sort((a, b) => a._dif - b._dif);
+
+  const nivelLabels = ['','Fácil','Médio','Difícil'];
+  const nivelIcons  = ['','🟢','🟡','🔴'];
+  if (info) info.textContent = `${filtrado.length} questões • ${a.titulo} • ${nivelIcons[exNivelAtual]} ${nivelLabels[exNivelAtual]}`;
+
+  const difIcons     = ['','🟢','🟡','🟠','🔴'];
+  const difLabels    = ['','Fácil','Médio','Difícil','Avançado'];
+  const difColors    = ['','rgba(34,197,94,0.15)','rgba(245,158,11,0.15)','rgba(239,68,68,0.1)','rgba(139,92,246,0.15)'];
+  const difTxtColors = ['','#22c55e','var(--amber)','var(--red)','var(--violet)'];
+
+  if (!filtrado.length) {
+    container.innerHTML = `<div style="text-align:center;padding:32px;color:var(--text2);font-size:14px">
+      <div style="font-size:40px;margin-bottom:12px">🔍</div>
+      <div>Nenhuma questão encontrada para este assunto e nível.<br>Tente outro nível ou assunto!</div>
+    </div>`;
     return;
   }
 
-  // Ordenar por dificuldade crescente, com aleatoriedade dentro de cada nível
-  pool = pool.map(q => ({...q, _dif: getDificuldade(q)}));
-  // Pega ao menos 2-3 de cada nível quando possível
-  const niveis = [1,2,3,4];
-  let selecionadas = [];
-  const porNivel = niveis.map(n => pool.filter(q=>q._dif===n).sort(()=>Math.random()-0.5));
-  // Distribuição: 3 fáceis, 3 médias, 2 difíceis, 2 muito difíceis
-  const dist = [3,3,2,2];
-  niveis.forEach((n, i) => {
-    const lvl = porNivel[i];
-    selecionadas.push(...lvl.slice(0, dist[i]));
-  });
-  // Se ficaram menos de 10, pega mais do pool embaralhado
-  if (selecionadas.length < 10) {
-    const ids = new Set(selecionadas.map(q=>q.id));
-    const extras = pool.filter(q=>!ids.has(q.id)).sort(()=>Math.random()-0.5);
-    selecionadas.push(...extras.slice(0, 10 - selecionadas.length));
-  }
-  selecionadas = selecionadas.slice(0, 10);
-  // Ordenar finalmente por dificuldade
-  selecionadas.sort((a,b) => a._dif - b._dif);
-
-  if (info) info.textContent = `${selecionadas.length} questões de ${vest} • do mais fácil ao mais difícil`;
-
-  const difIcons = ['','🟢','🟡','🟠','🔴'];
-  const difLabels = ['','Fácil','Médio','Difícil','Avançado'];
-  const difColors = ['','rgba(34,197,94,0.15)','rgba(245,158,11,0.15)','rgba(239,68,68,0.1)','rgba(139,92,246,0.15)'];
-  const difTxtColors = ['','#22c55e','var(--amber)','var(--red)','var(--violet)'];
-
-  container.innerHTML = selecionadas.map((q, i) => {
-    const dif = q._dif || 1;
-    const tema = q.contexto ? q.contexto.split('—')[0].replace('Tema:','').trim() : 'Matemática';
+  container.innerHTML = filtrado.map((q, i) => {
+    const dif  = q._dif || 1;
+    const tema = q.contexto ? q.contexto.split('—')[0].replace('Tema:','').trim() : a.titulo;
     return `<div class="ex-lista-item" onclick="abrirExercicio('${q.id}')">
       <div class="ex-dif-badge" style="background:${difColors[dif]};color:${difTxtColors[dif]}">${difIcons[dif]}</div>
       <div style="flex:1;min-width:0">
         <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;flex-wrap:wrap">
           <span style="font-size:10px;font-weight:700;color:${difTxtColors[dif]}">${difLabels[dif]}</span>
-          <span style="font-size:10px;color:var(--text2);background:var(--surface2);padding:2px 6px;border-radius:4px">${q.vest}${q.etapa?' E'+q.etapa:''} ${q.ano}</span>
-          <span style="font-size:10px;color:var(--text2)">${tema.slice(0,25)}</span>
+          <span style="font-size:10px;color:var(--text2);background:var(--surface2);padding:2px 6px;border-radius:4px">${q.vest}${q.etapa?' E'+q.etapa:''} ${q.ano||''}</span>
+          <span style="font-size:10px;color:var(--text2)">${tema.slice(0,28)}</span>
         </div>
         <div style="font-size:13px;color:var(--text);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${q.enunciado}</div>
       </div>
@@ -1214,10 +1380,10 @@ function renderListaEx() {
   }).join('');
 }
 
-function atualizarListaEx() {
-  renderListaEx();
-  showXPToast('🔄 Lista atualizada!');
-}
+// Mantém compat com chamada antiga (pratAba chama renderListaEx)
+function renderListaEx() { exMostrarAssuntos(); }
+function atualizarListaEx() { exMostrarAssuntos(); }
+function exVestFiltro() {} // stub para não quebrar
 
 // ─── EXERCÍCIOS ESTILO DUOLINGO (mantido para o botão Exercícios do nav) ───
 let temasFragos = JSON.parse(localStorage.getItem('temasFragos') || '{}');
@@ -7192,6 +7358,37 @@ const bancoDB = [
 
 ];
 
+// ─── BANCO: POST-PROCESSAMENTO ─────────────────────────────
+// Adiciona campos 'materia' e 'serie' a cada questão do banco
+bancoDB.forEach(q => {
+  if (!q.materia) q.materia = 'Matemática'; // todo o banco atual é matemática
+  if (!q.serie) {
+    if (q.etapa === 1) q.serie = 1;
+    else if (q.etapa === 2) q.serie = 2;
+    else if (q.etapa === 3) q.serie = 3;
+    else q.serie = 3; // ENEM/MACRO cobrem todo EM, tratamos como 3ª série
+  }
+});
+
+// ─── DIFICULDADE DAS QUESTÕES ─────────────────────────────
+function getDificuldade(q) {
+  const ctx = (q.contexto || '').toLowerCase();
+  // Nível 4 — avançado (SIS 3, conteúdo universitário)
+  if (ctx.includes('transformada') || ctx.includes('integral') || ctx.includes('autovalor') ||
+      ctx.includes('edo') || ctx.includes('laplace') || ctx.includes('série de taylor') ||
+      (q.vest === 'SIS' && q.etapa >= 3)) return 4;
+  // Nível 3 — difícil
+  if (ctx.includes('cônica') || ctx.includes('combinação') || ctx.includes('permutação') ||
+      ctx.includes('determinante') || ctx.includes('logarit') || ctx.includes('trigonometr') ||
+      (q.vest === 'SIS' && q.etapa === 2) || (q.vest === 'PSC' && q.etapa === 3)) return 3;
+  // Nível 2 — médio
+  if (ctx.includes('probabilidade') || ctx.includes('exponencial') ||
+      ctx.includes('geometr') || ctx.includes('matr') ||
+      ctx.includes('quadrática') || ctx.includes('progressão') ||
+      ctx.includes('estatística')) return 2;
+  // Nível 1 — fácil
+  return 1;
+}
 
 // ─── NAVIGATION ───
 function goTo(screen) {
@@ -7202,7 +7399,6 @@ function goTo(screen) {
   if (screen === 'materia') renderTopics();
   if (screen === 'perfil') renderPerfil();
   if (screen === 'praticar') {
-    renderSimCards();
     pratAba('sim');
   }
 }

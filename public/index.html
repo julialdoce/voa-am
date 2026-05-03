@@ -555,18 +555,44 @@
 
     <!-- Painel Exercícios -->
     <div id="prat-ex-panel" style="display:none">
-      <!-- Vest filter -->
-      <div style="display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;padding-bottom:4px">
-        <button class="sim-vest-btn active" onclick="exVestFiltro('ENEM',this)">🌿 ENEM</button>
-        <button class="sim-vest-btn" onclick="exVestFiltro('MACRO',this)">🔥 MACRO</button>
-        <button class="sim-vest-btn" onclick="exVestFiltro('PSC',this)">🎓 PSC</button>
-        <button class="sim-vest-btn" onclick="exVestFiltro('SIS',this)">⭐ SIS</button>
+
+      <!-- ETAPA 1: Grade de assuntos -->
+      <div id="ex-assuntos-panel">
+        <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">📚 Escolha um assunto</div>
+        <div id="ex-assuntos-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"></div>
       </div>
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-        <div style="font-size:12px;color:var(--text2)" id="ex-lista-info">10 questões • do mais fácil ao mais difícil</div>
-        <button onclick="atualizarListaEx()" style="display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer">🔄 Atualizar</button>
+
+      <!-- ETAPA 2: Seletor de nível -->
+      <div id="ex-nivel-panel" style="display:none">
+        <button onclick="exVoltarAssuntos()" style="display:flex;align-items:center;gap:6px;margin-bottom:14px;background:none;border:none;color:var(--text2);font-family:var(--font);font-size:13px;cursor:pointer;padding:0">← Voltar</button>
+        <div id="ex-nivel-header" style="display:flex;align-items:center;gap:12px;padding:14px;border-radius:14px;margin-bottom:14px;border:1px solid var(--border)"></div>
+        <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">Escolha o nível de dificuldade</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <button onclick="exSelecionarNivel(1)" style="padding:16px;border-radius:14px;border:1px solid rgba(34,197,94,0.3);background:rgba(34,197,94,0.08);color:var(--text);font-family:var(--font);cursor:pointer;text-align:left;display:flex;align-items:center;gap:14px;transition:all 0.15s">
+            <span style="font-size:24px">🟢</span>
+            <div><div style="font-size:14px;font-weight:700;color:#22c55e">Fácil</div><div style="font-size:11px;color:var(--text2);margin-top:2px">Conceitos básicos e contas diretas</div></div>
+          </button>
+          <button onclick="exSelecionarNivel(2)" style="padding:16px;border-radius:14px;border:1px solid rgba(245,158,11,0.3);background:rgba(245,158,11,0.08);color:var(--text);font-family:var(--font);cursor:pointer;text-align:left;display:flex;align-items:center;gap:14px;transition:all 0.15s">
+            <span style="font-size:24px">🟡</span>
+            <div><div style="font-size:14px;font-weight:700;color:var(--amber)">Médio</div><div style="font-size:11px;color:var(--text2);margin-top:2px">Interpretação e aplicação de fórmulas</div></div>
+          </button>
+          <button onclick="exSelecionarNivel(3)" style="padding:16px;border-radius:14px;border:1px solid rgba(239,68,68,0.3);background:rgba(239,68,68,0.08);color:var(--text);font-family:var(--font);cursor:pointer;text-align:left;display:flex;align-items:center;gap:14px;transition:all 0.15s">
+            <span style="font-size:24px">🔴</span>
+            <div><div style="font-size:14px;font-weight:700;color:var(--red)">Difícil</div><div style="font-size:11px;color:var(--text2);margin-top:2px">Questões de vestibular de alta complexidade</div></div>
+          </button>
+        </div>
       </div>
-      <div id="ex-lista-10"></div>
+
+      <!-- ETAPA 3: Lista de questões -->
+      <div id="ex-questoes-panel" style="display:none">
+        <button onclick="exVoltarNivel()" style="display:flex;align-items:center;gap:6px;margin-bottom:14px;background:none;border:none;color:var(--text2);font-family:var(--font);font-size:13px;cursor:pointer;padding:0">← Voltar</button>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div style="font-size:12px;color:var(--text2)" id="ex-lista-info"></div>
+          <button onclick="exAtualizarQuestoes()" style="display:flex;align-items:center;gap:5px;padding:7px 12px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font);font-size:11px;font-weight:700;cursor:pointer">🔄 Atualizar</button>
+        </div>
+        <div id="ex-lista-10"></div>
+      </div>
+
     </div>
   </div>
 </div>
