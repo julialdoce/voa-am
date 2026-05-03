@@ -6,6 +6,98 @@
 <title>Voa AM — Vestibulares do Amazonas</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Fraunces:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<style>
+.sim-vest-btn {
+  padding: 7px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--text2);
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+.sim-vest-btn.active {
+  border-color: var(--border-accent);
+  background: rgba(59,130,246,0.1);
+  color: var(--accent2);
+}
+.sim-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.sim-card:active { transform: scale(0.98); }
+.sim-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.sim-card-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+.sim-card-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.3;
+}
+.sim-card-sub {
+  font-size: 11px;
+  color: var(--text2);
+  margin-top: 2px;
+}
+.sim-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.sim-tag {
+  font-size: 10px;
+  padding: 3px 7px;
+  border-radius: 5px;
+  font-weight: 700;
+}
+.ex-lista-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.ex-lista-item:active { transform: scale(0.98); }
+.ex-dif-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+</style>
 </head>
 <body>
 
@@ -416,65 +508,66 @@
 <div class="screen" id="screen-praticar">
   <div style="padding:20px 20px 10px">
     <div style="font-family:var(--font-display);font-size:22px;font-weight:900;margin-bottom:2px;letter-spacing:-0.5px">⚡ Praticar</div>
-    <div style="font-size:13px;color:var(--text2);margin-bottom:20px">Questões reais dos vestibulares do Amazonas</div>
+    <div style="font-size:13px;color:var(--text2);margin-bottom:16px">Questões reais dos vestibulares do Amazonas</div>
 
-    <!-- Card Simulado -->
-    <div onclick="abrirModalSimulado()" class="action-card" style="margin-bottom:10px;border-color:var(--border-accent);gap:16px;padding:18px 16px;"
-      onmousedown="this.style.transform='scale(0.98)'" onmouseup="this.style.transform='scale(1)'">
-      <div class="action-icon sim" style="width:52px;height:52px;border-radius:14px;font-size:26px;">🎯</div>
-      <div style="flex:1">
-        <div style="font-size:16px;font-weight:800;color:var(--text);margin-bottom:3px;letter-spacing:-0.2px">Simulado</div>
-        <div style="font-size:12px;color:var(--text2)">Prova completa • Cronometrado • Igual ao vestibular</div>
-      </div>
-      <div style="color:var(--accent2);font-size:20px">›</div>
+    <!-- Tabs Simulados / Exercícios -->
+    <div style="display:flex;gap:6px;margin-bottom:16px">
+      <button id="pratab-sim" onclick="pratAba('sim')" style="flex:1;padding:10px 8px;border-radius:12px;border:1.5px solid var(--border-accent);background:rgba(59,130,246,0.1);color:var(--accent2);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer">🎯 Simulados</button>
+      <button id="pratab-ex" onclick="pratAba('ex')" style="flex:1;padding:10px 8px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--text2);font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer">⚡ Exercícios</button>
     </div>
 
-    <!-- Card Exercícios -->
-    <div onclick="abrirExercicios()" class="action-card" style="border-color:rgba(245,158,11,0.25);gap:16px;padding:18px 16px;"
-      onmousedown="this.style.transform='scale(0.98)'" onmouseup="this.style.transform='scale(1)'">
-      <div class="action-icon" style="width:52px;height:52px;border-radius:14px;font-size:26px;background:rgba(245,158,11,0.12);">⚡</div>
-      <div style="flex:1">
-        <div style="font-size:16px;font-weight:800;color:var(--text);margin-bottom:3px;letter-spacing:-0.2px">Exercícios</div>
-        <div style="font-size:12px;color:var(--text2)">Questões por tema • XP • 3 vidas por dia</div>
+    <!-- Painel Simulados -->
+    <div id="prat-sim-panel">
+
+      <!-- Abas Simples / Completo -->
+      <div style="display:flex;gap:8px;margin-bottom:18px" id="sim-modo-tabs">
+        <button id="simtab-simples" onclick="simModoAba('simples',this)" style="
+          flex:1;padding:14px 10px;border-radius:14px;
+          border:1.5px solid var(--border-accent);
+          background:rgba(59,130,246,0.12);
+          color:var(--accent2);font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;
+          display:flex;flex-direction:column;align-items:center;gap:4px;transition:all 0.2s">
+          <span style="font-size:22px">⚡</span>
+          <span>Simulado Simples</span>
+          <span style="font-size:10px;font-weight:500;opacity:0.75">Metade das questões e tempo</span>
+        </button>
+        <button id="simtab-completo" onclick="simModoAba('completo',this)" style="
+          flex:1;padding:14px 10px;border-radius:14px;
+          border:1px solid var(--border);
+          background:var(--surface);
+          color:var(--text2);font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;
+          display:flex;flex-direction:column;align-items:center;gap:4px;transition:all 0.2s">
+          <span style="font-size:22px">🏆</span>
+          <span>Simulado Completo</span>
+          <span style="font-size:10px;font-weight:500;opacity:0.75">Prova oficial completa</span>
+        </button>
       </div>
-      <div style="color:var(--amber);font-size:20px">›</div>
+
+      <!-- Picker de vestibular (aparece após escolher o modo) -->
+      <div id="sim-vest-picker" style="display:none">
+        <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px" id="sim-vest-picker-label">Escolha o vestibular</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px" id="sim-vest-picker-grid"></div>
+      </div>
+
+      <!-- Cards do simulado selecionado -->
+      <div id="sim-cards-container" style="margin-top:4px"></div>
     </div>
-  </div>
-</div>
 
-<!-- Modal Simulado -->
-<div id="modal-simulado" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:300;align-items:flex-end;justify-content:center">
-  <div style="background:var(--surface);border-radius:24px 24px 0 0;padding:24px 20px 32px;width:100%;border-top:1px solid var(--border)">
-    <div style="width:36px;height:4px;background:rgba(255,255,255,0.15);border-radius:2px;margin:0 auto 20px"></div>
-    <div style="font-size:18px;font-weight:800;margin-bottom:4px">🎯 Escolha o simulado</div>
-    <div style="font-size:13px;color:var(--text2);margin-bottom:20px">Questões reais • Cronometrado igual à prova</div>
-
-    <!-- SIS -->
-    <div style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">⭐ SIS — UEA</div>
-    <button onclick="startSimuladoComEtapa('SIS','dia1');fecharModalSimulado()" style="width:100%;padding:14px 16px;border-radius:12px;border:1px solid rgba(245,158,11,0.2);background:rgba(245,158,11,0.05);color:var(--text);font-family:var(--font);font-size:14px;cursor:pointer;text-align:left;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-      <div><div style="font-weight:700;color:var(--gold)">Dia 1 — Linguagens + Humanas</div><div style="font-size:11px;color:var(--text2);margin-top:2px">⏱️ 180 min • Português, Inglês, História, Geo...</div></div>
-      <span style="color:var(--text2)">›</span>
-    </button>
-    <button onclick="startSimuladoComEtapa('SIS','dia2');fecharModalSimulado()" style="width:100%;padding:14px 16px;border-radius:12px;border:1px solid rgba(245,158,11,0.2);background:rgba(245,158,11,0.05);color:var(--text);font-family:var(--font);font-size:14px;cursor:pointer;text-align:left;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-      <div><div style="font-weight:700;color:var(--gold)">Dia 2 — Exatas + Redação</div><div style="font-size:11px;color:var(--text2);margin-top:2px">⏱️ 180 min • Matemática, Física, Química, Bio...</div></div>
-      <span style="color:var(--text2)">›</span>
-    </button>
-
-    <!-- PSC -->
-    <div style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">🎓 PSC — UFAM</div>
-    <button onclick="startSimuladoComEtapa('PSC','tudo');fecharModalSimulado()" style="width:100%;padding:14px 16px;border-radius:12px;border:1px solid rgba(0,180,216,0.2);background:rgba(0,180,216,0.05);color:var(--text);font-family:var(--font);font-size:14px;cursor:pointer;text-align:left;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-      <div><div style="font-weight:700;color:var(--cyan)">Prova Única — Todas as matérias</div><div style="font-size:11px;color:var(--text2);margin-top:2px">⏱️ 240 min • Questões do banco PSC</div></div>
-      <span style="color:var(--text2)">›</span>
-    </button>
-
-    <!-- Só Mat -->
-    <div style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">📐 Foco</div>
-    <button onclick="startSimulado('mat-sis');fecharModalSimulado()" style="width:100%;padding:14px 16px;border-radius:12px;border:1px solid rgba(21,101,192,0.25);background:rgba(21,101,192,0.08);color:var(--text);font-family:var(--font);font-size:14px;cursor:pointer;text-align:left;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-      <div><div style="font-weight:700;color:var(--cyan2)">Só Matemática</div><div style="font-size:11px;color:var(--text2);margin-top:2px">⏱️ 30 min • 10 questões do banco SIS</div></div>
-      <span style="color:var(--text2)">›</span>
-    </button>
-
-    <button onclick="fecharModalSimulado()" style="width:100%;padding:13px;border-radius:12px;border:1px solid var(--border);background:var(--surface2);color:var(--text2);font-family:var(--font);font-size:14px;cursor:pointer">Cancelar</button>
+    <!-- Painel Exercícios -->
+    <div id="prat-ex-panel" style="display:none">
+      <!-- Vest filter -->
+      <div style="display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;padding-bottom:4px">
+        <button class="sim-vest-btn active" onclick="exVestFiltro('ENEM',this)">🌿 ENEM</button>
+        <button class="sim-vest-btn" onclick="exVestFiltro('MACRO',this)">🔥 MACRO</button>
+        <button class="sim-vest-btn" onclick="exVestFiltro('PSC',this)">🎓 PSC</button>
+        <button class="sim-vest-btn" onclick="exVestFiltro('SIS',this)">⭐ SIS</button>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div style="font-size:12px;color:var(--text2)" id="ex-lista-info">10 questões • do mais fácil ao mais difícil</div>
+        <button onclick="atualizarListaEx()" style="display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer">🔄 Atualizar</button>
+      </div>
+      <div id="ex-lista-10"></div>
+    </div>
   </div>
 </div>
 

@@ -703,7 +703,523 @@ function pararCronometro() {
   if (el) el.style.display = 'none';
 }
 
-// ─── EXERCÍCIOS ADAPTATIVOS COM CORAÇÕES ───
+// ─── PRATICAR — ABAS ───
+let pratAbaAtual = 'sim';
+let simVestAtual = 'ENEM';
+let exVestAtual = 'ENEM';
+let simModoAtual = null; // 'simples' or 'completo'
+
+// Config dos vestibulares: questões e tempo completos
+const simConfig = {
+  ENEM:  { label:'ENEM',         emoji:'🌿', qs:45, horas:5, cor:'rgba(34,197,94,0.12)',  corBorda:'rgba(34,197,94,0.3)',  corNum:'#22c55e' },
+  MACRO: { label:'MACRO',        emoji:'🔥', qs:20, horas:4, cor:'rgba(239,68,68,0.12)',  corBorda:'rgba(239,68,68,0.3)',  corNum:'var(--red)' },
+  PSC1:  { label:'PSC 1ª Etapa', emoji:'🎓', qs:10, horas:2, cor:'rgba(59,130,246,0.12)', corBorda:'rgba(59,130,246,0.3)', corNum:'var(--accent2)' },
+  PSC2:  { label:'PSC 2ª Etapa', emoji:'🎓', qs:12, horas:2, cor:'rgba(59,130,246,0.12)', corBorda:'rgba(59,130,246,0.3)', corNum:'var(--accent2)' },
+  PSC3:  { label:'PSC 3ª Etapa', emoji:'🎓', qs:15, horas:2, cor:'rgba(59,130,246,0.12)', corBorda:'rgba(59,130,246,0.3)', corNum:'var(--accent2)' },
+  SIS1:  { label:'SIS 1ª Etapa', emoji:'⭐', qs:10, horas:2, cor:'rgba(245,158,11,0.12)', corBorda:'rgba(245,158,11,0.3)', corNum:'var(--amber)' },
+  SIS2:  { label:'SIS 2ª Etapa', emoji:'⭐', qs:12, horas:2, cor:'rgba(245,158,11,0.12)', corBorda:'rgba(245,158,11,0.3)', corNum:'var(--amber)' },
+  SIS3:  { label:'SIS 3ª Etapa', emoji:'⭐', qs:15, horas:2, cor:'rgba(245,158,11,0.12)', corBorda:'rgba(245,158,11,0.3)', corNum:'var(--amber)' },
+};
+
+function simModoAba(modo) {
+  simModoAtual = modo;
+  const btnSimples = document.getElementById('simtab-simples');
+  const btnCompleto = document.getElementById('simtab-completo');
+  if (btnSimples && btnCompleto) {
+    const isSimples = modo === 'simples';
+    btnSimples.style.borderColor = isSimples ? 'var(--border-accent)' : 'var(--border)';
+    btnSimples.style.background  = isSimples ? 'rgba(59,130,246,0.12)' : 'var(--surface)';
+    btnSimples.style.color       = isSimples ? 'var(--accent2)' : 'var(--text2)';
+    btnCompleto.style.borderColor = !isSimples ? 'rgba(244,168,51,0.5)' : 'var(--border)';
+    btnCompleto.style.background  = !isSimples ? 'rgba(244,168,51,0.1)' : 'var(--surface)';
+    btnCompleto.style.color       = !isSimples ? 'var(--gold)' : 'var(--text2)';
+  }
+  const picker = document.getElementById('sim-vest-picker');
+  const label  = document.getElementById('sim-vest-picker-label');
+  const grid   = document.getElementById('sim-vest-picker-grid');
+  const cardsContainer = document.getElementById('sim-cards-container');
+  if (!picker || !grid) return;
+  picker.style.display = 'block';
+  if (cardsContainer) cardsContainer.innerHTML = '';
+  if (label) label.textContent = modo === 'simples'
+    ? '⚡ Escolha o vestibular — Modo Simples'
+    : '🏆 Escolha o vestibular — Modo Completo';
+
+  grid.innerHTML = Object.entries(simConfig).map(([key, cfg]) => {
+    const qs   = modo === 'simples' ? Math.ceil(cfg.qs / 2) : cfg.qs;
+    const mins = modo === 'simples' ? Math.ceil(cfg.horas * 60 / 2) : cfg.horas * 60;
+    const horasStr = mins >= 60 ? (mins/60).toFixed(1).replace('.0','')+'h' : mins+'min';
+    return `<button onclick="simSelecionarVestibular('${key}')" style="
+      padding:14px 12px;border-radius:14px;border:1px solid ${cfg.corBorda};
+      background:${cfg.cor};color:var(--text);font-family:var(--font);
+      cursor:pointer;text-align:left;transition:all 0.15s;display:flex;flex-direction:column;gap:4px">
+      <div style="font-size:20px">${cfg.emoji}</div>
+      <div style="font-size:13px;font-weight:700;color:${cfg.corNum}">${cfg.label}</div>
+      <div style="font-size:10px;color:var(--text2)">${qs} questões • ${horasStr}</div>
+    </button>`;
+  }).join('');
+}
+
+function simSelecionarVestibular(vestKey) {
+  simVestAtual = vestKey;
+  const picker = document.getElementById('sim-vest-picker');
+  if (picker) picker.style.display = 'none';
+  renderSimCardsNovo(vestKey, simModoAtual);
+}
+
+function renderSimCardsNovo(vestKey, modo) {
+  const container = document.getElementById('sim-cards-container');
+  if (!container) return;
+  const cfg = simConfig[vestKey];
+  if (!cfg) return;
+  const qs   = modo === 'simples' ? Math.ceil(cfg.qs / 2) : cfg.qs;
+  const mins = modo === 'simples' ? Math.ceil(cfg.horas * 60 / 2) : cfg.horas * 60;
+  const horasStr = mins >= 60 ? (mins/60).toFixed(1).replace('.0','')+'h' : mins+'min';
+  const modoLabel = modo === 'simples' ? 'Simples' : 'Completo';
+  const modeIcon  = modo === 'simples' ? '⚡' : '🏆';
+
+  const temasMap = {
+    ENEM:  ['Álgebra & Funções','Geometria','Estatística','Probabilidade','Trigonometria','Mat. Financeira','Combinatória'],
+    MACRO: ['Logaritmos & Exp.','Geometria Espacial','Probabilidade','Álgebra Avançada','Combinatória'],
+    PSC1:  ['Conjuntos','Função Afim','Função Quadrática','Geometria Plana','PA e PG'],
+    PSC2:  ['Trigonometria','Geometria Espacial','Matrizes','Sistemas Lineares','Combinatória'],
+    PSC3:  ['Logaritmos','Probabilidade','Geo. Analítica','Números Complexos','Cônicas'],
+    SIS1:  ['Funções','Equações','Geometria Plana','Progressões','Trigonometria'],
+    SIS2:  ['Matrizes','Probabilidade','Geo. Espacial','Trigonometria Avançada','Logaritmos'],
+    SIS3:  ['Combinatória','Estatística','Geo. Analítica','Mat. Financeira','Funções Avançadas'],
+  };
+  const temas = temasMap[vestKey] || [];
+  const temasSel = modo === 'simples' ? temas.slice(0, Math.ceil(temas.length / 2)) : temas;
+
+  // Resolve cor do botão principal
+  const btnBg = cfg.corNum === 'var(--accent2)' ? 'var(--accent)'
+    : cfg.corNum === '#22c55e' ? '#22c55e'
+    : cfg.corNum === 'var(--amber)' ? 'var(--amber)'
+    : cfg.corNum === 'var(--gold)'  ? 'var(--gold)'
+    : 'var(--red)';
+
+  container.innerHTML = `
+    <div style="background:${cfg.cor};border:1px solid ${cfg.corBorda};border-radius:16px;padding:18px;margin-bottom:16px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+        <div style="font-size:32px">${cfg.emoji}</div>
+        <div>
+          <div style="font-size:16px;font-weight:800;color:${cfg.corNum}">${cfg.label}</div>
+          <div style="font-size:12px;color:var(--text2);margin-top:2px">${modeIcon} Modo ${modoLabel} • ${qs} questões • ${horasStr}</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px">
+        <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:10px;text-align:center">
+          <div style="font-size:18px;font-weight:800;color:${cfg.corNum}">${qs}</div>
+          <div style="font-size:10px;color:var(--text2)">Questões</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:10px;text-align:center">
+          <div style="font-size:18px;font-weight:800;color:${cfg.corNum}">${horasStr}</div>
+          <div style="font-size:10px;color:var(--text2)">Tempo</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:10px;text-align:center">
+          <div style="font-size:18px;font-weight:800;color:${cfg.corNum}">${modo === 'simples' ? 'Médio' : 'Alto'}</div>
+          <div style="font-size:10px;color:var(--text2)">Nível</div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--text2);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Conteúdos abordados</div>
+      <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px">
+        ${temasSel.map(t => `<span style="font-size:10px;padding:3px 8px;border-radius:6px;background:rgba(255,255,255,0.08);color:var(--text2);font-weight:600">${t}</span>`).join('')}
+      </div>
+      <button onclick="iniciarSimuladoNovo('${vestKey}','${modo}')" style="
+        width:100%;padding:15px;border-radius:12px;border:none;
+        background:${btnBg};color:#fff;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;
+        display:flex;align-items:center;justify-content:center;gap:8px">
+        ${modeIcon} Iniciar Simulado ${modoLabel}
+      </button>
+      <button onclick="voltarParaModos()" style="
+        width:100%;padding:11px;margin-top:8px;border-radius:12px;border:1px solid var(--border);
+        background:transparent;color:var(--text2);font-family:var(--font);font-size:13px;cursor:pointer">
+        ← Trocar vestibular
+      </button>
+    </div>`;
+}
+
+function voltarParaModos() {
+  const container = document.getElementById('sim-cards-container');
+  if (container) container.innerHTML = '';
+  const picker = document.getElementById('sim-vest-picker');
+  if (picker && simModoAtual) picker.style.display = 'block';
+}
+
+function iniciarSimuladoNovo(vestKey, modo) {
+  const cfg = simConfig[vestKey];
+  if (!cfg) return;
+  const qs   = modo === 'simples' ? Math.ceil(cfg.qs / 2) : cfg.qs;
+  const mins = modo === 'simples' ? Math.ceil(cfg.horas * 60 / 2) : cfg.horas * 60;
+
+  const vestMap  = { ENEM:'ENEM', MACRO:'MACRO', PSC1:'PSC', PSC2:'PSC', PSC3:'PSC', SIS1:'SIS', SIS2:'SIS', SIS3:'SIS' };
+  const etapaMap = { PSC1:1, PSC2:2, PSC3:3, SIS1:1, SIS2:2, SIS3:3 };
+  const vestNome = vestMap[vestKey];
+  const etapa    = etapaMap[vestKey];
+
+  let pool = bancoDB.filter(q => q.vest === vestNome && q.opcoes && q.opcoes.length > 0);
+  if (etapa) pool = pool.filter(q => !q.etapa || q.etapa === etapa);
+  const embaralhadas = pool.sort(() => Math.random() - 0.5).slice(0, qs);
+  if (!embaralhadas.length) { showXPToast('⚠️ Banco de questões insuficiente'); return; }
+
+  const questoes = embaralhadas.map(q => ({
+    q: q.enunciado, opts: q.opcoes, correct: q.correta,
+    explanation: q.contexto || `Gabarito: ${q.gabarito}`, materia: q.materia, id: q.id
+  }));
+  const modoLabel = modo === 'simples' ? 'Simples' : 'Completo';
+  currentQuiz = {
+    title: `${cfg.label} — Simulado ${modoLabel}`,
+    desc: `${modo === 'simples' ? '⚡' : '🏆'} Simulado ${modoLabel} • ${qs} questões • ${mins >= 60 ? (mins/60).toFixed(1).replace('.0','')+'h' : mins+'min'} cronometrado`,
+    video: null, questions: questoes
+  };
+  currentQuizIdx = 0; quizCorrect = 0; isSimulado = true;
+  document.getElementById('aula-title').textContent = currentQuiz.title;
+  document.getElementById('aula-content').innerHTML = `
+    <div class="topic-desc">${currentQuiz.desc}</div>
+    <div class="quiz-title-bar">
+      <span class="quiz-badge" style="background:${cfg.cor};color:${cfg.corNum}">${cfg.emoji} ${cfg.label}</span>
+      <span class="quiz-progress-text">0 / ${questoes.length} questões</span>
+    </div>
+    <div id="quiz-area"></div>`;
+  document.getElementById('aula-view').classList.add('open');
+  iniciarCronometro(mins * 60);
+  renderQuestion();
+}
+
+function pratAba(aba) {
+  pratAbaAtual = aba;
+  const btnSim = document.getElementById('pratab-sim');
+  const btnEx = document.getElementById('pratab-ex');
+  const panelSim = document.getElementById('prat-sim-panel');
+  const panelEx = document.getElementById('prat-ex-panel');
+  if (!btnSim) return;
+
+  const isSim = aba === 'sim';
+  btnSim.style.borderColor = isSim ? 'var(--border-accent)' : 'var(--border)';
+  btnSim.style.background  = isSim ? 'rgba(59,130,246,0.1)' : 'var(--surface)';
+  btnSim.style.color        = isSim ? 'var(--accent2)'       : 'var(--text2)';
+  btnEx.style.borderColor  = !isSim ? 'rgba(245,158,11,0.4)' : 'var(--border)';
+  btnEx.style.background   = !isSim ? 'rgba(245,158,11,0.08)' : 'var(--surface)';
+  btnEx.style.color         = !isSim ? 'var(--gold)'          : 'var(--text2)';
+  if (panelSim) panelSim.style.display = isSim ? 'block' : 'none';
+  if (panelEx)  panelEx.style.display  = !isSim ? 'block' : 'none';
+
+  if (!isSim) renderListaEx();
+}
+
+// ─── SIMULADOS POR VESTIBULAR ───
+const catalogoSimulados = {
+  ENEM: [
+    { id:'enem-s1', num:1, emoji:'🧮', titulo:'Álgebra & Funções', sub:'Funções, equações, PA/PG', temas:['Funções','Equações','PA/PG','Matrizes'], tempo:45, qs:10,
+      cor:'rgba(34,197,94,0.12)', corBorda:'rgba(34,197,94,0.3)', corNum:'#22c55e',
+      tags:[{txt:'Funções',c:'rgba(34,197,94,0.15)',tc:'#22c55e'},{txt:'Álgebra',c:'rgba(59,130,246,0.1)',tc:'var(--accent2)'}],
+      filtro: q => q.vest==='ENEM' && ['Função afim','Função quadrática','PA','PG','Matrizes','Sistemas lineares','Funções'].some(t => q.contexto&&q.contexto.includes(t)) },
+    { id:'enem-s2', num:2, emoji:'📐', titulo:'Geometria Completa', sub:'Plana, espacial e analítica', temas:['Geometria'], tempo:45, qs:10,
+      cor:'rgba(59,130,246,0.1)', corBorda:'rgba(59,130,246,0.25)', corNum:'var(--accent2)',
+      tags:[{txt:'Geometria',c:'rgba(59,130,246,0.1)',tc:'var(--accent2)'},{txt:'Espacial',c:'rgba(139,92,246,0.1)',tc:'var(--violet)'}],
+      filtro: q => q.vest==='ENEM' && q.contexto && q.contexto.toLowerCase().includes('geometr') },
+    { id:'enem-s3', num:3, emoji:'🎲', titulo:'Estatística & Prob.', sub:'Probabilidade, combinatória, média', temas:['Prob','Estat','Combinatória'], tempo:40, qs:10,
+      cor:'rgba(244,168,51,0.1)', corBorda:'rgba(244,168,51,0.25)', corNum:'var(--gold)',
+      tags:[{txt:'Probabilidade',c:'rgba(244,168,51,0.1)',tc:'var(--gold)'},{txt:'Estatística',c:'rgba(239,68,68,0.1)',tc:'var(--red)'}],
+      filtro: q => q.vest==='ENEM' && q.contexto && (q.contexto.includes('Probabilidade')||q.contexto.includes('Estatística')||q.contexto.includes('Combinação')||q.contexto.includes('mbinação')) },
+    { id:'enem-s4', num:4, emoji:'🔥', titulo:'Simulado Completo', sub:'Todos os temas — nível avançado', temas:['Todos'], tempo:90, qs:15,
+      cor:'rgba(239,68,68,0.1)', corBorda:'rgba(239,68,68,0.25)', corNum:'var(--red)',
+      tags:[{txt:'Completo',c:'rgba(239,68,68,0.1)',tc:'var(--red)'},{txt:'Avançado',c:'rgba(139,92,246,0.1)',tc:'var(--violet)'}],
+      filtro: q => q.vest==='ENEM' },
+  ],
+  MACRO: [
+    { id:'macro-s1', num:1, emoji:'🔢', titulo:'Álgebra Avançada', sub:'Log, exp, polinômios, sistemas', tempo:45, qs:10,
+      cor:'rgba(239,68,68,0.1)', corBorda:'rgba(239,68,68,0.25)', corNum:'var(--red)',
+      tags:[{txt:'Logaritmos',c:'rgba(239,68,68,0.1)',tc:'var(--red)'},{txt:'Exponenciais',c:'rgba(244,168,51,0.1)',tc:'var(--gold)'}],
+      filtro: q => q.vest==='MACRO' && q.contexto && (q.contexto.includes('Logarit')||q.contexto.includes('exponencial')||q.contexto.includes('Polinôm')) },
+    { id:'macro-s2', num:2, emoji:'📊', titulo:'Geometria & Trigon.', sub:'Geometria espacial, trigonometria', tempo:45, qs:10,
+      cor:'rgba(59,130,246,0.1)', corBorda:'rgba(59,130,246,0.25)', corNum:'var(--accent2)',
+      tags:[{txt:'Geometria',c:'rgba(59,130,246,0.1)',tc:'var(--accent2)'},{txt:'Trigonometria',c:'rgba(139,92,246,0.1)',tc:'var(--violet)'}],
+      filtro: q => q.vest==='MACRO' && q.contexto && (q.contexto.toLowerCase().includes('geometr')||q.contexto.includes('rigonometr')) },
+    { id:'macro-s3', num:3, emoji:'🧩', titulo:'Matrizes & Combinat.', sub:'Matrizes, determinantes, combinatória', tempo:40, qs:10,
+      cor:'rgba(139,92,246,0.1)', corBorda:'rgba(139,92,246,0.25)', corNum:'var(--violet)',
+      tags:[{txt:'Matrizes',c:'rgba(139,92,246,0.1)',tc:'var(--violet)'},{txt:'Combinatória',c:'rgba(34,197,94,0.1)',tc:'#22c55e'}],
+      filtro: q => q.vest==='MACRO' && q.contexto && (q.contexto.includes('Matr')||q.contexto.includes('eterminant')||q.contexto.includes('ombinação')||q.contexto.includes('Probabilidade')) },
+    { id:'macro-s4', num:4, emoji:'🏆', titulo:'Simulado Gabarito', sub:'Todos os anos — alta dificuldade', tempo:90, qs:15,
+      cor:'rgba(244,168,51,0.12)', corBorda:'rgba(244,168,51,0.3)', corNum:'var(--gold)',
+      tags:[{txt:'Completo',c:'rgba(244,168,51,0.1)',tc:'var(--gold)'},{txt:'Difícil',c:'rgba(239,68,68,0.1)',tc:'var(--red)'}],
+      filtro: q => q.vest==='MACRO' },
+  ],
+  PSC1: [
+    { id:'psc1-s1', num:1, emoji:'🔢', titulo:'Operações & Frações', sub:'Cálculo básico, porcentagem, razão', tempo:30, qs:10,
+      cor:'rgba(59,130,246,0.1)', corBorda:'rgba(59,130,246,0.25)', corNum:'var(--accent2)',
+      tags:[{txt:'Aritmética',c:'rgba(59,130,246,0.1)',tc:'var(--accent2)'},{txt:'Porcentagem',c:'rgba(34,197,94,0.1)',tc:'#22c55e'}],
+      filtro: q => q.vest==='PSC' && q.etapa===1 && q.contexto && (q.contexto.includes('Porcentagem')||q.contexto.includes('Fração')||q.contexto.includes('Divisão')||q.contexto.includes('Regra de três')) },
+    { id:'psc1-s2', num:2, emoji:'📐', titulo:'Geometria Plana', sub:'Áreas, perímetros, Pitágoras', tempo:30, qs:10,
+      cor:'rgba(139,92,246,0.1)', corBorda:'rgba(139,92,246,0.25)', corNum:'var(--violet)',
+      tags:[{txt:'Geometria',c:'rgba(139,92,246,0.1)',tc:'var(--violet)'},{txt:'Pitágoras',c:'rgba(59,130,246,0.1)',tc:'var(--accent2)'}],
+      filtro: q => q.vest==='PSC' && q.etapa===1 && q.contexto && (q.contexto.toLowerCase().includes('geometr')||q.contexto.includes('itágoras')||q.contexto.includes('ângulo')) },
+    { id:'psc1-s3', num:3, emoji:'🔡', titulo:'Equações & Álgebra', sub:'1º e 2º grau, produtos notáveis', tempo:30, qs:10,
+      cor:'rgba(244,168,51,0.1)', corBorda:'rgba(244,168,51,0.25)', corNum:'var(--gold)',
+      tags:[{txt:'Equações',c:'rgba(244,168,51,0.1)',tc:'var(--gold)'},{txt:'Álgebra',c:'rgba(59,130,246,0.1)',tc:'var(--accent2)'}],
+      filtro: q => q.vest==='PSC' && q.etapa===1 && q.contexto && (q.contexto.includes('quação')||q.contexto.includes('Função')||q.contexto.includes('produto')) },
+    { id:'psc1-s4', num:4, emoji:'🎯', titulo:'Simulado PSC 1 Completo', sub:'Todos os temas do 1º ano', tempo:60, qs:10,
+      cor:'rgba(34,197,94,0.1)', corBorda:'rgba(34,197,94,0.25)', corNum:'#22c55e',
+      tags:[{txt:'PSC 1ª Etapa',c:'rgba(34,197,94,0.1)',tc:'#22c55e'},{txt:'Completo',c:'rgba(59,130,246,0.1)',tc:'var(--accent2)'}],
+      filtro: q => q.vest==='PSC' && q.etapa===1 },
+  ],
+  PSC2: [
+    { id:'psc2-s1', num:1, emoji:'📊', titulo:'Trig. & Funções', sub:'Trigonometria, funções exponenciais', tempo:35, qs:10,
+      cor:'rgba(59,130,246,0.1)', corBorda:'rgba(59,130,246,0.25)', corNum:'var(--accent2)',
+      tags:[{txt:'Trigonometria',c:'rgba(59,130,246,0.1)',tc:'var(--accent2)'},{txt:'Funções',c:'rgba(139,92,246,0.1)',tc:'var(--violet)'}],
+      filtro: q => q.vest==='PSC' && q.etapa===2 && q.contexto && (q.contexto.includes('rigonometr')||q.contexto.includes('Função')||q.contexto.includes('xponencial')) },
+    { id:'psc2-s2', num:2, emoji:'🔷', titulo:'Geometria Espacial', sub:'Volumes, áreas de sólidos', tempo:35, qs:10,
+      cor:'rgba(139,92,246,0.1)', corBorda:'rgba(139,92,246,0.25)', corNum:'var(--violet)',
+      tags:[{txt:'Espacial',c:'rgba(139,92,246,0.1)',tc:'var(--violet)'},{txt:'Volumes',c:'rgba(34,197,94,0.1)',tc:'#22c55e'}],
+      filtro: q => q.vest==='PSC' && q.etapa===2 && q.contexto && (q.contexto.includes('spacial')||q.contexto.includes('Volume')||q.contexto.includes('pirâmide')||q.contexto.includes('ilindro')) },
+    { id:'psc2-s3', num:3, emoji:'🧮', titulo:'Matrizes & Sistemas', sub:'Matrizes, determinantes, sistemas', tempo:35, qs:10,
+      cor:'rgba(244,168,51,0.1)', corBorda:'rgba(244,168,51,0.25)', corNum:'var(--gold)',
+      tags:[{txt:'Matrizes',c:'rgba(244,168,51,0.1)',tc:'var(--gold)'},{txt:'Sistemas',c:'rgba(239,68,68,0.1)',tc:'var(--red)'}],
+      filtro: q => q.vest==='PSC' && q.etapa===2 && q.contexto && (q.contexto.includes('Matr')||q.contexto.includes('eterminant')||q.contexto.includes('istemas')) },
+    { id:'psc2-s4', num:4, emoji:'🎯', titulo:'Simulado PSC 2 Completo', sub:'Todos os temas do 2º ano', tempo:60, qs:10,
+      cor:'rgba(239,68,68,0.1)', corBorda:'rgba(239,68,68,0.25)', corNum:'var(--red)',
+      tags:[{txt:'PSC 2ª Etapa',c:'rgba(239,68,68,0.1)',tc:'var(--red)'},{txt:'Completo',c:'rgba(59,130,246,0.1)',tc:'var(--accent2)'}],
+      filtro: q => q.vest==='PSC' && q.etapa===2 },
+  ],
+  PSC3: [
+    { id:'psc3-s1', num:1, emoji:'📈', titulo:'Log., Exp. & Cônicas', sub:'Logaritmos, cônicas, números complexos', tempo:45, qs:10,
+      cor:'rgba(34,197,94,0.1)', corBorda:'rgba(34,197,94,0.25)', corNum:'#22c55e',
+      tags:[{txt:'Logaritmos',c:'rgba(34,197,94,0.1)',tc:'#22c55e'},{txt:'Cônicas',c:'rgba(59,130,246,0.1)',tc:'var(--accent2)'}],
+      filtro: q => q.vest==='PSC' && q.etapa===3 && q.contexto && (q.contexto.includes('Logarit')||q.contexto.includes('ônica')||q.contexto.includes('complexo')) },
+    { id:'psc3-s2', num:2, emoji:'🎲', titulo:'Combinatória & Prob.', sub:'Combinações, arranjos, probabilidade', tempo:40, qs:10,
+      cor:'rgba(244,168,51,0.1)', corBorda:'rgba(244,168,51,0.25)', corNum:'var(--gold)',
+      tags:[{txt:'Combinatória',c:'rgba(244,168,51,0.1)',tc:'var(--gold)'},{txt:'Probabilidade',c:'rgba(239,68,68,0.1)',tc:'var(--red)'}],
+      filtro: q => q.vest==='PSC' && q.etapa===3 && q.contexto && (q.contexto.includes('Combinação')||q.contexto.includes('Arranjo')||q.contexto.includes('Probabilidade')||q.contexto.includes('Permutação')) },
+    { id:'psc3-s3', num:3, emoji:'📊', titulo:'Geometria Analítica', sub:'Pontos, retas, circunferências', tempo:45, qs:10,
+      cor:'rgba(139,92,246,0.1)', corBorda:'rgba(139,92,246,0.25)', corNum:'var(--violet)',
+      tags:[{txt:'Geo. Analítica',c:'rgba(139,92,246,0.1)',tc:'var(--violet)'},{txt:'Circunferências',c:'rgba(59,130,246,0.1)',tc:'var(--accent2)'}],
+      filtro: q => q.vest==='PSC' && q.etapa===3 && q.contexto && q.contexto.includes('analítica') },
+    { id:'psc3-s4', num:4, emoji:'🏆', titulo:'Simulado PSC 3 Completo', sub:'Alta dificuldade — todos os temas', tempo:60, qs:10,
+      cor:'rgba(239,68,68,0.1)', corBorda:'rgba(239,68,68,0.25)', corNum:'var(--red)',
+      tags:[{txt:'PSC 3ª Etapa',c:'rgba(239,68,68,0.1)',tc:'var(--red)'},{txt:'Avançado',c:'rgba(139,92,246,0.1)',tc:'var(--violet)'}],
+      filtro: q => q.vest==='PSC' && q.etapa===3 },
+  ],
+  SIS1: [
+    { id:'sis1-s1', num:1, emoji:'🔢', titulo:'Álgebra & Funções', sub:'Funções, equações, sequências', tempo:40, qs:10,
+      cor:'rgba(245,158,11,0.1)', corBorda:'rgba(245,158,11,0.25)', corNum:'var(--amber)',
+      tags:[{txt:'Funções',c:'rgba(245,158,11,0.1)',tc:'var(--amber)'},{txt:'Álgebra',c:'rgba(59,130,246,0.1)',tc:'var(--accent2)'}],
+      filtro: q => q.vest==='SIS' && q.etapa===1 && q.contexto && (q.contexto.includes('Função')||q.contexto.includes('quação')||q.contexto.includes('Polinôm')) },
+    { id:'sis1-s2', num:2, emoji:'📐', titulo:'Geometria & Trigon.', sub:'Plana, espacial, trigonometria', tempo:40, qs:10,
+      cor:'rgba(59,130,246,0.1)', corBorda:'rgba(59,130,246,0.25)', corNum:'var(--accent2)',
+      tags:[{txt:'Geometria',c:'rgba(59,130,246,0.1)',tc:'var(--accent2)'},{txt:'Trigonometria',c:'rgba(139,92,246,0.1)',tc:'var(--violet)'}],
+      filtro: q => q.vest==='SIS' && q.etapa===1 && q.contexto && (q.contexto.toLowerCase().includes('geometr')||q.contexto.includes('rigonometr')) },
+    { id:'sis1-s3', num:3, emoji:'🧮', titulo:'Matrizes & Log.', sub:'Matrizes, determinantes, logaritmos', tempo:40, qs:10,
+      cor:'rgba(139,92,246,0.1)', corBorda:'rgba(139,92,246,0.25)', corNum:'var(--violet)',
+      tags:[{txt:'Matrizes',c:'rgba(139,92,246,0.1)',tc:'var(--violet)'},{txt:'Logaritmos',c:'rgba(34,197,94,0.1)',tc:'#22c55e'}],
+      filtro: q => q.vest==='SIS' && q.etapa===1 && q.contexto && (q.contexto.includes('Matr')||q.contexto.includes('eterminant')||q.contexto.includes('Logarit')) },
+    { id:'sis1-s4', num:4, emoji:'🏆', titulo:'Simulado SIS 1 Completo', sub:'Todos os temas — nível universitário', tempo:90, qs:15,
+      cor:'rgba(245,158,11,0.12)', corBorda:'rgba(245,158,11,0.3)', corNum:'var(--amber)',
+      tags:[{txt:'SIS 1ª Etapa',c:'rgba(245,158,11,0.1)',tc:'var(--amber)'},{txt:'Completo',c:'rgba(59,130,246,0.1)',tc:'var(--accent2)'}],
+      filtro: q => q.vest==='SIS' && q.etapa===1 },
+  ],
+  SIS2: [
+    { id:'sis2-s1', num:1, emoji:'📈', titulo:'Cálculo & Análise', sub:'Limites, derivadas, integrais', tempo:45, qs:10,
+      cor:'rgba(34,197,94,0.1)', corBorda:'rgba(34,197,94,0.25)', corNum:'#22c55e',
+      tags:[{txt:'Cálculo',c:'rgba(34,197,94,0.1)',tc:'#22c55e'},{txt:'Limites',c:'rgba(59,130,246,0.1)',tc:'var(--accent2)'}],
+      filtro: q => q.vest==='SIS' && q.etapa===2 && q.contexto && (q.contexto.includes('Integral')||q.contexto.includes('Limite')||q.contexto.includes('erivada')) },
+    { id:'sis2-s2', num:2, emoji:'🎲', titulo:'Probabilidade & Estat.', sub:'Distribuições, estatística', tempo:40, qs:10,
+      cor:'rgba(244,168,51,0.1)', corBorda:'rgba(244,168,51,0.25)', corNum:'var(--gold)',
+      tags:[{txt:'Probabilidade',c:'rgba(244,168,51,0.1)',tc:'var(--gold)'},{txt:'Estatística',c:'rgba(239,68,68,0.1)',tc:'var(--red)'}],
+      filtro: q => q.vest==='SIS' && q.etapa===2 && q.contexto && (q.contexto.includes('Probabilidade')||q.contexto.includes('Estatística')||q.contexto.includes('Poisson')||q.contexto.includes('Normal')) },
+    { id:'sis2-s3', num:3, emoji:'🔷', titulo:'Geo. Analítica Avançada', sub:'Cônicas, vetores, coordenadas', tempo:45, qs:10,
+      cor:'rgba(139,92,246,0.1)', corBorda:'rgba(139,92,246,0.25)', corNum:'var(--violet)',
+      tags:[{txt:'Cônicas',c:'rgba(139,92,246,0.1)',tc:'var(--violet)'},{txt:'Vetores',c:'rgba(59,130,246,0.1)',tc:'var(--accent2)'}],
+      filtro: q => q.vest==='SIS' && q.etapa===2 && q.contexto && (q.contexto.includes('ônica')||q.contexto.includes('Vetor')||q.contexto.includes('analítica')) },
+    { id:'sis2-s4', num:4, emoji:'🏆', titulo:'Simulado SIS 2 Completo', sub:'Alta complexidade — todos os temas', tempo:90, qs:15,
+      cor:'rgba(239,68,68,0.1)', corBorda:'rgba(239,68,68,0.25)', corNum:'var(--red)',
+      tags:[{txt:'SIS 2ª Etapa',c:'rgba(239,68,68,0.1)',tc:'var(--red)'},{txt:'Avançado',c:'rgba(139,92,246,0.1)',tc:'var(--violet)'}],
+      filtro: q => q.vest==='SIS' && q.etapa===2 },
+  ],
+  SIS3: [
+    { id:'sis3-s1', num:1, emoji:'∫', titulo:'Cálculo Integral', sub:'Integrais definidas e indefinidas', tempo:45, qs:10,
+      cor:'rgba(34,197,94,0.1)', corBorda:'rgba(34,197,94,0.25)', corNum:'#22c55e',
+      tags:[{txt:'Integral',c:'rgba(34,197,94,0.1)',tc:'#22c55e'},{txt:'Cálculo',c:'rgba(59,130,246,0.1)',tc:'var(--accent2)'}],
+      filtro: q => q.vest==='SIS' && q.etapa===3 && q.contexto && q.contexto.includes('Integral') },
+    { id:'sis3-s2', num:2, emoji:'📊', titulo:'Estatística Avançada', sub:'Distribuições de probabilidade', tempo:40, qs:10,
+      cor:'rgba(244,168,51,0.1)', corBorda:'rgba(244,168,51,0.25)', corNum:'var(--gold)',
+      tags:[{txt:'Distribuições',c:'rgba(244,168,51,0.1)',tc:'var(--gold)'},{txt:'Inferência',c:'rgba(139,92,246,0.1)',tc:'var(--violet)'}],
+      filtro: q => q.vest==='SIS' && q.etapa===3 && q.contexto && (q.contexto.includes('Estatística')||q.contexto.includes('Probabilidade')||q.contexto.includes('Poisson')) },
+    { id:'sis3-s3', num:3, emoji:'🔢', titulo:'Álgebra Superior', sub:'Álgebra linear, transformações', tempo:45, qs:10,
+      cor:'rgba(139,92,246,0.1)', corBorda:'rgba(139,92,246,0.25)', corNum:'var(--violet)',
+      tags:[{txt:'Álgebra Linear',c:'rgba(139,92,246,0.1)',tc:'var(--violet)'},{txt:'Matrizes',c:'rgba(59,130,246,0.1)',tc:'var(--accent2)'}],
+      filtro: q => q.vest==='SIS' && q.etapa===3 && q.contexto && (q.contexto.includes('Matr')||q.contexto.includes('Sistema')||q.contexto.includes('Polinôm')) },
+    { id:'sis3-s4', num:4, emoji:'🏆', titulo:'Simulado SIS 3 Completo', sub:'Nível máximo — todas as áreas', tempo:90, qs:15,
+      cor:'rgba(239,68,68,0.1)', corBorda:'rgba(239,68,68,0.25)', corNum:'var(--red)',
+      tags:[{txt:'SIS 3ª Etapa',c:'rgba(239,68,68,0.1)',tc:'var(--red)'},{txt:'Máximo',c:'rgba(244,168,51,0.1)',tc:'var(--gold)'}],
+      filtro: q => q.vest==='SIS' && q.etapa===3 },
+  ],
+};
+
+function simVestAba(vest, el) {
+  simVestAtual = vest;
+  document.querySelectorAll('#sim-vest-tabs .sim-vest-btn').forEach(b => b.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderSimCards();
+}
+
+function renderSimCards() {
+  const container = document.getElementById('sim-cards-container');
+  if (!container) return;
+  const lista = catalogoSimulados[simVestAtual] || [];
+  container.innerHTML = lista.map((s, idx) => {
+    const pool = bancoDB.filter(s.filtro);
+    const n = pool.length;
+    const disponivel = n >= s.qs;
+    const dificLabel = idx === 0 ? '🟢 Fácil' : idx === 1 ? '🟡 Médio' : idx === 2 ? '🟠 Difícil' : '🔴 Completo';
+    return `<div class="sim-card" onclick="${disponivel ? `iniciarSimuladoCatalogo('${s.id}')` : "showXPToast('⚠️ Poucas questões para este simulado')"}"
+      style="border-color:${s.corBorda};${!disponivel?'opacity:0.6':''}">
+      <div class="sim-card-header">
+        <div class="sim-card-num" style="background:${s.cor};color:${s.corNum}">${s.emoji}</div>
+        <div>
+          <div class="sim-card-title">${s.titulo}</div>
+          <div class="sim-card-sub">${s.sub}</div>
+        </div>
+        <div style="margin-left:auto;color:var(--text2);font-size:20px">›</div>
+      </div>
+      <div class="sim-card-tags">
+        ${s.tags.map(t=>`<span class="sim-tag" style="background:${t.c};color:${t.tc}">${t.txt}</span>`).join('')}
+        <span class="sim-tag" style="background:rgba(255,255,255,0.05);color:var(--text2)">⏱️ ${s.tempo}min</span>
+        <span class="sim-tag" style="background:rgba(255,255,255,0.05);color:var(--text2)">${s.qs} questões</span>
+        <span class="sim-tag" style="background:rgba(255,255,255,0.05);color:var(--text2)">${dificLabel}</span>
+        <span class="sim-tag" style="background:rgba(255,255,255,0.05);color:var(--text2)">📚 ${n} no banco</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function iniciarSimuladoCatalogo(id) {
+  const vest = simVestAtual;
+  const sim = (catalogoSimulados[vest]||[]).find(s => s.id === id);
+  if (!sim) return;
+  let pool = bancoDB.filter(sim.filtro);
+  if (pool.length < 1) { showXPToast('⚠️ Sem questões disponíveis'); return; }
+  // Embaralha e pega até sim.qs
+  pool = pool.sort(() => Math.random()-0.5).slice(0, sim.qs);
+  const qs = pool.map(q => ({
+    q: q.enunciado, opts: q.opcoes, correct: q.correta,
+    explanation: q.contexto || `Gabarito: ${q.gabarito}`, materia: q.materia, id: q.id
+  }));
+  currentQuiz = { title: `${vest} — ${sim.titulo}`, desc: `Simulado cronometrado. ${sim.tempo} minutos. ${sim.sub}.`, video: null, questions: qs };
+  currentQuizIdx = 0; quizCorrect = 0; isSimulado = true;
+  document.getElementById('aula-title').textContent = currentQuiz.title;
+  document.getElementById('aula-content').innerHTML = `
+    <div class="topic-desc">${currentQuiz.desc}</div>
+    <div class="quiz-title-bar">
+      <span class="quiz-badge" style="background:${sim.cor};color:${sim.corNum}">🎯 Simulado</span>
+      <span class="quiz-progress-text">0 / ${qs.length} questões</span>
+    </div>
+    <div id="quiz-area"></div>`;
+  document.getElementById('aula-view').classList.add('open');
+  iniciarCronometro(sim.tempo * 60);
+  renderQuestion();
+}
+
+// Manter compatibilidade com chamadas antigas
+function abrirModalSimulado() { goTo('praticar'); pratAba('sim'); }
+function fecharModalSimulado() {}
+
+// ─── EXERCÍCIOS — LISTA 10 QUESTÕES ───
+let exVestAtualLista = 'ENEM';
+
+function exVestFiltro(vest, el) {
+  exVestAtualLista = vest;
+  document.querySelectorAll('#prat-ex-panel .sim-vest-btn').forEach(b => b.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderListaEx();
+}
+
+// Mapa simples de dificuldade por tema (contexto) — quanto mais avançado o tema, mais difícil
+function getDificuldade(q) {
+  const ctx = (q.contexto||'').toLowerCase();
+  const enun = (q.enunciado||'').toLowerCase();
+  // Mais difíceis: cálculo, cônicas, números complexos, poisson, matrizes 3x3, integral, limite
+  if (['integral','derivada','limite','cônica','complexo','poisson','normal','homotetia','binômio de newton','equação da circunferência'].some(t=>ctx.includes(t))) return 4;
+  // Difíceis: combinatória, logaritmo, trigonometria completa, probabilidade condicional, geo analítica
+  if (['combinação','permutação','arranjo','logarit','trigonometr','geo. analítica','analítica','probabilidade','pg infinita','inequação modular'].some(t=>ctx.includes(t))) return 3;
+  // Médios: funções, PA/PG, matrizes simples, geometria espacial, porcentagem composta
+  if (['função quadrática','função afim','pa','pg','matrizes','sistemas lineares','espacial','porcentagem','juros'].some(t=>ctx.includes(t))) return 2;
+  // Fáceis: aritmética básica, conjuntos, frações, geometria plana simples
+  return 1;
+}
+
+function renderListaEx() {
+  const container = document.getElementById('ex-lista-10');
+  const info = document.getElementById('ex-lista-info');
+  if (!container) return;
+
+  const vest = exVestAtualLista;
+  let pool;
+  if (vest === 'PSC') {
+    pool = bancoDB.filter(q => q.vest === 'PSC' && q.opcoes.length > 0);
+  } else if (vest === 'SIS') {
+    pool = bancoDB.filter(q => q.vest === 'SIS' && q.opcoes.length > 0);
+  } else {
+    pool = bancoDB.filter(q => q.vest === vest && q.opcoes.length > 0);
+  }
+
+  if (!pool.length) {
+    container.innerHTML = `<div style="text-align:center;color:var(--text2);padding:32px;font-size:14px">Nenhuma questão disponível para ${vest}.</div>`;
+    return;
+  }
+
+  // Ordenar por dificuldade crescente, com aleatoriedade dentro de cada nível
+  pool = pool.map(q => ({...q, _dif: getDificuldade(q)}));
+  // Pega ao menos 2-3 de cada nível quando possível
+  const niveis = [1,2,3,4];
+  let selecionadas = [];
+  const porNivel = niveis.map(n => pool.filter(q=>q._dif===n).sort(()=>Math.random()-0.5));
+  // Distribuição: 3 fáceis, 3 médias, 2 difíceis, 2 muito difíceis
+  const dist = [3,3,2,2];
+  niveis.forEach((n, i) => {
+    const lvl = porNivel[i];
+    selecionadas.push(...lvl.slice(0, dist[i]));
+  });
+  // Se ficaram menos de 10, pega mais do pool embaralhado
+  if (selecionadas.length < 10) {
+    const ids = new Set(selecionadas.map(q=>q.id));
+    const extras = pool.filter(q=>!ids.has(q.id)).sort(()=>Math.random()-0.5);
+    selecionadas.push(...extras.slice(0, 10 - selecionadas.length));
+  }
+  selecionadas = selecionadas.slice(0, 10);
+  // Ordenar finalmente por dificuldade
+  selecionadas.sort((a,b) => a._dif - b._dif);
+
+  if (info) info.textContent = `${selecionadas.length} questões de ${vest} • do mais fácil ao mais difícil`;
+
+  const difIcons = ['','🟢','🟡','🟠','🔴'];
+  const difLabels = ['','Fácil','Médio','Difícil','Avançado'];
+  const difColors = ['','rgba(34,197,94,0.15)','rgba(245,158,11,0.15)','rgba(239,68,68,0.1)','rgba(139,92,246,0.15)'];
+  const difTxtColors = ['','#22c55e','var(--amber)','var(--red)','var(--violet)'];
+
+  container.innerHTML = selecionadas.map((q, i) => {
+    const dif = q._dif || 1;
+    const tema = q.contexto ? q.contexto.split('—')[0].replace('Tema:','').trim() : 'Matemática';
+    return `<div class="ex-lista-item" onclick="abrirExercicio('${q.id}')">
+      <div class="ex-dif-badge" style="background:${difColors[dif]};color:${difTxtColors[dif]}">${difIcons[dif]}</div>
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;flex-wrap:wrap">
+          <span style="font-size:10px;font-weight:700;color:${difTxtColors[dif]}">${difLabels[dif]}</span>
+          <span style="font-size:10px;color:var(--text2);background:var(--surface2);padding:2px 6px;border-radius:4px">${q.vest}${q.etapa?' E'+q.etapa:''} ${q.ano}</span>
+          <span style="font-size:10px;color:var(--text2)">${tema.slice(0,25)}</span>
+        </div>
+        <div style="font-size:13px;color:var(--text);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${q.enunciado}</div>
+      </div>
+      <div style="color:var(--text2);font-size:18px;flex-shrink:0">›</div>
+    </div>`;
+  }).join('');
+}
+
+function atualizarListaEx() {
+  renderListaEx();
+  showXPToast('🔄 Lista atualizada!');
+}
+
+// ─── EXERCÍCIOS ESTILO DUOLINGO (mantido para o botão Exercícios do nav) ───
 let temasFragos = JSON.parse(localStorage.getItem('temasFragos') || '{}');
 let questoesUsadas = JSON.parse(localStorage.getItem('questoesUsadas') || '{}');
 let exMateriaAtual = 'Matemática';
@@ -6685,19 +7201,14 @@ function goTo(screen) {
   document.getElementById('nav-' + screen)?.classList.add('active');
   if (screen === 'materia') renderTopics();
   if (screen === 'perfil') renderPerfil();
+  if (screen === 'praticar') {
+    renderSimCards();
+    pratAba('sim');
+  }
 }
 
-// ─── MODAL SIMULADO ───
-function abrirModalSimulado() {
-  const m = document.getElementById('modal-simulado');
-  m.style.display = 'flex';
-}
-function fecharModalSimulado() {
-  document.getElementById('modal-simulado').style.display = 'none';
-}
-// Mantém compatibilidade com código antigo
-function escolherEtapaSimulado(vest) { abrirModalSimulado(); }
-function fecharModalEtapa() { fecharModalSimulado(); }
+// ─── MODAL SIMULADO (compatibilidade) ───
+// já redefinido acima no bloco PRATICAR — ABAS
 
 // ─── EXERCÍCIOS ESTILO DUOLINGO ───
 let exTabAtual = 'Matemática';
