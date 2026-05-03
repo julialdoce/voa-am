@@ -263,7 +263,7 @@ body {
   .action-cards .action-card:last-child { grid-column: span 2; }
 
   /* Conteúdo principal com max-width confortável mas usando espaço */
-  .home-hero, .materia-screen, .vest-screen, .corretor-screen,
+  .home-hero, .materia-screen, .vest-screen, .corretor-screen, .provas-screen,
   .treino-screen, .progress-card, .vestibulares-row, .action-cards,
   .streak-banner, .section-title, .coracoes-bar, .bloqueado-banner {
     max-width: none;
@@ -1440,6 +1440,122 @@ body {
    MOBILE FIRST — Desktop tweaks
 ═══════════════════════════════════════════ */
 
+
+/* ═══════════════════════════════════════════
+   PROVAS SCREEN
+═══════════════════════════════════════════ */
+.provas-screen {
+  padding: 22px 20px 0;
+}
+.provas-screen-title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 900;
+  font-style: italic;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.provas-screen-sub {
+  font-size: 13px;
+  color: var(--text2);
+  margin-bottom: 20px;
+}
+.provas-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.provas-tab {
+  flex: 1;
+  padding: 10px 6px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text2);
+  font-family: var(--font);
+  transition: all var(--transition);
+}
+.provas-tab span {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 3px;
+}
+.provas-tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.provas-year-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+}
+.provas-year-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.provas-year-label {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text);
+}
+.provas-links {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.provas-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 11px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--font);
+  text-decoration: none;
+  transition: all var(--transition);
+}
+.provas-link-prova {
+  background: rgba(59,130,246,0.1);
+  color: var(--accent2);
+  border: 1px solid var(--border-accent);
+}
+.provas-link-prova:hover { background: rgba(59,130,246,0.18); }
+.provas-link-gabarito {
+  background: rgba(16,185,129,0.1);
+  color: var(--emerald);
+  border: 1px solid rgba(16,185,129,0.25);
+}
+.provas-link-gabarito:hover { background: rgba(16,185,129,0.18); }
+.provas-year-body {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.provas-subrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.provas-sublabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text2);
+  min-width: 56px;
+  flex-shrink: 0;
+}
 
 /* ═══════════════════════════════════════════
    SCROLLBAR
