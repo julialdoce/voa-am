@@ -7193,6 +7193,16 @@ const bancoDB = [
 ];
 
 
+// ─── PROVAS ABAS ───
+function provasAba(aba) {
+  ['enem', 'macro', 'psc', 'sis'].forEach(a => {
+    const tab = document.getElementById('provas-tab-' + a);
+    const panel = document.getElementById('provas-panel-' + a);
+    if (tab) tab.classList.toggle('active', a === aba);
+    if (panel) panel.style.display = a === aba ? 'block' : 'none';
+  });
+}
+
 // ─── NAVIGATION ───
 function goTo(screen) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
