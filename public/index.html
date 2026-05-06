@@ -2,7 +2,7 @@
 <html lang="pt-BR" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Voa AM — Vestibulares do Amazonas</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Fraunces:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
@@ -98,103 +98,559 @@
   flex-shrink: 0;
 }
 </style>
+
+<!-- ===== RESPONSIVO DESKTOP ===== -->
+<style>
+/* ── Auth: card centralizado no desktop ── */
+@media (min-width: 768px) {
+  #auth-wrapper {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg) !important;
+    padding: 40px 20px;
+  }
+  #auth-wrapper[style*="block"] {
+    display: flex !important;
+  }
+  .auth-screen {
+    min-height: unset !important;
+    width: 100%;
+    max-width: 480px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.25);
+  }
+  .auth-screen.auth-active { display: flex; }
+  .auth-header { padding: 40px 36px 0 !important; }
+  .auth-logo-row { margin-bottom: 28px !important; }
+  .auth-title { font-size: 32px !important; }
+  .auth-sub { margin-bottom: 24px !important; }
+  .auth-form { padding: 0 36px !important; gap: 12px !important; }
+  .auth-bottom-link { padding: 20px 36px 32px !important; }
+}
+
+/* ── App: layout desktop com sidebar ── */
+@media (min-width: 768px) {
+
+  /* Body com padding para o wrapper flutuar */
+  /* Impede rolagem do body – o scroll será interno */
+    body {
+    overflow: hidden;
+    margin: 0;          /* ← remove margens do navegador */
+    padding: 0;
+    background: var(--bg);
+  }
+
+  /* Wrapper ocupa a tela toda (com margem opcional) */
+  #app-wrapper {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    grid-template-rows: auto 1fr;
+    height: 100vh;       /* ← altura total da tela, sem descontos */
+    max-width: 1280px;
+    margin: 0 auto;      /* ← sem margens verticais, centralizado horizontalmente */
+    border-radius: 24px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+  }
+
+  /* Header ocupa largura toda no topo */
+  .header {
+    grid-column: 1 / -1;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 0 28px;
+    height: 60px;
+    border-bottom: 1px solid var(--border);
+    border-radius: 24px 24px 0 0;
+  }
+
+  /* Bottom nav vira sidebar esquerda */
+  .bottom-nav {
+    grid-column: 1;
+    grid-row: 2;
+    position: relative;   /* deixa de ser sticky */
+    height: 100%;         /* ocupa toda a altura da célula do grid */
+    width: 220px;
+    /* ... mantenha as demais propriedades (padding, border-right, etc.) */
+  }
+
+  .nav-btn {
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    gap: 12px;
+    padding: 12px 14px !important;
+    border-radius: 12px !important;
+    font-size: 14px !important;
+    font-weight: 600;
+    text-align: left;
+    width: 100%;
+  }
+
+  .nav-btn .nav-icon {
+    font-size: 20px;
+    min-width: 24px;
+    text-align: center;
+  }
+
+  .nav-btn.active {
+    background: rgba(59,130,246,0.12);
+    color: var(--accent2);
+  }
+
+  /* Área de conteúdo (screens) fica à direita */
+  .screen,
+  .screen.active {
+    grid-column: 2;
+    grid-row: 2;
+    width: 100%;
+    margin: 0 auto;
+    padding-bottom: 40px;
+    border-radius: 0 0 24px 0;
+    overflow-y: auto;      /* rolagem apenas aqui */
+    height: 100%;          /* respeita a altura da célula */
+  }
+
+  /* Aula view e exercícios view — sobreposição */
+  .aula-view {
+    position: fixed;
+    top: 60px;
+    left: 220px;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+  }
+
+  /* Home hero mais espaçoso */
+  .home-hero {
+    padding: 36px 32px 20px !important;
+  }
+  .home-greeting { font-size: 16px !important; }
+  .home-title { font-size: 28px !important; }
+
+  /* Cards de vestibular em grid */
+  .vest-cards-row {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  /* Progress card mais largo */
+  .progress-card {
+    margin: 0 32px 24px !important;
+  }
+
+  /* Seções com padding lateral maior */
+  .screen > div,
+  .screen > section {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  /* Quick actions grid */
+  .quick-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  /* Perfil: coluna única centralizada (igual ao mobile) */
+  #screen-perfil > div {
+    padding: 32px 24px !important;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* Toast e achievement não saem da área */
+  .xp-toast {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 72px;
+  }
+  .achievement-popup {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* Aula content padding */
+  .aula-content {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 32px !important;
+  }
+
+  /* Bloqueado view */
+  #bloqueado-view {
+    left: 220px;
+    top: 60px;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+  }
+  #bloqueado-view > div {
+    max-width: 440px;
+    margin: 0 auto;
+  }
+
+  /* Screens de matéria e praticar */
+  #screen-materia > div,
+  #screen-praticar > div,
+  #screen-vestibulares > div {
+    padding: 28px 32px !important;
+  }
+
+  /* Scrollbar elegante */
+  .bottom-nav::-webkit-scrollbar { width: 4px; }
+  .bottom-nav::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+}
+
+/* ── Breakpoint médio: tablet ── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  #app-wrapper {
+    grid-template-columns: 64px 1fr;
+    margin: 16px auto;
+  }
+  .bottom-nav {
+    width: 64px;
+    padding: 16px 8px;
+    align-items: center;
+  }
+  .nav-btn {
+    flex-direction: column !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    padding: 10px 8px !important;
+    font-size: 10px !important;
+    text-align: center;
+  }
+  .nav-btn .nav-icon { font-size: 22px; min-width: unset; }
+  .aula-view { left: 64px; }
+  #bloqueado-view { left: 64px; }
+}
+</style>
 </head>
 <body>
 
-<!-- ========== ONBOARDING ========== -->
-<div class="onboarding" id="onboarding" style="background:var(--bg)">
-  <div class="ob-logo">
-    <div class="ob-logo-icon">🚀</div>
-    <div class="ob-title">Voa<span>AM</span></div>
-    <div class="ob-sub">Vestibulares do Amazonas</div>
+<!-- ========== AUTH (LOGIN / CADASTRO) ========== -->
+<div id="auth-wrapper" style="display:none; position:fixed; inset:0; background:var(--bg); z-index:9999; overflow-y:auto; font-family:var(--font)">
+
+  <style>
+    .auth-screen { display:none; flex-direction:column; min-height:100vh; padding:0; }
+    .auth-screen.auth-active { display:flex; }
+
+    .auth-header { padding: 52px 28px 0; flex-shrink:0; }
+
+    .auth-logo-row { display:flex; align-items:center; gap:10px; margin-bottom:36px; }
+    .auth-logo-icon { width:40px; height:40px; border-radius:12px; background:linear-gradient(135deg,var(--accent),var(--violet)); display:flex; align-items:center; justify-content:center; font-size:20px; }
+    .auth-logo-text { font-family:var(--font-display); font-size:22px; font-weight:900; color:var(--text); letter-spacing:-0.5px; }
+    .auth-logo-text span { color:var(--accent); }
+
+    .auth-title { font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--text); line-height:1.2; margin-bottom:8px; }
+    .auth-sub { font-size:14px; color:var(--text2); line-height:1.5; margin-bottom:32px; }
+
+    .auth-form { padding:0 28px; flex:1; display:flex; flex-direction:column; gap:14px; }
+
+    .auth-field { display:flex; flex-direction:column; gap:6px; }
+    .auth-label { font-size:12px; font-weight:700; color:var(--text2); text-transform:uppercase; letter-spacing:0.06em; }
+    .auth-input {
+      width:100%; padding:14px 16px;
+      background:var(--surface2); border:1.5px solid var(--border);
+      border-radius:14px; color:var(--text);
+      font-family:var(--font); font-size:15px; outline:none;
+      transition:border-color 0.2s; box-sizing:border-box;
+    }
+    .auth-input::placeholder { color:var(--text2); opacity:0.6; }
+    .auth-input:focus { border-color:var(--accent); }
+
+    .auth-input-wrap { position:relative; }
+    .auth-input-wrap .auth-input { padding-right:48px; }
+    .auth-eye { position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--text2); cursor:pointer; background:none; border:none; font-size:18px; padding:0; line-height:1; }
+
+    .auth-forgot { text-align:right; font-size:13px; font-weight:600; color:var(--accent2); cursor:pointer; margin-top:-6px; }
+
+    .auth-btn-primary {
+      width:100%; padding:16px; border-radius:14px; border:none;
+      background:var(--accent); color:#fff;
+      font-family:var(--font); font-size:16px; font-weight:800;
+      cursor:pointer; margin-top:4px; transition:opacity 0.15s; letter-spacing:-0.2px;
+    }
+    .auth-btn-primary:active { opacity:0.85; }
+
+    .auth-divider { display:flex; align-items:center; gap:12px; margin:4px 0; }
+    .auth-divider-line { flex:1; height:1px; background:var(--border); }
+    .auth-divider-text { font-size:12px; color:var(--text2); font-weight:600; letter-spacing:0.05em; }
+
+    .auth-btn-google {
+      width:100%; padding:14px; border-radius:14px;
+      border:1.5px solid var(--border); background:var(--surface2); color:var(--text);
+      font-family:var(--font); font-size:15px; font-weight:700;
+      cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px;
+      transition:background 0.15s;
+    }
+    .auth-btn-google:active { background:var(--surface); }
+
+    .auth-bottom-link { padding:24px 28px 40px; text-align:center; font-size:14px; color:var(--text2); flex-shrink:0; }
+    .auth-bottom-link span { color:var(--accent2); font-weight:700; cursor:pointer; }
+
+    .auth-terms { font-size:11px; color:var(--text2); text-align:center; line-height:1.6; margin-top:2px; opacity:0.7; }
+
+    .auth-select {
+      width:100%; padding:14px 16px;
+      background:var(--surface2); border:1.5px solid var(--border);
+      border-radius:14px; color:var(--text);
+      font-family:var(--font); font-size:15px; outline:none;
+      box-sizing:border-box; appearance:none; -webkit-appearance:none; cursor:pointer;
+    }
+    .auth-select-wrap { position:relative; }
+    .auth-select-arrow { position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--text2); pointer-events:none; }
+
+    .auth-vest-row { display:flex; flex-wrap:wrap; gap:7px; }
+    .auth-vest-badge {
+      display:inline-flex; align-items:center; gap:5px;
+      padding:6px 12px; border-radius:10px; font-size:12px; font-weight:800;
+      letter-spacing:0.04em; cursor:pointer; border:1.5px solid transparent;
+      transition:all 0.15s; background:var(--surface2); color:var(--text2); border-color:var(--border);
+    }
+    .auth-vest-badge.sis { background:rgba(168,85,247,0.1); border-color:rgba(168,85,247,0.2); color:#a855f7; }
+    .auth-vest-badge.psc { background:rgba(59,130,246,0.1); border-color:rgba(59,130,246,0.2); color:#60a5fa; }
+    .auth-vest-badge.enem { background:rgba(34,197,94,0.1); border-color:rgba(34,197,94,0.2); color:#4ade80; }
+    .auth-vest-badge.macro { background:rgba(245,158,11,0.1); border-color:rgba(245,158,11,0.2); color:#fbbf24; }
+    .auth-vest-badge.vest-selected { filter:brightness(1.25); box-shadow:0 0 0 2px currentColor; }
+
+    .auth-hint { font-size:11px; color:var(--text2); margin-top:-6px; opacity:0.6; }
+
+    .auth-error { font-size:13px; color:var(--red); background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.2); border-radius:10px; padding:10px 14px; display:none; }
+  </style>
+
+  <!-- ── TELA LOGIN ── -->
+  <div class="auth-screen auth-active" id="auth-login">
+    <div class="auth-header">
+      <div class="auth-logo-row">
+        <div class="auth-logo-icon">🚀</div>
+        <div class="auth-logo-text">Voa<span>AM</span></div>
+      </div>
+      <div class="auth-title">Bem-vindo<br>de volta! 👋</div>
+      <div class="auth-sub">Acesse sua conta e continue<br>sua jornada rumo ao vestibular.</div>
+    </div>
+
+    <div class="auth-form">
+      <div id="auth-login-error" class="auth-error">E-mail ou senha inválidos. Tente novamente.</div>
+
+      <div class="auth-field">
+        <div class="auth-label">E-mail</div>
+        <input class="auth-input" id="login-email" type="email" placeholder="seu@email.com">
+      </div>
+
+      <div class="auth-field">
+        <div class="auth-label">Senha</div>
+        <div class="auth-input-wrap">
+          <input class="auth-input" id="login-senha" type="password" placeholder="••••••••">
+          <button class="auth-eye" onclick="authTogglePwd('login-senha', this)">👁</button>
+        </div>
+      </div>
+
+      <div class="auth-forgot">Esqueci minha senha</div>
+
+      <button class="auth-btn-primary" onclick="authEntrar()">Entrar na conta →</button>
+
+      <div class="auth-divider">
+        <div class="auth-divider-line"></div>
+        <div class="auth-divider-text">OU CONTINUE COM</div>
+        <div class="auth-divider-line"></div>
+      </div>
+
+      <button class="auth-btn-google" onclick="authGoogle()">
+        <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
+        Entrar com Google
+      </button>
+    </div>
+
+    <div class="auth-bottom-link">
+      Não tem conta? <span onclick="authMostrarTela('cadastro')">Criar conta grátis</span>
+    </div>
   </div>
 
-  <div class="ob-progress">
-    <div class="ob-dot active" id="dot-0"></div>
-    <div class="ob-dot" id="dot-1"></div>
-    <div class="ob-dot" id="dot-2"></div>
-    <div class="ob-dot" id="dot-3"></div>
-  </div>
+  <!-- ── TELA CADASTRO ── -->
+  <div class="auth-screen" id="auth-cadastro">
+    <div class="auth-header">
+      <div class="auth-logo-row">
+        <div class="auth-logo-icon">🚀</div>
+        <div class="auth-logo-text">Voa<span>AM</span></div>
+      </div>
+      <div class="auth-title">Crie sua conta 🎓</div>
+      <div class="auth-sub">Junte-se a milhares de estudantes<br>do Amazonas rumo ao vestibular.</div>
+    </div>
 
-  <!-- Passo 0: Nome -->
-  <div class="ob-step active" id="ob-step-0">
-    <div class="ob-step-title">Qual é o seu nome? 👋</div>
-    <div class="ob-step-sub">Vamos personalizar sua jornada de estudos</div>
-    <input class="ob-input" id="ob-nome" type="text" placeholder="Digite seu nome" oninput="obValidar(0)">
-    <button class="ob-btn" id="ob-btn-0" onclick="obProximo(1)" disabled>Continuar →</button>
-  </div>
+    <div class="auth-form">
+      <div id="auth-cad-error" class="auth-error">Preencha todos os campos obrigatórios.</div>
 
-  <!-- Passo 1: Série -->
-  <div class="ob-step" id="ob-step-1">
-    <div class="ob-step-title">Qual série você está? 📚</div>
-    <div class="ob-step-sub">Isso define o conteúdo programático do seu estudo</div>
-    <div class="ob-options">
-      <div class="ob-option" onclick="obSelecionarSerie(1, this)">
-        <span class="ob-option-icon">1️⃣</span>
-        <div><div style="font-weight:700">1ª Série</div><div style="font-size:12px;color:var(--text2)">PSC 1 • SIS 1</div></div>
+      <div class="auth-field">
+        <div class="auth-label">Nome completo</div>
+        <input class="auth-input" id="cad-nome" type="text" placeholder="Como quer ser chamado(a)?">
       </div>
-      <div class="ob-option" onclick="obSelecionarSerie(2, this)">
-        <span class="ob-option-icon">2️⃣</span>
-        <div><div style="font-weight:700">2ª Série</div><div style="font-size:12px;color:var(--text2)">PSC 2 • SIS 2</div></div>
+
+      <div class="auth-field">
+        <div class="auth-label">E-mail</div>
+        <input class="auth-input" id="cad-email" type="email" placeholder="seu@email.com">
       </div>
-      <div class="ob-option" onclick="obSelecionarSerie(3, this)">
-        <span class="ob-option-icon">3️⃣</span>
-        <div><div style="font-weight:700">3ª Série</div><div style="font-size:12px;color:var(--text2)">PSC 3 • SIS 3</div></div>
+
+      <div class="auth-field">
+        <div class="auth-label">Senha</div>
+        <div class="auth-input-wrap">
+          <input class="auth-input" id="cad-senha" type="password" placeholder="Mínimo 6 caracteres">
+          <button class="auth-eye" onclick="authTogglePwd('cad-senha', this)">👁</button>
+        </div>
       </div>
-      <div class="ob-option" onclick="obSelecionarSerie(4, this)">
-        <span class="ob-option-icon">🎓</span>
-        <div><div style="font-weight:700">Já terminei o EM</div><div style="font-size:12px;color:var(--text2)">ENEM • MACRO</div></div>
+
+      <div class="auth-field">
+        <div class="auth-label">Série</div>
+        <div class="auth-select-wrap">
+          <select class="auth-select" id="cad-serie">
+            <option value="" disabled selected>Selecione sua série</option>
+            <option value="1">1ª Série do Ensino Médio</option>
+            <option value="2">2ª Série do Ensino Médio</option>
+            <option value="3">3ª Série do Ensino Médio</option>
+            <option value="4">Já terminei o Ensino Médio</option>
+          </select>
+          <span class="auth-select-arrow">▾</span>
+        </div>
+      </div>
+
+      <div class="auth-field">
+        <div class="auth-label">Vestibulares de interesse</div>
+        <div class="auth-vest-row" id="cad-vest-row">
+          <span class="auth-vest-badge sis" onclick="authToggleVest(this,'SIS')">⭐ SIS</span>
+          <span class="auth-vest-badge psc" onclick="authToggleVest(this,'PSC')">📘 PSC</span>
+          <span class="auth-vest-badge enem" onclick="authToggleVest(this,'ENEM')">🇧🇷 ENEM</span>
+          <span class="auth-vest-badge macro" onclick="authToggleVest(this,'MACRO')">🏛️ MACRO</span>
+        </div>
+        <div class="auth-hint">Pode escolher mais de um</div>
+      </div>
+
+      <button class="auth-btn-primary" onclick="authCadastrar()">Criar conta grátis 🚀</button>
+
+      <div class="auth-divider">
+        <div class="auth-divider-line"></div>
+        <div class="auth-divider-text">OU CADASTRE COM</div>
+        <div class="auth-divider-line"></div>
+      </div>
+
+      <button class="auth-btn-google" onclick="authGoogle()">
+        <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
+        Cadastrar com Google
+      </button>
+
+      <div class="auth-terms">
+        Ao criar uma conta, você concorda com os<br>
+        <a style="color:var(--text2);text-decoration:underline;cursor:pointer">Termos de Uso</a> e a
+        <a style="color:var(--text2);text-decoration:underline;cursor:pointer">Política de Privacidade</a>.
       </div>
     </div>
-    <button class="ob-btn" id="ob-btn-1" onclick="obProximo(2)" disabled>Continuar →</button>
+
+    <div class="auth-bottom-link">
+      Já tem conta? <span onclick="authMostrarTela('login')">Entrar agora</span>
+    </div>
   </div>
 
-  <!-- Passo 2: Vestibular alvo -->
-  <div class="ob-step" id="ob-step-2">
-    <div class="ob-step-title">Qual vestibular é seu foco? 🎯</div>
-    <div class="ob-step-sub">Você pode mudar isso depois. Pode escolher mais de um!</div>
-    <div class="ob-options" id="ob-vest-opts">
-      <div class="ob-option" onclick="obSelecionarVest('SIS', this)">
-        <span class="ob-option-icon">⭐</span>
-        <div><div style="font-weight:700">SIS — UEA</div><div style="font-size:12px;color:var(--text2)">Sistema de Ingresso Seriado</div></div>
-      </div>
-      <div class="ob-option" onclick="obSelecionarVest('PSC', this)">
-        <span class="ob-option-icon">🎓</span>
-        <div><div style="font-weight:700">PSC — UFAM</div><div style="font-size:12px;color:var(--text2)">Processo Seletivo Contínuo</div></div>
-      </div>
-      <div class="ob-option" onclick="obSelecionarVest('MACRO', this)">
-        <span class="ob-option-icon">🔥</span>
-        <div><div style="font-weight:700">MACRO — UEA</div><div style="font-size:12px;color:var(--text2)">Vestibular tradicional</div></div>
-      </div>
-      <div class="ob-option" onclick="obSelecionarVest('ENEM', this)">
-        <span class="ob-option-icon">🌿</span>
-        <div><div style="font-weight:700">ENEM</div><div style="font-size:12px;color:var(--text2)">Nacional — MEC/INEP</div></div>
-      </div>
-    </div>
-    <button class="ob-btn" id="ob-btn-2" onclick="obProximo(3)" disabled>Continuar →</button>
-  </div>
-
-  <!-- Passo 3: Dificuldade -->
-  <div class="ob-step" id="ob-step-3">
-    <div class="ob-step-title">Sua maior dificuldade? 💡</div>
-    <div class="ob-step-sub">Vamos focar nisso nas suas primeiras aulas</div>
-    <div class="ob-options">
-      <div class="ob-option" onclick="obSelecionarDific('mat', this)">
-        <span class="ob-option-icon">📐</span>
-        <div><div style="font-weight:700">Matemática</div><div style="font-size:12px;color:var(--text2)">Cálculos, funções, geometria...</div></div>
-      </div>
-      <div class="ob-option" onclick="obSelecionarDific('red', this)">
-        <span class="ob-option-icon">✍️</span>
-        <div><div style="font-weight:700">Redação</div><div style="font-size:12px;color:var(--text2)">Argumentação, estrutura...</div></div>
-      </div>
-      <div class="ob-option" onclick="obSelecionarDific('ambos', this)">
-        <span class="ob-option-icon">💪</span>
-        <div><div style="font-weight:700">Os dois</div><div style="font-size:12px;color:var(--text2)">Quero melhorar em tudo</div></div>
-      </div>
-    </div>
-    <button class="ob-btn" id="ob-btn-3" onclick="obFinalizar()" disabled>Começar a estudar 🚀</button>
-  </div>
 </div>
+
+<!-- auth JS inline (antes do script.js) -->
+<script>
+  var authVestsSelecionados = [];
+
+  function authMostrarTela(tela) {
+    document.querySelectorAll('.auth-screen').forEach(function(s){ s.classList.remove('auth-active'); });
+    document.getElementById('auth-' + tela).classList.add('auth-active');
+    document.getElementById('auth-wrapper').scrollTop = 0;
+  }
+
+  function authTogglePwd(id, btn) {
+    var inp = document.getElementById(id);
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+    btn.textContent = inp.type === 'password' ? '👁' : '🙈';
+  }
+
+  function authToggleVest(el, vest) {
+    el.classList.toggle('vest-selected');
+    var idx = authVestsSelecionados.indexOf(vest);
+    if (idx > -1) authVestsSelecionados.splice(idx, 1);
+    else authVestsSelecionados.push(vest);
+  }
+
+  function authEntrar() {
+    var email = document.getElementById('login-email').value.trim();
+    var senha = document.getElementById('login-senha').value;
+    var err = document.getElementById('auth-login-error');
+    if (!email || !senha) { err.style.display = 'block'; return; }
+    var contas = JSON.parse(localStorage.getItem('voaam_contas') || '[]');
+    var conta = contas.find(function(c){ return c.email === email && c.senha === senha; });
+    if (!conta) { err.style.display = 'block'; return; }
+    err.style.display = 'none';
+    authEntrarComPerfil(conta.perfil);
+  }
+
+  function authCadastrar() {
+    var nome = document.getElementById('cad-nome').value.trim();
+    var email = document.getElementById('cad-email').value.trim();
+    var senha = document.getElementById('cad-senha').value;
+    var serie = parseInt(document.getElementById('cad-serie').value) || 0;
+    var err = document.getElementById('auth-cad-error');
+    if (!nome || !email || senha.length < 6 || !serie) {
+      err.textContent = 'Preencha todos os campos. Senha mínima de 6 caracteres.';
+      err.style.display = 'block'; return;
+    }
+    err.style.display = 'none';
+    var vests = authVestsSelecionados.length ? authVestsSelecionados : ['SIS'];
+    var novoPerfil = { nome: nome, serie: serie, vests: vests, dific: 'ambos' };
+    var contas = JSON.parse(localStorage.getItem('voaam_contas') || '[]');
+    contas.push({ email: email, senha: senha, perfil: novoPerfil });
+    localStorage.setItem('voaam_contas', JSON.stringify(contas));
+    authEntrarComPerfil(novoPerfil);
+  }
+
+  function authGoogle() {
+    var nome = 'Estudante Google';
+    var novoPerfil = { nome: nome, serie: 3, vests: ['SIS','ENEM'], dific: 'ambos' };
+    authEntrarComPerfil(novoPerfil);
+  }
+
+  function authEntrarComPerfil(p) {
+    localStorage.setItem('voaam_perfil', JSON.stringify(p));
+    document.getElementById('auth-wrapper').style.display = 'none';
+    location.reload();
+  }
+
+  // Inicialização: mostrar auth se não logado
+  (function() {
+    var p = localStorage.getItem('voaam_perfil');
+    if (!p) {
+      var aw = document.getElementById('auth-wrapper');
+      // Em desktop usa flex (centraliza o card), em mobile usa block
+      aw.style.display = window.innerWidth >= 768 ? 'flex' : 'block';
+    }
+  })();
+</script>
 
 <!-- Header -->
 

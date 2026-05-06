@@ -130,7 +130,7 @@ function obFinalizar() {
   perfil = { nome, serie: obSerie, vests: obVests, dific: obDific };
   localStorage.setItem('voaam_perfil', JSON.stringify(perfil));
   state.currentSerie = obSerie <= 3 ? obSerie : 3;
-  document.getElementById('onboarding').classList.add('hidden');
+  var ob = document.getElementById('onboarding'); if (ob) ob.classList.add('hidden');
   aplicarPerfil();
 }
 function aplicarPerfil() {
@@ -7636,6 +7636,10 @@ function editarPerfil() {
   localStorage.removeItem('voaam_perfil');
   location.reload();
 }
+function authLogout() {
+  localStorage.removeItem('voaam_perfil');
+  location.reload();
+}
 
 // ─── THEME TOGGLE ───
 function toggleTheme() {
@@ -7650,10 +7654,7 @@ function toggleTheme() {
 
 // ─── INIT ───
 document.getElementById('xp-count').textContent = state.xp;
-if (!perfil) {
-  document.getElementById('onboarding').classList.remove('hidden');
-} else {
-  document.getElementById('onboarding').classList.add('hidden');
+if (perfil) {
   aplicarPerfil();
 }
 renderTopics();
