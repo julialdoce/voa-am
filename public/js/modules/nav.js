@@ -7,6 +7,7 @@ const SLOT_MAP = {
   vestibulares: 'slot-page-vestibulares',
   materia:      'slot-page-materia',
   praticar:     'slot-page-praticar',
+  redacao:      'slot-page-redacao',
   perfil:       'slot-page-perfil',
 };
 
@@ -20,9 +21,10 @@ function goTo(screen) {
     const slot = document.getElementById(slotId);
     if (slot) slot.style.display = (name === screen) ? 'block' : 'none';
   });
-  if (screen === 'materia') renderTopics();
-  if (screen === 'perfil') renderPerfil();
+  if (screen === 'materia')  renderTopics();
+  if (screen === 'perfil')   renderPerfil();
   if (screen === 'praticar') pratAba('sim');
+  if (screen === 'redacao')  redAba('temas');
 }
 
 // ─── MODAL SIMULADO (compatibilidade) ───

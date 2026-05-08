@@ -93,3 +93,46 @@
   flex-shrink: 0;
 }
 
+
+/* ═══════════════════════════════════════════
+   REDAÇÃO — Filtros, cards de tema, editor
+═══════════════════════════════════════════ */
+
+/* Botões de filtro por vestibular */
+.red-filtro-btn {
+  padding: 6px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--text2);
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.red-filtro-btn.red-filtro-active {
+  border-color: var(--border-accent);
+  background: rgba(59,130,246,0.1);
+  color: var(--accent2);
+}
+
+/* Card de tema */
+.red-tema-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.red-tema-card:not(.red-tema-locked):hover {
+  border-color: var(--border-accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+.red-tema-card:not(.red-tema-locked):active {
+  transform: scale(0.99);
+}
