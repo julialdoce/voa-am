@@ -1,0 +1,95 @@
+/* css/components.css
+   Componentes reutilizáveis: sim-card, ex-lista, badges
+   VoaAM · Vestibulares do Amazonas */
+
+.sim-vest-btn {
+  padding: 7px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--text2);
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+.sim-vest-btn.active {
+  border-color: var(--border-accent);
+  background: rgba(59,130,246,0.1);
+  color: var(--accent2);
+}
+.sim-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.sim-card:active { transform: scale(0.98); }
+.sim-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.sim-card-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+.sim-card-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.3;
+}
+.sim-card-sub {
+  font-size: 11px;
+  color: var(--text2);
+  margin-top: 2px;
+}
+.sim-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.sim-tag {
+  font-size: 10px;
+  padding: 3px 7px;
+  border-radius: 5px;
+  font-weight: 700;
+}
+.ex-lista-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.ex-lista-item:active { transform: scale(0.98); }
+.ex-dif-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+

@@ -1,0 +1,54 @@
+<!-- pages/perfil.html — Perfil do aluno: stats, ranking e configurações -->
+<!-- ========== PERFIL ========== -->
+<div class="screen" id="screen-perfil">
+  <div style="padding:24px 20px">
+    <div style="text-align:center;margin-bottom:20px">
+      <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--violet));display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 12px">🎓</div>
+      <div style="font-family:var(--font-display);font-size:20px;font-weight:800" id="perfil-nome">—</div>
+      <div style="font-size:13px;color:var(--text2);margin-top:3px" id="perfil-info">—</div>
+    </div>
+
+    <!-- Stats -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:20px">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center">
+        <div style="font-size:22px;font-weight:700;color:var(--gold)" id="perfil-xp">0</div>
+        <div style="font-size:10px;color:var(--text2)">XP total</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center">
+        <div style="font-size:22px;font-weight:700;color:var(--green)" id="perfil-acertos">0%</div>
+        <div style="font-size:10px;color:var(--text2)">acertos</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center">
+        <div style="font-size:22px;font-weight:700;color:var(--red)" id="perfil-streak">🔥0</div>
+        <div style="font-size:10px;color:var(--text2)">streak</div>
+      </div>
+    </div>
+
+    <!-- Dificuldades observadas -->
+    <div style="background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.15);border-radius:14px;padding:16px;margin-bottom:14px">
+      <div style="font-size:12px;font-weight:700;color:var(--red);margin-bottom:10px">⚠️ Pontos a reforçar</div>
+      <div id="perfil-dificuldades" style="font-size:13px;color:var(--text2);line-height:1.9">
+        <span style="color:var(--text2);font-size:12px">Nenhum erro registrado ainda. Continue praticando!</span>
+      </div>
+    </div>
+
+    <!-- Ranking -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px">
+      <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:12px">🏆 Ranking da semana</div>
+      <div class="ranking-list">
+        <div class="rank-item"><div class="rank-pos gold">🥇</div><div class="rank-avatar">👩</div><div class="rank-name">Ana Paula M.</div><div class="rank-xp">1.240 XP</div></div>
+        <div class="rank-item"><div class="rank-pos silver">🥈</div><div class="rank-avatar">👦</div><div class="rank-name">Carlos R.</div><div class="rank-xp">980 XP</div></div>
+        <div class="rank-item"><div class="rank-pos bronze">🥉</div><div class="rank-avatar">👧</div><div class="rank-name">Isabela S.</div><div class="rank-xp">875 XP</div></div>
+        <div class="rank-item" style="border-color:var(--border-accent);background:rgba(59,130,246,0.05)">
+          <div class="rank-pos" style="color:var(--cyan)">—</div>
+          <div class="rank-avatar">😎</div>
+          <div class="rank-name" id="rank-nome">Você</div>
+          <div class="rank-xp" id="rank-xp">0 XP</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Editar perfil -->
+    <button onclick="editarPerfil()" style="width:100%;padding:14px;border-radius:12px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font);font-size:14px;cursor:pointer">✏️ Editar série e vestibular</button>
+  </div>
+</div>

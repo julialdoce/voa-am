@@ -1448,5 +1448,3 @@ body {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 2px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--border-accent); }
-
-

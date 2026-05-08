@@ -1,0 +1,233 @@
+<!-- pages/auth.html — Telas de Login e Cadastro -->
+<!-- ========== AUTH (LOGIN / CADASTRO) ========== -->
+<div id="auth-wrapper" style="display:none; position:fixed; inset:0; background:var(--bg); z-index:9999; overflow-y:auto; font-family:var(--font)">
+
+  <style>
+    .auth-screen { display:none; flex-direction:column; min-height:100vh; padding:0; }
+    .auth-screen.auth-active { display:flex; }
+
+    .auth-header { padding: 52px 28px 0; flex-shrink:0; }
+
+    .auth-logo-row { display:flex; align-items:center; gap:10px; margin-bottom:36px; }
+    .auth-logo-icon { width:40px; height:40px; border-radius:12px; background:linear-gradient(135deg,var(--accent),var(--violet)); display:flex; align-items:center; justify-content:center; font-size:20px; }
+    .auth-logo-text { font-family:var(--font-display); font-size:22px; font-weight:900; color:var(--text); letter-spacing:-0.5px; }
+    .auth-logo-text span { color:var(--accent); }
+
+    .auth-title { font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--text); line-height:1.2; margin-bottom:8px; }
+    .auth-sub { font-size:14px; color:var(--text2); line-height:1.5; margin-bottom:32px; }
+
+    .auth-form { padding:0 28px; flex:1; display:flex; flex-direction:column; gap:14px; }
+
+    .auth-field { display:flex; flex-direction:column; gap:6px; }
+    .auth-label { font-size:12px; font-weight:700; color:var(--text2); text-transform:uppercase; letter-spacing:0.06em; }
+    .auth-input {
+      width:100%; padding:14px 16px;
+      background:var(--surface2); border:1.5px solid var(--border);
+      border-radius:14px; color:var(--text);
+      font-family:var(--font); font-size:15px; outline:none;
+      transition:border-color 0.2s; box-sizing:border-box;
+    }
+    .auth-input::placeholder { color:var(--text2); opacity:0.6; }
+    .auth-input:focus { border-color:var(--accent); }
+
+    .auth-input-wrap { position:relative; }
+    .auth-input-wrap .auth-input { padding-right:48px; }
+    .auth-eye { position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--text2); cursor:pointer; background:none; border:none; font-size:18px; padding:0; line-height:1; }
+
+    .auth-forgot { text-align:right; font-size:13px; font-weight:600; color:var(--accent2); cursor:pointer; margin-top:-6px; }
+
+    .auth-btn-primary {
+      width:100%; padding:16px; border-radius:14px; border:none;
+      background:var(--accent); color:#fff;
+      font-family:var(--font); font-size:16px; font-weight:800;
+      cursor:pointer; margin-top:4px; transition:opacity 0.15s; letter-spacing:-0.2px;
+    }
+    .auth-btn-primary:active { opacity:0.85; }
+
+    .auth-divider { display:flex; align-items:center; gap:12px; margin:4px 0; }
+    .auth-divider-line { flex:1; height:1px; background:var(--border); }
+    .auth-divider-text { font-size:12px; color:var(--text2); font-weight:600; letter-spacing:0.05em; }
+
+    .auth-btn-google {
+      width:100%; padding:14px; border-radius:14px;
+      border:1.5px solid var(--border); background:var(--surface2); color:var(--text);
+      font-family:var(--font); font-size:15px; font-weight:700;
+      cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px;
+      transition:background 0.15s;
+    }
+    .auth-btn-google:active { background:var(--surface); }
+
+    .auth-bottom-link { padding:24px 28px 40px; text-align:center; font-size:14px; color:var(--text2); flex-shrink:0; }
+    .auth-bottom-link span { color:var(--accent2); font-weight:700; cursor:pointer; }
+
+    .auth-terms { font-size:11px; color:var(--text2); text-align:center; line-height:1.6; margin-top:2px; opacity:0.7; }
+
+    .auth-select {
+      width:100%; padding:14px 16px;
+      background:var(--surface2); border:1.5px solid var(--border);
+      border-radius:14px; color:var(--text);
+      font-family:var(--font); font-size:15px; outline:none;
+      box-sizing:border-box; appearance:none; -webkit-appearance:none; cursor:pointer;
+    }
+    .auth-select-wrap { position:relative; }
+    .auth-select-arrow { position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--text2); pointer-events:none; }
+
+    .auth-vest-row { display:flex; flex-wrap:wrap; gap:7px; }
+    .auth-vest-badge {
+      display:inline-flex; align-items:center; gap:5px;
+      padding:6px 12px; border-radius:10px; font-size:12px; font-weight:800;
+      letter-spacing:0.04em; cursor:pointer; border:1.5px solid transparent;
+      transition:all 0.15s; background:var(--surface2); color:var(--text2); border-color:var(--border);
+    }
+    .auth-vest-badge.sis { background:rgba(168,85,247,0.1); border-color:rgba(168,85,247,0.2); color:#a855f7; }
+    .auth-vest-badge.psc { background:rgba(59,130,246,0.1); border-color:rgba(59,130,246,0.2); color:#60a5fa; }
+    .auth-vest-badge.enem { background:rgba(34,197,94,0.1); border-color:rgba(34,197,94,0.2); color:#4ade80; }
+    .auth-vest-badge.macro { background:rgba(245,158,11,0.1); border-color:rgba(245,158,11,0.2); color:#fbbf24; }
+    .auth-vest-badge.vest-selected { filter:brightness(1.25); box-shadow:0 0 0 2px currentColor; }
+
+    .auth-hint { font-size:11px; color:var(--text2); margin-top:-6px; opacity:0.6; }
+
+    .auth-error { font-size:13px; color:var(--red); background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.2); border-radius:10px; padding:10px 14px; display:none; }
+  </style>
+
+  <!-- ── TELA LOGIN ── -->
+  <div class="auth-screen auth-active" id="auth-login">
+    <div class="auth-header">
+      <div class="auth-logo-row">
+        <div class="auth-logo-icon">🚀</div>
+        <div class="auth-logo-text">Voa<span>AM</span></div>
+      </div>
+      <div class="auth-title">Bem-vindo<br>de volta! 👋</div>
+      <div class="auth-sub">Acesse sua conta e continue<br>sua jornada rumo ao vestibular.</div>
+    </div>
+
+    <div class="auth-form">
+      <div id="auth-login-error" class="auth-error">E-mail ou senha inválidos. Tente novamente.</div>
+
+      <div class="auth-field">
+        <div class="auth-label">E-mail</div>
+        <input class="auth-input" id="login-email" type="email" placeholder="seu@email.com">
+      </div>
+
+      <div class="auth-field">
+        <div class="auth-label">Senha</div>
+        <div class="auth-input-wrap">
+          <input class="auth-input" id="login-senha" type="password" placeholder="••••••••">
+          <button class="auth-eye" onclick="authTogglePwd('login-senha', this)">👁</button>
+        </div>
+      </div>
+
+      <div class="auth-forgot">Esqueci minha senha</div>
+
+      <button class="auth-btn-primary" onclick="authEntrar()">Entrar na conta →</button>
+
+      <div class="auth-divider">
+        <div class="auth-divider-line"></div>
+        <div class="auth-divider-text">OU CONTINUE COM</div>
+        <div class="auth-divider-line"></div>
+      </div>
+
+      <button class="auth-btn-google" onclick="authGoogle()">
+        <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
+        Entrar com Google
+      </button>
+    </div>
+
+    <div class="auth-bottom-link">
+      Não tem conta? <span onclick="authMostrarTela('cadastro')">Criar conta grátis</span>
+    </div>
+  </div>
+
+  <!-- ── TELA CADASTRO ── -->
+  <div class="auth-screen" id="auth-cadastro">
+    <div class="auth-header">
+      <div class="auth-logo-row">
+        <div class="auth-logo-icon">🚀</div>
+        <div class="auth-logo-text">Voa<span>AM</span></div>
+      </div>
+      <div class="auth-title">Crie sua conta 🎓</div>
+      <div class="auth-sub">Junte-se a milhares de estudantes<br>do Amazonas rumo ao vestibular.</div>
+    </div>
+
+    <div class="auth-form">
+      <div id="auth-cad-error" class="auth-error">Preencha todos os campos obrigatórios.</div>
+
+      <div class="auth-field">
+        <div class="auth-label">Nome completo</div>
+        <input class="auth-input" id="cad-nome" type="text" placeholder="Como quer ser chamado(a)?">
+      </div>
+
+      <div class="auth-field">
+        <div class="auth-label">E-mail</div>
+        <input class="auth-input" id="cad-email" type="email" placeholder="seu@email.com">
+      </div>
+
+      <div class="auth-field">
+        <div class="auth-label">Senha</div>
+        <div class="auth-input-wrap">
+          <input class="auth-input" id="cad-senha" type="password" placeholder="Mínimo 6 caracteres">
+          <button class="auth-eye" onclick="authTogglePwd('cad-senha', this)">👁</button>
+        </div>
+      </div>
+
+      <div class="auth-field">
+        <div class="auth-label">Série</div>
+        <div class="auth-select-wrap">
+          <select class="auth-select" id="cad-serie">
+            <option value="" disabled selected>Selecione sua série</option>
+            <option value="1">1ª Série do Ensino Médio</option>
+            <option value="2">2ª Série do Ensino Médio</option>
+            <option value="3">3ª Série do Ensino Médio</option>
+            <option value="4">Já terminei o Ensino Médio</option>
+          </select>
+          <span class="auth-select-arrow">▾</span>
+        </div>
+      </div>
+
+      <div class="auth-field">
+        <div class="auth-label">Vestibulares de interesse</div>
+        <div class="auth-vest-row" id="cad-vest-row">
+          <span class="auth-vest-badge sis" onclick="authToggleVest(this,'SIS')">⭐ SIS</span>
+          <span class="auth-vest-badge psc" onclick="authToggleVest(this,'PSC')">📘 PSC</span>
+          <span class="auth-vest-badge enem" onclick="authToggleVest(this,'ENEM')">🇧🇷 ENEM</span>
+          <span class="auth-vest-badge macro" onclick="authToggleVest(this,'MACRO')">🏛️ MACRO</span>
+        </div>
+        <div class="auth-hint">Pode escolher mais de um</div>
+      </div>
+
+      <button class="auth-btn-primary" onclick="authCadastrar()">Criar conta grátis 🚀</button>
+
+      <div class="auth-divider">
+        <div class="auth-divider-line"></div>
+        <div class="auth-divider-text">OU CADASTRE COM</div>
+        <div class="auth-divider-line"></div>
+      </div>
+
+      <button class="auth-btn-google" onclick="authGoogle()">
+        <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
+        Cadastrar com Google
+      </button>
+
+      <div class="auth-terms">
+        Ao criar uma conta, você concorda com os<br>
+        <a style="color:var(--text2);text-decoration:underline;cursor:pointer">Termos de Uso</a> e a
+        <a style="color:var(--text2);text-decoration:underline;cursor:pointer">Política de Privacidade</a>.
+      </div>
+    </div>
+
+    <div class="auth-bottom-link">
+      Já tem conta? <span onclick="authMostrarTela('login')">Entrar agora</span>
+    </div>
+  </div>
+
+</div>

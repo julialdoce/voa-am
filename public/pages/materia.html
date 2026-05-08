@@ -1,0 +1,28 @@
+<!-- pages/materia.html — Seleção de matéria, série e tópicos -->
+<!-- ========== MATÉRIA ========== -->
+<div class="screen" id="screen-materia">
+  <div class="materia-screen">
+    <div class="subject-tabs">
+      <div class="subject-tab active" id="tab-mat" onclick="selectSubject('mat')">
+        <span>📐</span>Matemática
+      </div>
+      <div class="subject-tab" id="tab-red" onclick="selectSubject('red')">
+        <span>✏️</span>Redação
+      </div>
+    </div>
+
+    <div class="serie-selector" id="serie-selector-mat">
+      <button class="serie-btn active" onclick="selectSerie(1)">1º ano</button>
+      <button class="serie-btn" onclick="selectSerie(2)">2º ano</button>
+      <button class="serie-btn" onclick="selectSerie(3)">3º ano</button>
+    </div>
+
+    <div class="serie-selector" id="serie-selector-red" style="display:none">
+      <button class="serie-btn active" onclick="selectSerieRed(1)">Fundamentos</button>
+      <button class="serie-btn" onclick="selectSerieRed(2)">Estrutura</button>
+      <button class="serie-btn" onclick="selectSerieRed(3)">ENEM/PSC</button>
+    </div>
+
+    <div class="topics-list" id="topics-list"></div>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<!-- pages/home.html — Tela inicial: progresso, vestibulares e ações -->
+<!-- ========== HOME ========== -->
+<div class="screen active" id="screen-home">
+  <div class="home-hero">
+    <div class="home-greeting" id="home-greeting">Olá, estudante! 👋</div>
+    <div class="home-title">Bora <span class="hi">voar</span> no vestibular do Amazonas?</div>
+  </div>
+
+  <div class="progress-card" style="margin: 0 20px 20px;">
+    <div class="progress-header">
+      <span class="progress-label">Seu progresso geral</span>
+      <span class="progress-pct" id="home-pct">0%</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="home-bar" style="width:0%"></div></div>
+    <div class="progress-stats">
+      <div class="pstat">
+        <div class="pstat-val" id="stat-aulas">0</div>
+        <div class="pstat-lbl">Aulas vistas</div>
+      </div>
+      <div class="pstat">
+        <div class="pstat-val" id="stat-quiz">0</div>
+        <div class="pstat-lbl">Questões feitas</div>
+      </div>
+      <div class="pstat">
+        <div class="pstat-val" id="stat-correct">0</div>
+        <div class="pstat-lbl">Acertos</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title" id="home-vest-title">Meu vestibular</div>
+  <div class="vestibulares-row" id="home-vest-cards">
+    <!-- preenchido dinamicamente -->
+  </div>
+
+  <div class="section-title">Estudar agora</div>
+  <div class="action-cards">
+    <div class="action-card" onclick="goTo('materia')">
+      <div class="action-icon mat">📐</div>
+      <div class="action-info">
+        <div class="action-name">Matemática</div>
+        <div class="action-sub" id="home-mat-sub">Comece pelo 1º conteúdo</div>
+      </div>
+      <div class="action-arrow">›</div>
+    </div>
+    <div class="action-card" onclick="goTo('materia')">
+      <div class="action-icon red">✏️</div>
+      <div class="action-info">
+        <div class="action-name">Redação</div>
+        <div class="action-sub">Estrutura e repertório</div>
+      </div>
+      <div class="action-arrow">›</div>
+    </div>
+    <div class="action-card" onclick="goTo('praticar')">
+      <div class="action-icon sim">🎯</div>
+      <div class="action-info">
+        <div class="action-name">Simulado</div>
+        <div class="action-sub" id="home-sim-sub">Questões reais do seu vestibular</div>
+      </div>
+      <div class="action-arrow">›</div>
+    </div>
+  </div>
+
+  <div class="streak-banner" style="margin-top: 16px;">
+    <div class="streak-fire">🔥</div>
+    <div class="streak-text">
+      <div class="streak-days" id="streak-days">0 dias seguidos</div>
+      <div class="streak-sub">Não perca sua sequência — estude hoje!</div>
+    </div>
+  </div>
+</div>
+

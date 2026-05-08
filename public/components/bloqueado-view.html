@@ -1,0 +1,12 @@
+<!-- components/bloqueado-view.html — Tela sem vidas (corações esgotados) -->
+<!-- Tela bloqueada (sem vidas) -->
+<div class="aula-view" id="bloqueado-view" style="display:none;background:var(--bg)">
+  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:32px;text-align:center">
+    <div style="font-size:64px;margin-bottom:16px">💔</div>
+    <div style="font-size:22px;font-weight:800;color:var(--red);margin-bottom:8px">Sem vidas!</div>
+    <div style="font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:20px">Você usou todos os corações hoje.<br>Volte amanhã ou estude um conteúdo novo para ganhar uma vida extra.</div>
+    <div id="bloqueado-timer" style="font-size:28px;font-weight:700;color:var(--gold);margin-bottom:24px"></div>
+    <button onclick="fecharBloqueado();goTo('materia')" style="padding:14px 28px;border-radius:12px;border:none;background:var(--accent);color:#fff;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;margin-bottom:12px;width:100%">📚 Estudar conteúdo (+1 vida)</button>
+    <button onclick="fecharBloqueado()" style="padding:12px;border-radius:12px;border:1px solid var(--border);background:var(--surface2);color:var(--text2);font-family:var(--font);font-size:14px;cursor:pointer;width:100%">← Voltar</button>
+  </div>
+</div>

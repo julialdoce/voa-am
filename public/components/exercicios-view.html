@@ -1,0 +1,24 @@
+<!-- components/exercicios-view.html — Overlay exercícios estilo Duolingo -->
+<!-- Tela de Exercícios (estilo Duolingo) -->
+<div class="aula-view" id="exercicios-view">
+  <div class="aula-header" style="flex-direction:column;gap:0;padding:0;background:var(--card2)">
+    <!-- Barra superior: X + progresso + coração -->
+    <div style="display:flex;align-items:center;gap:10px;padding:14px 16px 10px;width:100%">
+      <button onclick="fecharExercicios()" style="width:36px;height:36px;border-radius:10px;background:var(--surface2);border:none;color:var(--text);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">✕</button>
+      <div style="flex:1;height:8px;background:var(--surface2);border-radius:4px;overflow:hidden">
+        <div id="ex-progress-bar" style="height:100%;background:linear-gradient(90deg,var(--amber),var(--amber2));border-radius:4px;width:0%;transition:width 0.4s"></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:4px;flex-shrink:0">
+        <span id="ex-c1" style="font-size:20px">❤️</span>
+        <span id="ex-c2" style="font-size:20px">❤️</span>
+        <span id="ex-c3" style="font-size:20px">❤️</span>
+      </div>
+    </div>
+    <!-- Tabs mat/red -->
+    <div style="display:flex;gap:6px;padding:0 16px 12px;width:100%">
+      <button id="extab-mat" onclick="exTrocarTab('Matemática')" style="flex:1;padding:8px;border-radius:10px;border:1.5px solid var(--border-accent);background:rgba(59,130,246,0.1);color:var(--accent2);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer">📐 Matemática</button>
+      <button id="extab-red" onclick="exTrocarTab('Redação')" style="flex:1;padding:8px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--text2);font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer">✍️ Redação</button>
+    </div>
+  </div>
+  <div class="aula-content" id="ex-questao-area" style="padding:20px"></div>
+</div>

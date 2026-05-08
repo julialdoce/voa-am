@@ -1,1182 +1,158 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Voa AM — Vestibulares do Amazonas</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Fraunces:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
-<style>
-.sim-vest-btn {
-  padding: 7px 12px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: var(--surface2);
-  color: var(--text2);
-  font-family: var(--font);
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.15s;
-}
-.sim-vest-btn.active {
-  border-color: var(--border-accent);
-  background: rgba(59,130,246,0.1);
-  color: var(--accent2);
-}
-.sim-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 16px;
-  margin-bottom: 10px;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.sim-card:active { transform: scale(0.98); }
-.sim-card-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 8px;
-}
-.sim-card-num {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  font-weight: 900;
-  flex-shrink: 0;
-}
-.sim-card-title {
-  font-size: 15px;
-  font-weight: 800;
-  color: var(--text);
-  line-height: 1.3;
-}
-.sim-card-sub {
-  font-size: 11px;
-  color: var(--text2);
-  margin-top: 2px;
-}
-.sim-card-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-}
-.sim-tag {
-  font-size: 10px;
-  padding: 3px 7px;
-  border-radius: 5px;
-  font-weight: 700;
-}
-.ex-lista-item {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 14px 16px;
-  margin-bottom: 8px;
-  cursor: pointer;
-  transition: all 0.15s;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.ex-lista-item:active { transform: scale(0.98); }
-.ex-dif-badge {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  flex-shrink: 0;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voa AM — Vestibulares do Amazonas</title>
 
-<!-- ===== RESPONSIVO DESKTOP ===== -->
-<style>
-/* ── Auth: card centralizado no desktop ── */
-@media (min-width: 768px) {
-  #auth-wrapper {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    background: var(--bg) !important;
-    padding: 40px 20px;
-  }
-  #auth-wrapper[style*="block"] {
-    display: flex !important;
-  }
-  .auth-screen {
-    min-height: unset !important;
-    width: 100%;
-    max-width: 480px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 24px 60px rgba(0,0,0,0.25);
-  }
-  .auth-screen.auth-active { display: flex; }
-  .auth-header { padding: 40px 36px 0 !important; }
-  .auth-logo-row { margin-bottom: 28px !important; }
-  .auth-title { font-size: 32px !important; }
-  .auth-sub { margin-bottom: 24px !important; }
-  .auth-form { padding: 0 36px !important; gap: 12px !important; }
-  .auth-bottom-link { padding: 20px 36px 32px !important; }
-}
+  <!-- ── Fontes ── -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Fraunces:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
 
-/* ── App: layout desktop com sidebar ── */
-@media (min-width: 768px) {
+  <!-- ── CSS Base (tokens, reset, layout móvel) ── -->
+  <link rel="stylesheet" href="css/style.css">
 
-  /* Body com padding para o wrapper flutuar */
-  /* Impede rolagem do body – o scroll será interno */
-    body {
-    overflow: hidden;
-    margin: 0;          /* ← remove margens do navegador */
-    padding: 0;
-    background: var(--bg);
-  }
-
-  /* Wrapper ocupa a tela toda (com margem opcional) */
-  #app-wrapper {
-    display: grid;
-    grid-template-columns: 220px 1fr;
-    grid-template-rows: auto 1fr;
-    height: 100vh;       /* ← altura total da tela, sem descontos */
-    max-width: 1280px;
-    margin: 0 auto;      /* ← sem margens verticais, centralizado horizontalmente */
-    border-radius: 24px;
-    border: 1px solid var(--border);
-    overflow: hidden;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.18);
-  }
-
-  /* Header ocupa largura toda no topo */
-  .header {
-    grid-column: 1 / -1;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    padding: 0 28px;
-    height: 60px;
-    border-bottom: 1px solid var(--border);
-    border-radius: 24px 24px 0 0;
-  }
-
-  /* Bottom nav vira sidebar esquerda */
-  .bottom-nav {
-    grid-column: 1;
-    grid-row: 2;
-    position: relative;   /* deixa de ser sticky */
-    height: 100%;         /* ocupa toda a altura da célula do grid */
-    width: 220px;
-    /* ... mantenha as demais propriedades (padding, border-right, etc.) */
-  }
-
-  .nav-btn {
-    flex-direction: row !important;
-    justify-content: flex-start !important;
-    gap: 12px;
-    padding: 12px 14px !important;
-    border-radius: 12px !important;
-    font-size: 14px !important;
-    font-weight: 600;
-    text-align: left;
-    width: 100%;
-  }
-
-  .nav-btn .nav-icon {
-    font-size: 20px;
-    min-width: 24px;
-    text-align: center;
-  }
-
-  .nav-btn.active {
-    background: rgba(59,130,246,0.12);
-    color: var(--accent2);
-  }
-
-  /* Área de conteúdo (screens) fica à direita */
-  .screen,
-  .screen.active {
-    grid-column: 2;
-    grid-row: 2;
-    width: 100%;
-    margin: 0 auto;
-    padding-bottom: 40px;
-    border-radius: 0 0 24px 0;
-    overflow-y: auto;      /* rolagem apenas aqui */
-    height: 100%;          /* respeita a altura da célula */
-  }
-
-  /* Aula view e exercícios view — sobreposição */
-  .aula-view {
-    position: fixed;
-    top: 60px;
-    left: 220px;
-    right: 0;
-    bottom: 0;
-    width: auto;
-    height: auto;
-  }
-
-  /* Home hero mais espaçoso */
-  .home-hero {
-    padding: 36px 32px 20px !important;
-  }
-  .home-greeting { font-size: 16px !important; }
-  .home-title { font-size: 28px !important; }
-
-  /* Cards de vestibular em grid */
-  .vest-cards-row {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 12px;
-  }
-
-  /* Progress card mais largo */
-  .progress-card {
-    margin: 0 32px 24px !important;
-  }
-
-  /* Seções com padding lateral maior */
-  .screen > div,
-  .screen > section {
-    padding-left: 32px;
-    padding-right: 32px;
-  }
-
-  /* Quick actions grid */
-  .quick-grid {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-  }
-
-  /* Perfil: coluna única centralizada (igual ao mobile) */
-  #screen-perfil > div {
-    padding: 32px 24px !important;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 480px;
-    margin: 0 auto;
-  }
-
-  /* Toast e achievement não saem da área */
-  .xp-toast {
-    left: 50%;
-    transform: translateX(-50%);
-    top: 72px;
-  }
-  .achievement-popup {
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  /* Aula content padding */
-  .aula-content {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 32px !important;
-  }
-
-  /* Bloqueado view */
-  #bloqueado-view {
-    left: 220px;
-    top: 60px;
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    width: auto;
-    height: auto;
-  }
-  #bloqueado-view > div {
-    max-width: 440px;
-    margin: 0 auto;
-  }
-
-  /* Screens de matéria e praticar */
-  #screen-materia > div,
-  #screen-praticar > div,
-  #screen-vestibulares > div {
-    padding: 28px 32px !important;
-  }
-
-  /* Scrollbar elegante */
-  .bottom-nav::-webkit-scrollbar { width: 4px; }
-  .bottom-nav::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-}
-
-/* ── Breakpoint médio: tablet ── */
-@media (min-width: 768px) and (max-width: 1023px) {
-  #app-wrapper {
-    grid-template-columns: 64px 1fr;
-    margin: 16px auto;
-  }
-  .bottom-nav {
-    width: 64px;
-    padding: 16px 8px;
-    align-items: center;
-  }
-  .nav-btn {
-    flex-direction: column !important;
-    justify-content: center !important;
-    gap: 4px !important;
-    padding: 10px 8px !important;
-    font-size: 10px !important;
-    text-align: center;
-  }
-  .nav-btn .nav-icon { font-size: 22px; min-width: unset; }
-  .aula-view { left: 64px; }
-  #bloqueado-view { left: 64px; }
-}
-</style>
+  <!-- ── CSS Modular ──
+       components.css  → sim-card, ex-lista, badges reutilizáveis
+       auth.css        → login e cadastro
+       responsive.css  → sidebar desktop e breakpoints
+  ── -->
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
 
-<!-- ========== AUTH (LOGIN / CADASTRO) ========== -->
-<div id="auth-wrapper" style="display:none; position:fixed; inset:0; background:var(--bg); z-index:9999; overflow-y:auto; font-family:var(--font)">
+<!-- AUTH OVERLAY ─────────────────────────────────────────────
+     Edite HTML → pages/auth.html
+     Edite CSS  → css/auth.css
+     Edite JS   → js/modules/auth.js
+     Nota: auth.html já contém o <div id="auth-wrapper"> completo.
+     O Router usa outerHTML para substituir este placeholder.
+──────────────────────────────────────────────────────────── -->
+<div id="auth-wrapper"></div>
 
-  <style>
-    .auth-screen { display:none; flex-direction:column; min-height:100vh; padding:0; }
-    .auth-screen.auth-active { display:flex; }
-
-    .auth-header { padding: 52px 28px 0; flex-shrink:0; }
-
-    .auth-logo-row { display:flex; align-items:center; gap:10px; margin-bottom:36px; }
-    .auth-logo-icon { width:40px; height:40px; border-radius:12px; background:linear-gradient(135deg,var(--accent),var(--violet)); display:flex; align-items:center; justify-content:center; font-size:20px; }
-    .auth-logo-text { font-family:var(--font-display); font-size:22px; font-weight:900; color:var(--text); letter-spacing:-0.5px; }
-    .auth-logo-text span { color:var(--accent); }
-
-    .auth-title { font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--text); line-height:1.2; margin-bottom:8px; }
-    .auth-sub { font-size:14px; color:var(--text2); line-height:1.5; margin-bottom:32px; }
-
-    .auth-form { padding:0 28px; flex:1; display:flex; flex-direction:column; gap:14px; }
-
-    .auth-field { display:flex; flex-direction:column; gap:6px; }
-    .auth-label { font-size:12px; font-weight:700; color:var(--text2); text-transform:uppercase; letter-spacing:0.06em; }
-    .auth-input {
-      width:100%; padding:14px 16px;
-      background:var(--surface2); border:1.5px solid var(--border);
-      border-radius:14px; color:var(--text);
-      font-family:var(--font); font-size:15px; outline:none;
-      transition:border-color 0.2s; box-sizing:border-box;
-    }
-    .auth-input::placeholder { color:var(--text2); opacity:0.6; }
-    .auth-input:focus { border-color:var(--accent); }
-
-    .auth-input-wrap { position:relative; }
-    .auth-input-wrap .auth-input { padding-right:48px; }
-    .auth-eye { position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--text2); cursor:pointer; background:none; border:none; font-size:18px; padding:0; line-height:1; }
-
-    .auth-forgot { text-align:right; font-size:13px; font-weight:600; color:var(--accent2); cursor:pointer; margin-top:-6px; }
-
-    .auth-btn-primary {
-      width:100%; padding:16px; border-radius:14px; border:none;
-      background:var(--accent); color:#fff;
-      font-family:var(--font); font-size:16px; font-weight:800;
-      cursor:pointer; margin-top:4px; transition:opacity 0.15s; letter-spacing:-0.2px;
-    }
-    .auth-btn-primary:active { opacity:0.85; }
-
-    .auth-divider { display:flex; align-items:center; gap:12px; margin:4px 0; }
-    .auth-divider-line { flex:1; height:1px; background:var(--border); }
-    .auth-divider-text { font-size:12px; color:var(--text2); font-weight:600; letter-spacing:0.05em; }
-
-    .auth-btn-google {
-      width:100%; padding:14px; border-radius:14px;
-      border:1.5px solid var(--border); background:var(--surface2); color:var(--text);
-      font-family:var(--font); font-size:15px; font-weight:700;
-      cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px;
-      transition:background 0.15s;
-    }
-    .auth-btn-google:active { background:var(--surface); }
-
-    .auth-bottom-link { padding:24px 28px 40px; text-align:center; font-size:14px; color:var(--text2); flex-shrink:0; }
-    .auth-bottom-link span { color:var(--accent2); font-weight:700; cursor:pointer; }
-
-    .auth-terms { font-size:11px; color:var(--text2); text-align:center; line-height:1.6; margin-top:2px; opacity:0.7; }
-
-    .auth-select {
-      width:100%; padding:14px 16px;
-      background:var(--surface2); border:1.5px solid var(--border);
-      border-radius:14px; color:var(--text);
-      font-family:var(--font); font-size:15px; outline:none;
-      box-sizing:border-box; appearance:none; -webkit-appearance:none; cursor:pointer;
-    }
-    .auth-select-wrap { position:relative; }
-    .auth-select-arrow { position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--text2); pointer-events:none; }
-
-    .auth-vest-row { display:flex; flex-wrap:wrap; gap:7px; }
-    .auth-vest-badge {
-      display:inline-flex; align-items:center; gap:5px;
-      padding:6px 12px; border-radius:10px; font-size:12px; font-weight:800;
-      letter-spacing:0.04em; cursor:pointer; border:1.5px solid transparent;
-      transition:all 0.15s; background:var(--surface2); color:var(--text2); border-color:var(--border);
-    }
-    .auth-vest-badge.sis { background:rgba(168,85,247,0.1); border-color:rgba(168,85,247,0.2); color:#a855f7; }
-    .auth-vest-badge.psc { background:rgba(59,130,246,0.1); border-color:rgba(59,130,246,0.2); color:#60a5fa; }
-    .auth-vest-badge.enem { background:rgba(34,197,94,0.1); border-color:rgba(34,197,94,0.2); color:#4ade80; }
-    .auth-vest-badge.macro { background:rgba(245,158,11,0.1); border-color:rgba(245,158,11,0.2); color:#fbbf24; }
-    .auth-vest-badge.vest-selected { filter:brightness(1.25); box-shadow:0 0 0 2px currentColor; }
-
-    .auth-hint { font-size:11px; color:var(--text2); margin-top:-6px; opacity:0.6; }
-
-    .auth-error { font-size:13px; color:var(--red); background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.2); border-radius:10px; padding:10px 14px; display:none; }
-  </style>
-
-  <!-- ── TELA LOGIN ── -->
-  <div class="auth-screen auth-active" id="auth-login">
-    <div class="auth-header">
-      <div class="auth-logo-row">
-        <div class="auth-logo-icon">🚀</div>
-        <div class="auth-logo-text">Voa<span>AM</span></div>
-      </div>
-      <div class="auth-title">Bem-vindo<br>de volta! 👋</div>
-      <div class="auth-sub">Acesse sua conta e continue<br>sua jornada rumo ao vestibular.</div>
-    </div>
-
-    <div class="auth-form">
-      <div id="auth-login-error" class="auth-error">E-mail ou senha inválidos. Tente novamente.</div>
-
-      <div class="auth-field">
-        <div class="auth-label">E-mail</div>
-        <input class="auth-input" id="login-email" type="email" placeholder="seu@email.com">
-      </div>
-
-      <div class="auth-field">
-        <div class="auth-label">Senha</div>
-        <div class="auth-input-wrap">
-          <input class="auth-input" id="login-senha" type="password" placeholder="••••••••">
-          <button class="auth-eye" onclick="authTogglePwd('login-senha', this)">👁</button>
-        </div>
-      </div>
-
-      <div class="auth-forgot">Esqueci minha senha</div>
-
-      <button class="auth-btn-primary" onclick="authEntrar()">Entrar na conta →</button>
-
-      <div class="auth-divider">
-        <div class="auth-divider-line"></div>
-        <div class="auth-divider-text">OU CONTINUE COM</div>
-        <div class="auth-divider-line"></div>
-      </div>
-
-      <button class="auth-btn-google" onclick="authGoogle()">
-        <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
-          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-        </svg>
-        Entrar com Google
-      </button>
-    </div>
-
-    <div class="auth-bottom-link">
-      Não tem conta? <span onclick="authMostrarTela('cadastro')">Criar conta grátis</span>
-    </div>
-  </div>
-
-  <!-- ── TELA CADASTRO ── -->
-  <div class="auth-screen" id="auth-cadastro">
-    <div class="auth-header">
-      <div class="auth-logo-row">
-        <div class="auth-logo-icon">🚀</div>
-        <div class="auth-logo-text">Voa<span>AM</span></div>
-      </div>
-      <div class="auth-title">Crie sua conta 🎓</div>
-      <div class="auth-sub">Junte-se a milhares de estudantes<br>do Amazonas rumo ao vestibular.</div>
-    </div>
-
-    <div class="auth-form">
-      <div id="auth-cad-error" class="auth-error">Preencha todos os campos obrigatórios.</div>
-
-      <div class="auth-field">
-        <div class="auth-label">Nome completo</div>
-        <input class="auth-input" id="cad-nome" type="text" placeholder="Como quer ser chamado(a)?">
-      </div>
-
-      <div class="auth-field">
-        <div class="auth-label">E-mail</div>
-        <input class="auth-input" id="cad-email" type="email" placeholder="seu@email.com">
-      </div>
-
-      <div class="auth-field">
-        <div class="auth-label">Senha</div>
-        <div class="auth-input-wrap">
-          <input class="auth-input" id="cad-senha" type="password" placeholder="Mínimo 6 caracteres">
-          <button class="auth-eye" onclick="authTogglePwd('cad-senha', this)">👁</button>
-        </div>
-      </div>
-
-      <div class="auth-field">
-        <div class="auth-label">Série</div>
-        <div class="auth-select-wrap">
-          <select class="auth-select" id="cad-serie">
-            <option value="" disabled selected>Selecione sua série</option>
-            <option value="1">1ª Série do Ensino Médio</option>
-            <option value="2">2ª Série do Ensino Médio</option>
-            <option value="3">3ª Série do Ensino Médio</option>
-            <option value="4">Já terminei o Ensino Médio</option>
-          </select>
-          <span class="auth-select-arrow">▾</span>
-        </div>
-      </div>
-
-      <div class="auth-field">
-        <div class="auth-label">Vestibulares de interesse</div>
-        <div class="auth-vest-row" id="cad-vest-row">
-          <span class="auth-vest-badge sis" onclick="authToggleVest(this,'SIS')">⭐ SIS</span>
-          <span class="auth-vest-badge psc" onclick="authToggleVest(this,'PSC')">📘 PSC</span>
-          <span class="auth-vest-badge enem" onclick="authToggleVest(this,'ENEM')">🇧🇷 ENEM</span>
-          <span class="auth-vest-badge macro" onclick="authToggleVest(this,'MACRO')">🏛️ MACRO</span>
-        </div>
-        <div class="auth-hint">Pode escolher mais de um</div>
-      </div>
-
-      <button class="auth-btn-primary" onclick="authCadastrar()">Criar conta grátis 🚀</button>
-
-      <div class="auth-divider">
-        <div class="auth-divider-line"></div>
-        <div class="auth-divider-text">OU CADASTRE COM</div>
-        <div class="auth-divider-line"></div>
-      </div>
-
-      <button class="auth-btn-google" onclick="authGoogle()">
-        <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
-          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-        </svg>
-        Cadastrar com Google
-      </button>
-
-      <div class="auth-terms">
-        Ao criar uma conta, você concorda com os<br>
-        <a style="color:var(--text2);text-decoration:underline;cursor:pointer">Termos de Uso</a> e a
-        <a style="color:var(--text2);text-decoration:underline;cursor:pointer">Política de Privacidade</a>.
-      </div>
-    </div>
-
-    <div class="auth-bottom-link">
-      Já tem conta? <span onclick="authMostrarTela('login')">Entrar agora</span>
-    </div>
-  </div>
-
-</div>
-
-<!-- auth JS inline (antes do script.js) -->
-<script>
-  var authVestsSelecionados = [];
-
-  function authMostrarTela(tela) {
-    document.querySelectorAll('.auth-screen').forEach(function(s){ s.classList.remove('auth-active'); });
-    document.getElementById('auth-' + tela).classList.add('auth-active');
-    document.getElementById('auth-wrapper').scrollTop = 0;
-  }
-
-  function authTogglePwd(id, btn) {
-    var inp = document.getElementById(id);
-    inp.type = inp.type === 'password' ? 'text' : 'password';
-    btn.textContent = inp.type === 'password' ? '👁' : '🙈';
-  }
-
-  function authToggleVest(el, vest) {
-    el.classList.toggle('vest-selected');
-    var idx = authVestsSelecionados.indexOf(vest);
-    if (idx > -1) authVestsSelecionados.splice(idx, 1);
-    else authVestsSelecionados.push(vest);
-  }
-
-  function authEntrar() {
-    var email = document.getElementById('login-email').value.trim();
-    var senha = document.getElementById('login-senha').value;
-    var err = document.getElementById('auth-login-error');
-    if (!email || !senha) { err.style.display = 'block'; return; }
-    var contas = JSON.parse(localStorage.getItem('voaam_contas') || '[]');
-    var conta = contas.find(function(c){ return c.email === email && c.senha === senha; });
-    if (!conta) { err.style.display = 'block'; return; }
-    err.style.display = 'none';
-    authEntrarComPerfil(conta.perfil);
-  }
-
-  function authCadastrar() {
-    var nome = document.getElementById('cad-nome').value.trim();
-    var email = document.getElementById('cad-email').value.trim();
-    var senha = document.getElementById('cad-senha').value;
-    var serie = parseInt(document.getElementById('cad-serie').value) || 0;
-    var err = document.getElementById('auth-cad-error');
-    if (!nome || !email || senha.length < 6 || !serie) {
-      err.textContent = 'Preencha todos os campos. Senha mínima de 6 caracteres.';
-      err.style.display = 'block'; return;
-    }
-    err.style.display = 'none';
-    var vests = authVestsSelecionados.length ? authVestsSelecionados : ['SIS'];
-    var novoPerfil = { nome: nome, serie: serie, vests: vests, dific: 'ambos' };
-    var contas = JSON.parse(localStorage.getItem('voaam_contas') || '[]');
-    contas.push({ email: email, senha: senha, perfil: novoPerfil });
-    localStorage.setItem('voaam_contas', JSON.stringify(contas));
-    authEntrarComPerfil(novoPerfil);
-  }
-
-  function authGoogle() {
-    var nome = 'Estudante Google';
-    var novoPerfil = { nome: nome, serie: 3, vests: ['SIS','ENEM'], dific: 'ambos' };
-    authEntrarComPerfil(novoPerfil);
-  }
-
-  function authEntrarComPerfil(p) {
-    localStorage.setItem('voaam_perfil', JSON.stringify(p));
-    document.getElementById('auth-wrapper').style.display = 'none';
-    location.reload();
-  }
-
-  // Inicialização: mostrar auth se não logado
-  (function() {
-    var p = localStorage.getItem('voaam_perfil');
-    if (!p) {
-      var aw = document.getElementById('auth-wrapper');
-      // Em desktop usa flex (centraliza o card), em mobile usa block
-      aw.style.display = window.innerWidth >= 768 ? 'flex' : 'block';
-    }
-  })();
-</script>
-
-<!-- Header -->
-
+<!-- APP ──────────────────────────────────────────────────────
+     Layout principal: header + sidebar/nav + conteúdo
+──────────────────────────────────────────────────────────── -->
 <div id="app-wrapper">
-<div class="header">
-  <div class="logo">
-    <div class="logo-icon">🚀</div>
-    <div class="logo-text">Voa<span>AM</span></div>
-  </div>
-  <div class="header-right">
-    <div class="header-xp" id="xp-display">⭐ <span id="xp-count">0</span> XP</div>
-    <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Alternar tema" aria-label="Alternar tema">
-      <span class="theme-toggle-label theme-toggle-label-light">☀️ CLARO</span>
-      <span class="theme-toggle-label theme-toggle-label-dark">🌙 ESCURO</span>
-    </button>
-  </div>
-</div>
 
-<!-- XP Toast -->
-<div class="xp-toast" id="xp-toast"></div>
+  <!-- components/header.html -->
+  <div id="slot-header"></div>
 
-<!-- Achievement Popup -->
-<div class="achievement-popup" id="ach-popup">
-  <div class="ach-icon" id="ach-icon">🏆</div>
-  <div class="ach-title">Conquista Desbloqueada!</div>
-  <div class="ach-name" id="ach-name">Primeiros Passos</div>
-</div>
+  <!-- components/toasts.html (XP toast + achievement popup) -->
+  <div id="slot-toasts"></div>
 
-<!-- ========== HOME ========== -->
-<div class="screen active" id="screen-home">
-  <div class="home-hero">
-    <div class="home-greeting" id="home-greeting">Olá, estudante! 👋</div>
-    <div class="home-title">Bora <span class="hi">voar</span> no vestibular do Amazonas?</div>
-  </div>
+  <!-- ── PÁGINAS ────────────────────────────────────────────
+       Uma por vez (.active).  Navegação: goTo('nome')
+       pages/home.html          → Início
+       pages/vestibulares.html  → Vestibulares (PSC, SIS, MACRO, ENEM)
+       pages/materia.html       → Estudar (matéria + tópicos)
+       pages/praticar.html      → Praticar (simulados + exercícios)
+       pages/perfil.html        → Perfil do aluno
+  ──────────────────────────────────────────────────────────── -->
+  <div id="slot-page-home"></div>
+  <div id="slot-page-vestibulares"></div>
+  <div id="slot-page-materia"></div>
+  <div id="slot-page-praticar"></div>
+  <div id="slot-page-perfil"></div>
 
-  <div class="progress-card" style="margin: 0 20px 20px;">
-    <div class="progress-header">
-      <span class="progress-label">Seu progresso geral</span>
-      <span class="progress-pct" id="home-pct">0%</span>
-    </div>
-    <div class="progress-bar"><div class="progress-fill" id="home-bar" style="width:0%"></div></div>
-    <div class="progress-stats">
-      <div class="pstat">
-        <div class="pstat-val" id="stat-aulas">0</div>
-        <div class="pstat-lbl">Aulas vistas</div>
-      </div>
-      <div class="pstat">
-        <div class="pstat-val" id="stat-quiz">0</div>
-        <div class="pstat-lbl">Questões feitas</div>
-      </div>
-      <div class="pstat">
-        <div class="pstat-val" id="stat-correct">0</div>
-        <div class="pstat-lbl">Acertos</div>
-      </div>
-    </div>
-  </div>
+  <!-- ── OVERLAYS ───────────────────────────────────────────
+       Ficam sobre tudo quando ativos (position: fixed).
+       components/aula-view.html        → quiz + videoaula
+       components/exercicios-view.html  → exercícios duolingo
+       components/bloqueado-view.html   → sem corações
+  ──────────────────────────────────────────────────────────── -->
+  <div id="slot-aula-view"></div>
+  <div id="slot-exercicios-view"></div>
+  <div id="slot-bloqueado-view"></div>
 
-  <div class="section-title" id="home-vest-title">Meu vestibular</div>
-  <div class="vestibulares-row" id="home-vest-cards">
-    <!-- preenchido dinamicamente -->
-  </div>
+  <!-- components/navbar.html (bottom-nav móvel / sidebar desktop) -->
+  <div id="slot-navbar"></div>
 
-  <div class="section-title">Estudar agora</div>
-  <div class="action-cards">
-    <div class="action-card" onclick="goTo('materia')">
-      <div class="action-icon mat">📐</div>
-      <div class="action-info">
-        <div class="action-name">Matemática</div>
-        <div class="action-sub" id="home-mat-sub">Comece pelo 1º conteúdo</div>
-      </div>
-      <div class="action-arrow">›</div>
-    </div>
-    <div class="action-card" onclick="goTo('materia')">
-      <div class="action-icon red">✏️</div>
-      <div class="action-info">
-        <div class="action-name">Redação</div>
-        <div class="action-sub">Estrutura e repertório</div>
-      </div>
-      <div class="action-arrow">›</div>
-    </div>
-    <div class="action-card" onclick="goTo('praticar')">
-      <div class="action-icon sim">🎯</div>
-      <div class="action-info">
-        <div class="action-name">Simulado</div>
-        <div class="action-sub" id="home-sim-sub">Questões reais do seu vestibular</div>
-      </div>
-      <div class="action-arrow">›</div>
-    </div>
-  </div>
-
-  <div class="streak-banner" style="margin-top: 16px;">
-    <div class="streak-fire">🔥</div>
-    <div class="streak-text">
-      <div class="streak-days" id="streak-days">0 dias seguidos</div>
-      <div class="streak-sub">Não perca sua sequência — estude hoje!</div>
-    </div>
-  </div>
-</div>
-
-<!-- ========== VESTIBULARES ========== -->
-<div class="screen" id="screen-vestibulares">
-  <div class="vest-screen">
-    <div class="vest-screen-title">Vestibulares</div>
-    <div class="vest-screen-sub">Conteúdo programático e datas de 2025</div>
-
-    <!-- PSC -->
-    <div class="vest-full-card" id="vest-psc">
-      <div class="vest-full-header" onclick="toggleVest('vest-psc')">
-        <div class="vest-badge badge-psc">🎓</div>
-        <div class="vest-full-info">
-          <div class="vest-full-name">PSC — UFAM</div>
-          <div class="vest-full-inst">Processo Seletivo Contínuo • Seriado</div>
-        </div>
-        <div class="vest-expand-btn">▾</div>
-      </div>
-      <div class="vest-full-body">
-        <div class="vest-info-row">
-          <span class="vest-pill pill-blue">PSC 1 — 1º ano</span>
-          <span class="vest-pill pill-blue">PSC 2 — 2º ano</span>
-          <span class="vest-pill pill-blue">PSC 3 — 3º ano</span>
-        </div>
-        <div class="vest-section">
-          <div class="vest-section-title">📐 Matemática — PSC 1 (1º ano)</div>
-          <ul class="conteudo-list">
-            <li>Conjuntos Numéricos (Naturais, Inteiros, Racionais)</li>
-            <li>Funções: Definição e Representações</li>
-            <li>Função Afim (1º grau)</li>
-            <li>Função Quadrática (2º grau)</li>
-            <li>Progressão Aritmética (PA)</li>
-            <li>Progressão Geométrica (PG)</li>
-            <li>Trigonometria no Triângulo Retângulo</li>
-            <li>Geometria Plana: áreas e perímetros</li>
-          </ul>
-        </div>
-        <div class="vest-section">
-          <div class="vest-section-title">✏️ Redação</div>
-          <ul class="conteudo-list">
-            <li>Tipos textuais: Narração, Descrição e Dissertação</li>
-            <li>Artigo de Opinião</li>
-            <li>Coerência e Coesão Textual</li>
-            <li>Argumentação e Contra-argumentação</li>
-          </ul>
-        </div>
-        <div class="vest-section">
-          <div class="vest-section-title">📅 Calendário 2025</div>
-          <ul class="conteudo-list">
-            <li>PSC 1 — Novembro 2025 (1ª fase)</li>
-            <li>PSC 2 — Novembro 2025 (2ª fase)</li>
-            <li>PSC 3 — Novembro 2025 (3ª fase)</li>
-            <li>Inscrições — Agosto a Outubro 2025</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <!-- SIS -->
-    <div class="vest-full-card" id="vest-sis">
-      <div class="vest-full-header" onclick="toggleVest('vest-sis')">
-        <div class="vest-badge badge-sis">⭐</div>
-        <div class="vest-full-info">
-          <div class="vest-full-name">SIS — UEA</div>
-          <div class="vest-full-inst">Sistema de Ingresso Seriado • Seriado</div>
-        </div>
-        <div class="vest-expand-btn">▾</div>
-      </div>
-      <div class="vest-full-body">
-        <div class="vest-info-row">
-          <span class="vest-pill pill-gold">SIS 1 — 1º ano</span>
-          <span class="vest-pill pill-gold">SIS 2 — 2º ano</span>
-          <span class="vest-pill pill-gold">SIS 3 — 3º ano</span>
-        </div>
-        <div class="vest-section">
-          <div class="vest-section-title">📐 Matemática — SIS 1</div>
-          <ul class="conteudo-list">
-            <li>Números Reais e Operações</li>
-            <li>Potenciação e Radiciação</li>
-            <li>Equações e Inequações do 1º e 2º Grau</li>
-            <li>Sistemas de Equações</li>
-            <li>Geometria Plana Básica</li>
-            <li>Estatística: médias, moda e mediana</li>
-          </ul>
-        </div>
-        <div class="vest-section">
-          <div class="vest-section-title">📅 Calendário 2025</div>
-          <ul class="conteudo-list">
-            <li>Provas — Julho e Janeiro</li>
-            <li>Inscrições — Maio a Junho 2025</li>
-            <li>Resultado — Fevereiro 2026</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <!-- MACRO -->
-    <div class="vest-full-card" id="vest-macro">
-      <div class="vest-full-header" onclick="toggleVest('vest-macro')">
-        <div class="vest-badge badge-macro">🔥</div>
-        <div class="vest-full-info">
-          <div class="vest-full-name">MACRO — UEA</div>
-          <div class="vest-full-inst">Vestibular Tradicional • Concorrido</div>
-        </div>
-        <div class="vest-expand-btn">▾</div>
-      </div>
-      <div class="vest-full-body">
-        <div class="vest-info-row">
-          <span class="vest-pill pill-red">1ª Fase — Objetiva</span>
-          <span class="vest-pill pill-red">2ª Fase — Redação</span>
-        </div>
-        <div class="vest-section">
-          <div class="vest-section-title">📐 Matemática — Conteúdo</div>
-          <ul class="conteudo-list">
-            <li>Todo o Ensino Médio (1º ao 3º ano)</li>
-            <li>Trigonometria Completa e Círculo Trigonométrico</li>
-            <li>Geometria Espacial: volumes e áreas</li>
-            <li>Matrizes, Determinantes e Sistemas Lineares</li>
-            <li>Análise Combinatória e Probabilidade</li>
-            <li>Logaritmos e Exponenciais</li>
-          </ul>
-        </div>
-        <div class="vest-section">
-          <div class="vest-section-title">📅 Calendário 2025/2026</div>
-          <ul class="conteudo-list">
-            <li>Inscrições — Outubro/Novembro 2025</li>
-            <li>1ª Fase — Janeiro 2026</li>
-            <li>2ª Fase — Fevereiro 2026</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <!-- ENEM -->
-    <div class="vest-full-card" id="vest-enem">
-      <div class="vest-full-header" onclick="toggleVest('vest-enem')">
-        <div class="vest-badge badge-enem">🌿</div>
-        <div class="vest-full-info">
-          <div class="vest-full-name">ENEM</div>
-          <div class="vest-full-inst">Exame Nacional do Ensino Médio</div>
-        </div>
-        <div class="vest-expand-btn">▾</div>
-      </div>
-      <div class="vest-full-body">
-        <div class="vest-info-row">
-          <span class="vest-pill pill-green">Dia 1 — Humanas + Redação</span>
-          <span class="vest-pill pill-green">Dia 2 — Exatas + Nat.</span>
-        </div>
-        <div class="vest-section">
-          <div class="vest-section-title">📐 Matemática — Eixos ENEM</div>
-          <ul class="conteudo-list">
-            <li>Eixo 1: Álgebra — Funções e Equações</li>
-            <li>Eixo 2: Geometria — Plana, Espacial e Analítica</li>
-            <li>Eixo 3: Estatística e Probabilidade</li>
-            <li>Eixo 4: Números — Razão, Proporção, Porcentagem</li>
-            <li>Matemática Financeira</li>
-            <li>Grandezas e Medidas</li>
-          </ul>
-        </div>
-        <div class="vest-section">
-          <div class="vest-section-title">✏️ Redação ENEM</div>
-          <ul class="conteudo-list">
-            <li>Texto Dissertativo-Argumentativo</li>
-            <li>5 competências avaliadas (0 a 200 pts cada)</li>
-            <li>Proposta de Intervenção obrigatória</li>
-            <li>Proibido: textos em verso, narrativos ou descritivos</li>
-          </ul>
-        </div>
-        <div class="vest-section">
-          <div class="vest-section-title">📅 ENEM 2025</div>
-          <ul class="conteudo-list">
-            <li>Inscrições — Maio 2025</li>
-            <li>Dia 1 — 9 de Novembro 2025</li>
-            <li>Dia 2 — 16 de Novembro 2025</li>
-            <li>Gabarito — Novembro 2025</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ========== MATÉRIA ========== -->
-<div class="screen" id="screen-materia">
-  <div class="materia-screen">
-    <div class="subject-tabs">
-      <div class="subject-tab active" id="tab-mat" onclick="selectSubject('mat')">
-        <span>📐</span>Matemática
-      </div>
-      <div class="subject-tab" id="tab-red" onclick="selectSubject('red')">
-        <span>✏️</span>Redação
-      </div>
-    </div>
-
-    <div class="serie-selector" id="serie-selector-mat">
-      <button class="serie-btn active" onclick="selectSerie(1)">1º ano</button>
-      <button class="serie-btn" onclick="selectSerie(2)">2º ano</button>
-      <button class="serie-btn" onclick="selectSerie(3)">3º ano</button>
-    </div>
-
-    <div class="serie-selector" id="serie-selector-red" style="display:none">
-      <button class="serie-btn active" onclick="selectSerieRed(1)">Fundamentos</button>
-      <button class="serie-btn" onclick="selectSerieRed(2)">Estrutura</button>
-      <button class="serie-btn" onclick="selectSerieRed(3)">ENEM/PSC</button>
-    </div>
-
-    <div class="topics-list" id="topics-list"></div>
-  </div>
-</div>
-
-<!-- ========== TREINO ========== -->
-<!-- ========== PRATICAR ========== -->
-<div class="screen" id="screen-praticar">
-  <div style="padding:20px 20px 10px">
-    <div style="font-family:var(--font-display);font-size:22px;font-weight:900;margin-bottom:2px;letter-spacing:-0.5px">⚡ Praticar</div>
-    <div style="font-size:13px;color:var(--text2);margin-bottom:16px">Questões reais dos vestibulares do Amazonas</div>
-
-    <!-- Tabs Simulados / Exercícios -->
-    <div style="display:flex;gap:6px;margin-bottom:16px">
-      <button id="pratab-sim" onclick="pratAba('sim')" style="flex:1;padding:10px 8px;border-radius:12px;border:1.5px solid var(--border-accent);background:rgba(59,130,246,0.1);color:var(--accent2);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer">🎯 Simulados</button>
-      <button id="pratab-ex" onclick="pratAba('ex')" style="flex:1;padding:10px 8px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--text2);font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer">⚡ Exercícios</button>
-    </div>
-
-    <!-- Painel Simulados -->
-    <div id="prat-sim-panel">
-
-      <!-- Abas Simples / Completo -->
-      <div style="display:flex;gap:8px;margin-bottom:18px" id="sim-modo-tabs">
-        <button id="simtab-simples" onclick="simModoAba('simples',this)" style="
-          flex:1;padding:14px 10px;border-radius:14px;
-          border:1.5px solid var(--border-accent);
-          background:rgba(59,130,246,0.12);
-          color:var(--accent2);font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;
-          display:flex;flex-direction:column;align-items:center;gap:4px;transition:all 0.2s">
-          <span style="font-size:22px">⚡</span>
-          <span>Simulado Simples</span>
-          <span style="font-size:10px;font-weight:500;opacity:0.75">Metade das questões e tempo</span>
-        </button>
-        <button id="simtab-completo" onclick="simModoAba('completo',this)" style="
-          flex:1;padding:14px 10px;border-radius:14px;
-          border:1px solid var(--border);
-          background:var(--surface);
-          color:var(--text2);font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;
-          display:flex;flex-direction:column;align-items:center;gap:4px;transition:all 0.2s">
-          <span style="font-size:22px">🏆</span>
-          <span>Simulado Completo</span>
-          <span style="font-size:10px;font-weight:500;opacity:0.75">Prova oficial completa</span>
-        </button>
-      </div>
-
-      <!-- Picker de vestibular (aparece após escolher o modo) -->
-      <div id="sim-vest-picker" style="display:none">
-        <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px" id="sim-vest-picker-label">Escolha o vestibular</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px" id="sim-vest-picker-grid"></div>
-      </div>
-
-      <!-- Cards do simulado selecionado -->
-      <div id="sim-cards-container" style="margin-top:4px"></div>
-    </div>
-
-    <!-- Painel Exercícios -->
-    <div id="prat-ex-panel" style="display:none">
-
-      <!-- ETAPA 1: Grade de assuntos -->
-      <div id="ex-assuntos-panel">
-        <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">📚 Escolha um assunto</div>
-        <div id="ex-assuntos-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"></div>
-      </div>
-
-      <!-- ETAPA 2: Seletor de nível -->
-      <div id="ex-nivel-panel" style="display:none">
-        <button onclick="exVoltarAssuntos()" style="display:flex;align-items:center;gap:6px;margin-bottom:14px;background:none;border:none;color:var(--text2);font-family:var(--font);font-size:13px;cursor:pointer;padding:0">← Voltar</button>
-        <div id="ex-nivel-header" style="display:flex;align-items:center;gap:12px;padding:14px;border-radius:14px;margin-bottom:14px;border:1px solid var(--border)"></div>
-        <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">Escolha o nível de dificuldade</div>
-        <div style="display:flex;flex-direction:column;gap:8px">
-          <button onclick="exSelecionarNivel(1)" style="padding:16px;border-radius:14px;border:1px solid rgba(34,197,94,0.3);background:rgba(34,197,94,0.08);color:var(--text);font-family:var(--font);cursor:pointer;text-align:left;display:flex;align-items:center;gap:14px;transition:all 0.15s">
-            <span style="font-size:24px">🟢</span>
-            <div><div style="font-size:14px;font-weight:700;color:#22c55e">Fácil</div><div style="font-size:11px;color:var(--text2);margin-top:2px">Conceitos básicos e contas diretas</div></div>
-          </button>
-          <button onclick="exSelecionarNivel(2)" style="padding:16px;border-radius:14px;border:1px solid rgba(245,158,11,0.3);background:rgba(245,158,11,0.08);color:var(--text);font-family:var(--font);cursor:pointer;text-align:left;display:flex;align-items:center;gap:14px;transition:all 0.15s">
-            <span style="font-size:24px">🟡</span>
-            <div><div style="font-size:14px;font-weight:700;color:var(--amber)">Médio</div><div style="font-size:11px;color:var(--text2);margin-top:2px">Interpretação e aplicação de fórmulas</div></div>
-          </button>
-          <button onclick="exSelecionarNivel(3)" style="padding:16px;border-radius:14px;border:1px solid rgba(239,68,68,0.3);background:rgba(239,68,68,0.08);color:var(--text);font-family:var(--font);cursor:pointer;text-align:left;display:flex;align-items:center;gap:14px;transition:all 0.15s">
-            <span style="font-size:24px">🔴</span>
-            <div><div style="font-size:14px;font-weight:700;color:var(--red)">Difícil</div><div style="font-size:11px;color:var(--text2);margin-top:2px">Questões de vestibular de alta complexidade</div></div>
-          </button>
-        </div>
-      </div>
-
-      <!-- ETAPA 3: Lista de questões -->
-      <div id="ex-questoes-panel" style="display:none">
-        <button onclick="exVoltarNivel()" style="display:flex;align-items:center;gap:6px;margin-bottom:14px;background:none;border:none;color:var(--text2);font-family:var(--font);font-size:13px;cursor:pointer;padding:0">← Voltar</button>
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-          <div style="font-size:12px;color:var(--text2)" id="ex-lista-info"></div>
-          <button onclick="exAtualizarQuestoes()" style="display:flex;align-items:center;gap:5px;padding:7px 12px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font);font-size:11px;font-weight:700;cursor:pointer">🔄 Atualizar</button>
-        </div>
-        <div id="ex-lista-10"></div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- Tela de Exercícios (estilo Duolingo) -->
-<div class="aula-view" id="exercicios-view">
-  <div class="aula-header" style="flex-direction:column;gap:0;padding:0;background:var(--card2)">
-    <!-- Barra superior: X + progresso + coração -->
-    <div style="display:flex;align-items:center;gap:10px;padding:14px 16px 10px;width:100%">
-      <button onclick="fecharExercicios()" style="width:36px;height:36px;border-radius:10px;background:var(--surface2);border:none;color:var(--text);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">✕</button>
-      <div style="flex:1;height:8px;background:var(--surface2);border-radius:4px;overflow:hidden">
-        <div id="ex-progress-bar" style="height:100%;background:linear-gradient(90deg,var(--amber),var(--amber2));border-radius:4px;width:0%;transition:width 0.4s"></div>
-      </div>
-      <div style="display:flex;align-items:center;gap:4px;flex-shrink:0">
-        <span id="ex-c1" style="font-size:20px">❤️</span>
-        <span id="ex-c2" style="font-size:20px">❤️</span>
-        <span id="ex-c3" style="font-size:20px">❤️</span>
-      </div>
-    </div>
-    <!-- Tabs mat/red -->
-    <div style="display:flex;gap:6px;padding:0 16px 12px;width:100%">
-      <button id="extab-mat" onclick="exTrocarTab('Matemática')" style="flex:1;padding:8px;border-radius:10px;border:1.5px solid var(--border-accent);background:rgba(59,130,246,0.1);color:var(--accent2);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer">📐 Matemática</button>
-      <button id="extab-red" onclick="exTrocarTab('Redação')" style="flex:1;padding:8px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--text2);font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer">✍️ Redação</button>
-    </div>
-  </div>
-  <div class="aula-content" id="ex-questao-area" style="padding:20px"></div>
-</div>
-
-<!-- Tela bloqueada (sem vidas) -->
-<div class="aula-view" id="bloqueado-view" style="display:none;background:var(--bg)">
-  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:32px;text-align:center">
-    <div style="font-size:64px;margin-bottom:16px">💔</div>
-    <div style="font-size:22px;font-weight:800;color:var(--red);margin-bottom:8px">Sem vidas!</div>
-    <div style="font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:20px">Você usou todos os corações hoje.<br>Volte amanhã ou estude um conteúdo novo para ganhar uma vida extra.</div>
-    <div id="bloqueado-timer" style="font-size:28px;font-weight:700;color:var(--gold);margin-bottom:24px"></div>
-    <button onclick="fecharBloqueado();goTo('materia')" style="padding:14px 28px;border-radius:12px;border:none;background:var(--accent);color:#fff;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;margin-bottom:12px;width:100%">📚 Estudar conteúdo (+1 vida)</button>
-    <button onclick="fecharBloqueado()" style="padding:12px;border-radius:12px;border:1px solid var(--border);background:var(--surface2);color:var(--text2);font-family:var(--font);font-size:14px;cursor:pointer;width:100%">← Voltar</button>
-  </div>
-</div>
-
-<!-- ========== PERFIL ========== -->
-<div class="screen" id="screen-perfil">
-  <div style="padding:24px 20px">
-    <div style="text-align:center;margin-bottom:20px">
-      <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--violet));display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 12px">🎓</div>
-      <div style="font-family:var(--font-display);font-size:20px;font-weight:800" id="perfil-nome">—</div>
-      <div style="font-size:13px;color:var(--text2);margin-top:3px" id="perfil-info">—</div>
-    </div>
-
-    <!-- Stats -->
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:20px">
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center">
-        <div style="font-size:22px;font-weight:700;color:var(--gold)" id="perfil-xp">0</div>
-        <div style="font-size:10px;color:var(--text2)">XP total</div>
-      </div>
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center">
-        <div style="font-size:22px;font-weight:700;color:var(--green)" id="perfil-acertos">0%</div>
-        <div style="font-size:10px;color:var(--text2)">acertos</div>
-      </div>
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center">
-        <div style="font-size:22px;font-weight:700;color:var(--red)" id="perfil-streak">🔥0</div>
-        <div style="font-size:10px;color:var(--text2)">streak</div>
-      </div>
-    </div>
-
-    <!-- Dificuldades observadas -->
-    <div style="background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.15);border-radius:14px;padding:16px;margin-bottom:14px">
-      <div style="font-size:12px;font-weight:700;color:var(--red);margin-bottom:10px">⚠️ Pontos a reforçar</div>
-      <div id="perfil-dificuldades" style="font-size:13px;color:var(--text2);line-height:1.9">
-        <span style="color:var(--text2);font-size:12px">Nenhum erro registrado ainda. Continue praticando!</span>
-      </div>
-    </div>
-
-    <!-- Ranking -->
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px">
-      <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:12px">🏆 Ranking da semana</div>
-      <div class="ranking-list">
-        <div class="rank-item"><div class="rank-pos gold">🥇</div><div class="rank-avatar">👩</div><div class="rank-name">Ana Paula M.</div><div class="rank-xp">1.240 XP</div></div>
-        <div class="rank-item"><div class="rank-pos silver">🥈</div><div class="rank-avatar">👦</div><div class="rank-name">Carlos R.</div><div class="rank-xp">980 XP</div></div>
-        <div class="rank-item"><div class="rank-pos bronze">🥉</div><div class="rank-avatar">👧</div><div class="rank-name">Isabela S.</div><div class="rank-xp">875 XP</div></div>
-        <div class="rank-item" style="border-color:var(--border-accent);background:rgba(59,130,246,0.05)">
-          <div class="rank-pos" style="color:var(--cyan)">—</div>
-          <div class="rank-avatar">😎</div>
-          <div class="rank-name" id="rank-nome">Você</div>
-          <div class="rank-xp" id="rank-xp">0 XP</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Editar perfil -->
-    <button onclick="editarPerfil()" style="width:100%;padding:14px;border-radius:12px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font);font-size:14px;cursor:pointer">✏️ Editar série e vestibular</button>
-  </div>
-</div>
-
-<!-- ========== AULA VIEW ========== -->
-<div class="aula-view" id="aula-view">
-  <div class="aula-header">
-    <button class="back-btn" onclick="closeAula()">←</button>
-    <div class="aula-title" id="aula-title">Função Afim</div>
-    <div id="cronometro" style="display:none;font-size:13px;font-weight:700;color:var(--gold);padding:4px 10px;border-radius:8px;background:rgba(244,168,51,0.12)">00:00</div>
-  </div>
-  <div class="aula-content" id="aula-content"></div>
-</div>
-
-<!-- ========== BOTTOM NAV ========== -->
-<nav class="bottom-nav">
-  <button class="nav-btn active" id="nav-home" onclick="goTo('home')">
-    <div class="nav-icon">🏠</div>
-    Início
-  </button>
-  <button class="nav-btn" id="nav-materia" onclick="goTo('materia')">
-    <div class="nav-icon">📚</div>
-    Estudar
-  </button>
-  <button class="nav-btn" id="nav-praticar" onclick="goTo('praticar')">
-    <div class="nav-icon">⚡</div>
-    Praticar
-  </button>
-  <button class="nav-btn" id="nav-perfil" onclick="goTo('perfil')">
-    <div class="nav-icon">👤</div>
-    Perfil
-  </button>
-</nav>
 </div><!-- /app-wrapper -->
 
 
+<!-- ROUTER ───────────────────────────────────────────────────
+     Injeta fragmentos e carrega módulos JS em ordem.
+     Adicionar página: 1) crie pages/nova.html
+                       2) adicione entrada em fragments abaixo
+                       3) adicione case em js/modules/nav.js → goTo()
+──────────────────────────────────────────────────────────── -->
+<script>
+const Router = {
 
-<script src="js/script.js"></script>
+  fragments: {
+    'auth-wrapper':           'pages/auth.html',
+    'slot-header':            'components/header.html',
+    'slot-toasts':            'components/toasts.html',
+    'slot-navbar':            'components/navbar.html',
+    'slot-aula-view':         'components/aula-view.html',
+    'slot-exercicios-view':   'components/exercicios-view.html',
+    'slot-bloqueado-view':    'components/bloqueado-view.html',
+    'slot-page-home':         'pages/home.html',
+    'slot-page-vestibulares': 'pages/vestibulares.html',
+    'slot-page-materia':      'pages/materia.html',
+    'slot-page-praticar':     'pages/praticar.html',
+    'slot-page-perfil':       'pages/perfil.html',
+  },
+
+  // Ordem estrita de dependência — NÃO reordene sem revisar
+  scripts: [
+    'js/modules/state.js',        // estado, perfil, corações
+    'js/data/topics.js',          // mathTopics, redTopics
+    'js/data/quizzes.js',         // quizzes por tópico
+    'js/data/simulados.js',       // simuladoQuestions + catalogoSimulados
+    'js/data/banco.js',           // bancoDB (questões reais)
+    'js/modules/utils.js',        // getDificuldade + pós-proc
+    'js/modules/gamification.js', // XP, streak, achievements
+    'js/modules/materia.js',      // tela Estudar
+    'js/modules/aula.js',         // aula + quiz
+    'js/modules/simulado.js',     // simulado cronometrado
+    'js/modules/praticar.js',     // aba Praticar
+    'js/modules/exercicios-assuntos.js', // assuntos → nível → questões (extraído de script.js)
+    'js/modules/exercicios.js',   // exercícios Duolingo
+    'js/modules/auth.js',         // login/cadastro
+    'js/modules/nav.js',          // goTo, perfil, tema
+    'js/app.js',                  // init final
+  ],
+
+  async loadFragment(id, url) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    try {
+      const r = await fetch(url);
+      if (!r.ok) throw new Error(`${r.status} ${url}`);
+      const html = await r.text();
+      // auth.html já contém o próprio <div id="auth-wrapper">,
+      // então substituímos o elemento inteiro em vez de injetar dentro dele.
+      if (id === 'auth-wrapper') {
+        el.outerHTML = html;
+      } else {
+        el.innerHTML = html;
+      }
+    } catch (e) {
+      console.warn('[VoaAM] fragmento falhou:', e.message);
+    }
+  },
+
+  loadScript(src) {
+    return new Promise(res => {
+      const s = document.createElement('script');
+      s.src = src;
+      s.onload  = res;
+      s.onerror = () => { console.warn('[VoaAM] script falhou:', src); res(); };
+      document.body.appendChild(s);
+    });
+  },
+
+  async boot() {
+    await Promise.all(Object.entries(this.fragments).map(([id, url]) => this.loadFragment(id, url)));
+    for (const src of this.scripts) await this.loadScript(src);
+  }
+};
+
+Router.boot();
+</script>
+
 </body>
 </html>
-
