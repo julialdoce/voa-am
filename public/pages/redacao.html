@@ -1,4 +1,4 @@
-<!-- pages/redacao.html — Tela de Redação: Temas e Editor -->
+<!-- pages/redacao.html — Tela de Redação: Temas, Editor e Histórico -->
 <div class="screen" id="screen-redacao">
   <div style="padding:20px 20px 10px">
 
@@ -6,102 +6,93 @@
     <div style="font-family:var(--font-display);font-size:22px;font-weight:900;margin-bottom:2px;letter-spacing:-0.5px">✍️ Redação</div>
     <div style="font-size:13px;color:var(--text2);margin-bottom:16px">Pratique sua redação com temas reais dos vestibulares</div>
 
-    <!-- Abas Temas / Editor -->
+    <!-- Abas: Temas / Escrever / Histórico -->
     <div style="display:flex;gap:6px;margin-bottom:20px">
       <button id="redtab-temas" onclick="redAba('temas')"
-        style="flex:1;padding:10px 8px;border-radius:12px;border:1.5px solid var(--border-accent);background:rgba(59,130,246,0.1);color:var(--accent2);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s">
+        style="flex:1;padding:10px 6px;border-radius:12px;border:1.5px solid var(--border-accent);background:rgba(59,130,246,0.1);color:var(--accent2);font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s">
         📋 Temas
       </button>
       <button id="redtab-editor" onclick="redAba('editor')"
-        style="flex:1;padding:10px 8px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--text2);font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s">
+        style="flex:1;padding:10px 6px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--text2);font-family:var(--font);font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s">
         ✍️ Escrever
+      </button>
+      <button id="redtab-historico" onclick="redAba('historico')"
+        style="flex:1;padding:10px 6px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--text2);font-family:var(--font);font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s;position:relative">
+        📂 Histórico
+        <span id="red-hist-badge" style="display:none;position:absolute;top:5px;right:5px;min-width:16px;height:16px;border-radius:8px;background:var(--accent);color:#fff;font-size:9px;font-weight:800;line-height:16px;text-align:center;padding:0 3px"></span>
       </button>
     </div>
 
-    <!-- ══════════════════════════════════════
-         PAINEL: TEMAS
-    ══════════════════════════════════════ -->
+
+    <!-- ══════════════════════════════════
+         PAINEL TEMAS
+    ══════════════════════════════════ -->
     <div id="red-temas-panel">
 
-      <!-- Filtros por vestibular -->
-      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px" id="red-filtros">
-        <button class="red-filtro-btn red-filtro-active" onclick="redFiltrar('todos', this)">Todos</button>
-        <button class="red-filtro-btn" onclick="redFiltrar('ENEM', this)">🇧🇷 ENEM</button>
-        <button class="red-filtro-btn" onclick="redFiltrar('PSC', this)">📘 PSC</button>
-        <button class="red-filtro-btn" onclick="redFiltrar('SIS', this)">⭐ SIS</button>
-        <button class="red-filtro-btn" onclick="redFiltrar('MACRO', this)">🏛️ MACRO</button>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px">
+        <button class="red-filtro-btn red-filtro-active" onclick="redFiltrar('todos',this)">Todos</button>
+        <button class="red-filtro-btn" onclick="redFiltrar('ENEM',this)">🇧🇷 ENEM</button>
+        <button class="red-filtro-btn" onclick="redFiltrar('PSC',this)">📘 PSC</button>
+        <button class="red-filtro-btn" onclick="redFiltrar('SIS',this)">⭐ SIS</button>
+        <button class="red-filtro-btn" onclick="redFiltrar('MACRO',this)">🏛️ MACRO</button>
       </div>
 
-      <!-- Lista de temas -->
       <div id="red-temas-lista">
 
-        <!-- Card de tema -->
-        <div class="red-tema-card" data-vest="ENEM" onclick="redSelecionarTema(this)">
+        <!-- Card ENEM 2025 -->
+        <div class="red-tema-card" data-vest="ENEM" data-tema-id="ENEM_2025_envelhecimento" onclick="redSelecionarTema(this)">
           <div style="display:flex;align-items:flex-start;gap:12px">
             <div style="flex-shrink:0;width:40px;height:40px;border-radius:12px;background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.2);display:flex;align-items:center;justify-content:center;font-size:18px">🇧🇷</div>
             <div style="flex:1;min-width:0">
               <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px">
-                <span style="font-size:10px;font-weight:800;padding:2px 8px;border-radius:6px;background:rgba(34,197,94,0.12);color:#4ade80;letter-spacing:0.05em">ENEM 2025</span>
+                <span class="red-vest-badge enem-badge">ENEM 2025</span>
                 <span style="font-size:10px;color:var(--text2)">Ciências Humanas</span>
               </div>
               <div style="font-size:14px;font-weight:700;color:var(--text);line-height:1.35;margin-bottom:6px">
                 "Perspectivas acerca do envelhecimento na sociedade brasileira"
               </div>
-              <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-                <span style="font-size:11px;color:var(--text2);display:flex;align-items:center;gap:4px">📄 Dissertativo-argumentativo</span>
-                <span style="font-size:11px;color:var(--text2);display:flex;align-items:center;gap:4px">⏱️ 5h</span>
-                <span style="font-size:11px;color:var(--text2);display:flex;align-items:center;gap:4px">📝 7–30 linhas</span>
+              <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+                <span style="font-size:11px;color:var(--text2)">📄 Dissertativo-argumentativo</span>
+                <span style="font-size:11px;color:var(--text2)">⏱️ 5h</span>
+                <span style="font-size:11px;color:var(--text2)">📝 7–30 linhas</span>
               </div>
             </div>
           </div>
 
-          <!-- Motivadores (colapsados) -->
           <div class="red-motivadores" style="display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
             <div style="font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">📌 Textos motivadores</div>
             <div style="display:flex;flex-direction:column;gap:6px">
-              <div style="font-size:12px;padding:10px 12px;border-radius:10px;background:var(--surface2);color:var(--text);border-left:3px solid #4ade80;line-height:1.6">
-                "Em 2050, pela primeira vez na história, haverá mais idosos do que jovens no Brasil. O fenômeno, resultado da queda na taxa de natalidade e do aumento da expectativa de vida, desafia o sistema previdenciário e o mercado de trabalho." — IBGE, 2023
-              </div>
-              <div style="font-size:12px;padding:10px 12px;border-radius:10px;background:var(--surface2);color:var(--text);border-left:3px solid #4ade80;line-height:1.6">
-                "O idadismo — discriminação por faixa etária — é a forma de preconceito mais normalizada nas sociedades modernas, impactando o acesso de pessoas acima de 60 anos a emprego, saúde e espaços de participação social." — OMS, 2021
-              </div>
-              <div style="font-size:12px;padding:10px 12px;border-radius:10px;background:var(--surface2);color:var(--text);border-left:3px solid #4ade80;line-height:1.6">
-                Charge: idoso em frente a caixa eletrônico com mensagem de erro "Acesso Digital Negado", enquanto ao fundo jovens usam celulares sem dificuldade. [Fonte: Folha de S.Paulo, 2024]
-              </div>
+              <div class="red-motivador-item" style="border-left-color:#4ade80">"Em 2050, pela primeira vez na história, haverá mais idosos do que jovens no Brasil. O fenômeno, resultado da queda na taxa de natalidade e do aumento da expectativa de vida, desafia o sistema previdenciário e o mercado de trabalho." — IBGE, 2023</div>
+              <div class="red-motivador-item" style="border-left-color:#4ade80">"O idadismo — discriminação por faixa etária — é a forma de preconceito mais normalizada nas sociedades modernas, impactando o acesso de pessoas acima de 60 anos a emprego, saúde e espaços de participação social." — OMS, 2021</div>
+              <div class="red-motivador-item" style="border-left-color:#4ade80">Charge: idoso em frente a caixa eletrônico com mensagem de erro "Acesso Digital Negado", enquanto ao fundo jovens usam celulares sem dificuldade. [Fonte: Folha de S.Paulo, 2024]</div>
             </div>
-            <button onclick="redEscreverTema(event, this)" style="width:100%;margin-top:12px;padding:12px;border-radius:12px;border:none;background:var(--accent);color:#fff;font-family:var(--font);font-size:14px;font-weight:800;cursor:pointer;letter-spacing:-0.2px;transition:opacity 0.15s">
+            <button onclick="redEscreverTema(event,this)" style="width:100%;margin-top:12px;padding:12px;border-radius:12px;border:none;background:var(--accent);color:#fff;font-family:var(--font);font-size:14px;font-weight:800;cursor:pointer;transition:opacity 0.15s">
               ✍️ Escrever sobre este tema →
             </button>
           </div>
 
-          <!-- Botão expandir motivadores -->
-          <button class="red-expand-btn" onclick="redExpandirTema(event, this)" style="display:flex;align-items:center;justify-content:center;gap:5px;width:100%;margin-top:10px;padding:7px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text2);font-family:var(--font);font-size:11px;font-weight:600;cursor:pointer;transition:all 0.15s">
-            <span>Ver textos motivadores</span> <span class="red-expand-icon">▾</span>
+          <button class="red-expand-btn" onclick="redExpandirTema(event,this)">
+            <span>Ver textos motivadores</span><span class="red-expand-icon">▾</span>
           </button>
         </div>
-        <!-- /Card tema 1 -->
 
-        <!-- Placeholder cards (bloqueados — temas em breve) -->
-        <div class="red-tema-card red-tema-locked" style="opacity:0.45;pointer-events:none">
+        <!-- Placeholders -->
+        <div class="red-tema-card red-tema-locked">
           <div style="display:flex;align-items:center;gap:12px">
             <div style="flex-shrink:0;width:40px;height:40px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px">🔒</div>
             <div>
-              <div style="display:flex;gap:8px;margin-bottom:4px">
-                <span style="font-size:10px;font-weight:800;padding:2px 8px;border-radius:6px;background:var(--surface2);color:var(--text2)">ENEM 2024</span>
-              </div>
+              <div style="margin-bottom:4px"><span style="font-size:10px;font-weight:800;padding:2px 8px;border-radius:6px;background:var(--surface2);color:var(--text2)">ENEM 2024</span></div>
               <div style="font-size:14px;font-weight:700;color:var(--text)">Em breve</div>
               <div style="font-size:11px;color:var(--text2);margin-top:2px">Novo tema sendo preparado</div>
             </div>
           </div>
         </div>
 
-        <div class="red-tema-card red-tema-locked" style="opacity:0.45;pointer-events:none">
+        <div class="red-tema-card red-tema-locked">
           <div style="display:flex;align-items:center;gap:12px">
             <div style="flex-shrink:0;width:40px;height:40px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px">🔒</div>
             <div>
-              <div style="display:flex;gap:8px;margin-bottom:4px">
-                <span style="font-size:10px;font-weight:800;padding:2px 8px;border-radius:6px;background:var(--surface2);color:var(--text2)">PSC 2025</span>
-              </div>
+              <div style="margin-bottom:4px"><span style="font-size:10px;font-weight:800;padding:2px 8px;border-radius:6px;background:var(--surface2);color:var(--text2)">PSC 2025</span></div>
               <div style="font-size:14px;font-weight:700;color:var(--text)">Em breve</div>
               <div style="font-size:11px;color:var(--text2);margin-top:2px">Novo tema sendo preparado</div>
             </div>
@@ -109,90 +100,52 @@
         </div>
 
       </div>
-      <!-- /lista de temas -->
-
     </div>
     <!-- /painel temas -->
 
 
-    <!-- ══════════════════════════════════════
-         PAINEL: EDITOR DE REDAÇÃO
-    ══════════════════════════════════════ -->
+    <!-- ══════════════════════════════════
+         PAINEL EDITOR
+    ══════════════════════════════════ -->
     <div id="red-editor-panel" style="display:none">
 
-      <!-- Tema selecionado (header do editor) -->
-      <div id="red-editor-tema-header" style="padding:14px;border-radius:14px;background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);margin-bottom:16px">
+      <div style="padding:14px;border-radius:14px;background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);margin-bottom:16px">
         <div style="font-size:10px;font-weight:800;color:var(--accent2);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:4px" id="red-editor-vest-badge">✍️ Escreva sua redação</div>
         <div style="font-size:14px;font-weight:700;color:var(--text);line-height:1.4" id="red-editor-tema-titulo">Escolha um tema na aba "Temas" para começar</div>
       </div>
 
-      <!-- Dicas rápidas (colapsável) -->
       <details style="margin-bottom:14px">
         <summary style="font-size:12px;font-weight:700;color:var(--text2);cursor:pointer;padding:10px 12px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);list-style:none;display:flex;align-items:center;justify-content:space-between">
-          <span>💡 Estrutura da redação dissertativo-argumentativa</span>
+          <span>💡 Estrutura dissertativo-argumentativa</span>
           <span style="font-size:10px;opacity:0.7">▾ ver</span>
         </summary>
         <div style="padding:12px;margin-top:6px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);font-size:12px;color:var(--text2);line-height:1.7">
           <div style="display:flex;flex-direction:column;gap:8px">
-            <div style="display:flex;gap:10px;align-items:flex-start">
-              <span style="flex-shrink:0;width:20px;height:20px;border-radius:6px;background:rgba(59,130,246,0.15);color:var(--accent2);font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center">1</span>
-              <div><strong style="color:var(--text)">Introdução</strong> — Apresente o tema e a tese (sua posição). 2–3 linhas.</div>
-            </div>
-            <div style="display:flex;gap:10px;align-items:flex-start">
-              <span style="flex-shrink:0;width:20px;height:20px;border-radius:6px;background:rgba(59,130,246,0.15);color:var(--accent2);font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center">2</span>
-              <div><strong style="color:var(--text)">Desenvolvimento 1</strong> — 1º argumento com dado, exemplo ou citação. 4–5 linhas.</div>
-            </div>
-            <div style="display:flex;gap:10px;align-items:flex-start">
-              <span style="flex-shrink:0;width:20px;height:20px;border-radius:6px;background:rgba(59,130,246,0.15);color:var(--accent2);font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center">3</span>
-              <div><strong style="color:var(--text)">Desenvolvimento 2</strong> — 2º argumento complementar. 4–5 linhas.</div>
-            </div>
-            <div style="display:flex;gap:10px;align-items:flex-start">
-              <span style="flex-shrink:0;width:20px;height:20px;border-radius:6px;background:rgba(59,130,246,0.15);color:var(--accent2);font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center">4</span>
-              <div><strong style="color:var(--text)">Conclusão</strong> — Retome a tese e proponha uma intervenção. 3–4 linhas.</div>
-            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start"><span class="red-struct-num">1</span><div><strong style="color:var(--text)">Introdução</strong> — Apresente o tema e a tese. 2–3 linhas.</div></div>
+            <div style="display:flex;gap:10px;align-items:flex-start"><span class="red-struct-num">2</span><div><strong style="color:var(--text)">Desenvolvimento 1</strong> — 1º argumento com dado ou citação. 4–5 linhas.</div></div>
+            <div style="display:flex;gap:10px;align-items:flex-start"><span class="red-struct-num">3</span><div><strong style="color:var(--text)">Desenvolvimento 2</strong> — 2º argumento complementar. 4–5 linhas.</div></div>
+            <div style="display:flex;gap:10px;align-items:flex-start"><span class="red-struct-num">4</span><div><strong style="color:var(--text)">Conclusão</strong> — Retome a tese e proponha uma intervenção. 3–4 linhas.</div></div>
           </div>
         </div>
       </details>
 
-      <!-- Área de escrita -->
       <div style="margin-bottom:10px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
           <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.06em">Sua redação</div>
-          <!-- Contadores -->
           <div style="display:flex;gap:12px">
-            <div style="font-size:11px;color:var(--text2)">
-              Palavras: <span id="red-contador-palavras" style="font-weight:700;color:var(--text)">0</span>
-            </div>
-            <div style="font-size:11px;color:var(--text2)">
-              Linhas: <span id="red-contador-linhas" style="font-weight:700;color:var(--text)">0</span><span style="color:var(--text2)">/30</span>
-            </div>
+            <div style="font-size:11px;color:var(--text2)">Palavras: <span id="red-contador-palavras" style="font-weight:700;color:var(--text)">0</span></div>
+            <div style="font-size:11px;color:var(--text2)">Linhas: <span id="red-contador-linhas" style="font-weight:700;color:var(--text)">0</span><span style="color:var(--text2)">/30</span></div>
           </div>
         </div>
         <textarea id="red-editor-textarea"
           placeholder="Comece sua redação aqui...&#10;&#10;Dica: Uma boa redação do ENEM tem entre 25 e 30 linhas."
           oninput="redAtualizarContadores(this)"
-          style="
-            width:100%;
-            min-height:340px;
-            padding:16px;
-            background:var(--surface2);
-            border:1.5px solid var(--border);
-            border-radius:14px;
-            color:var(--text);
-            font-family:var(--font);
-            font-size:14px;
-            line-height:1.8;
-            resize:vertical;
-            outline:none;
-            transition:border-color 0.2s;
-            box-sizing:border-box;
-          "
           onfocus="this.style.borderColor='var(--accent)'"
           onblur="this.style.borderColor='var(--border)'"
-        ></textarea>
+          style="width:100%;min-height:340px;padding:16px;background:var(--surface2);border:1.5px solid var(--border);border-radius:14px;color:var(--text);font-family:var(--font);font-size:14px;line-height:1.8;resize:vertical;outline:none;transition:border-color 0.2s;box-sizing:border-box">
+        </textarea>
       </div>
 
-      <!-- Barra de progresso de linhas -->
       <div style="margin-bottom:16px">
         <div style="height:4px;border-radius:2px;background:var(--surface2);overflow:hidden">
           <div id="red-progress-bar" style="height:100%;border-radius:2px;background:var(--accent);transition:width 0.3s;width:0%"></div>
@@ -203,46 +156,92 @@
         </div>
       </div>
 
-      <!-- Ações -->
       <div style="display:flex;flex-direction:column;gap:8px">
-
-        <!-- Botão corrigir (placeholder — IA futura) -->
-        <button onclick="redCorrigir()" style="
-          width:100%;padding:15px;border-radius:14px;border:none;
-          background:linear-gradient(135deg,var(--accent),var(--violet,#7c3aed));
-          color:#fff;font-family:var(--font);font-size:15px;font-weight:800;
-          cursor:pointer;letter-spacing:-0.2px;transition:opacity 0.15s;
-          display:flex;align-items:center;justify-content:center;gap:8px">
+        <button onclick="redCorrigir()" style="width:100%;padding:15px;border-radius:14px;border:none;background:linear-gradient(135deg,var(--accent),var(--violet,#7c3aed));color:#fff;font-family:var(--font);font-size:15px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px">
           🤖 Corrigir com IA
           <span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:6px;background:rgba(255,255,255,0.2)">Em breve</span>
         </button>
-
-        <!-- Botão salvar rascunho -->
         <div style="display:flex;gap:8px">
-          <button onclick="redSalvarRascunho()" style="
-            flex:1;padding:12px;border-radius:12px;
-            border:1px solid var(--border);background:var(--surface2);
-            color:var(--text);font-family:var(--font);font-size:13px;font-weight:700;
-            cursor:pointer;transition:all 0.15s;display:flex;align-items:center;justify-content:center;gap:6px">
+          <button onclick="redSalvarRascunho()" style="flex:1;padding:12px;border-radius:12px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px">
             💾 Salvar rascunho
           </button>
-          <button onclick="redLimpar()" style="
-            flex:1;padding:12px;border-radius:12px;
-            border:1px solid var(--border);background:var(--surface2);
-            color:var(--text2);font-family:var(--font);font-size:13px;font-weight:600;
-            cursor:pointer;transition:all 0.15s;display:flex;align-items:center;justify-content:center;gap:6px">
-            🗑️ Limpar
+          <button onclick="redEnviarHistorico()" style="flex:1;padding:12px;border-radius:12px;border:1px solid rgba(34,197,94,0.3);background:rgba(34,197,94,0.1);color:#4ade80;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px">
+            ✅ Concluir redação
           </button>
         </div>
+        <button onclick="redLimpar()" style="width:100%;padding:10px;border-radius:12px;border:1px solid var(--border);background:transparent;color:var(--text2);font-family:var(--font);font-size:12px;font-weight:600;cursor:pointer">
+          🗑️ Limpar texto
+        </button>
       </div>
 
-      <!-- Feedback de rascunho salvo -->
-      <div id="red-save-feedback" style="display:none;margin-top:10px;padding:10px 14px;border-radius:10px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);color:#4ade80;font-size:13px;font-weight:600;text-align:center">
-        ✅ Rascunho salvo com sucesso!
-      </div>
-
+      <div id="red-save-feedback" style="display:none;margin-top:10px;padding:10px 14px;border-radius:10px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);color:#4ade80;font-size:13px;font-weight:600;text-align:center">✅ Rascunho salvo!</div>
+      <div id="red-concluir-feedback" style="display:none;margin-top:10px;padding:10px 14px;border-radius:10px;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2);color:var(--accent2);font-size:13px;font-weight:600;text-align:center">🎉 Redação salva no histórico!</div>
     </div>
     <!-- /painel editor -->
+
+
+    <!-- ══════════════════════════════════
+         PAINEL HISTÓRICO
+    ══════════════════════════════════ -->
+    <div id="red-historico-panel" style="display:none">
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--text)">Suas redações salvas</div>
+          <div id="red-hist-contador" style="font-size:11px;color:var(--text2);margin-top:2px">0 redações no histórico</div>
+        </div>
+        <button onclick="redLimparHistorico()" style="padding:7px 12px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);color:var(--text2);font-family:var(--font);font-size:11px;font-weight:700;cursor:pointer">
+          🗑️ Limpar tudo
+        </button>
+      </div>
+
+      <!-- Estado vazio -->
+      <div id="red-hist-vazio" style="padding:44px 20px;text-align:center">
+        <div style="font-size:44px;margin-bottom:12px">📂</div>
+        <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px">Nenhuma redação ainda</div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.7">Escreva e clique em<br><strong style="color:var(--accent2)">✅ Concluir redação</strong><br>para salvar aqui.</div>
+      </div>
+
+      <!-- Cards do histórico (renderizados por JS) -->
+      <div id="red-hist-lista" style="display:flex;flex-direction:column;gap:10px"></div>
+
+    </div>
+    <!-- /painel histórico -->
+
+    <!-- ══════════════════════════════════
+         MODAL DE LEITURA
+    ══════════════════════════════════ -->
+    <div id="red-modal" style="display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.65);padding:16px;overflow-y:auto">
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;width:100%;max-width:600px;margin:0 auto;overflow:hidden">
+
+        <!-- Header -->
+        <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+          <div style="flex:1;min-width:0">
+            <div id="modal-vest-badge" style="font-size:10px;font-weight:800;color:var(--accent2);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:4px"></div>
+            <div id="modal-tema-titulo" style="font-size:14px;font-weight:700;color:var(--text);line-height:1.35;margin-bottom:4px"></div>
+            <div id="modal-meta" style="font-size:11px;color:var(--text2)"></div>
+          </div>
+          <button onclick="redFecharModal()" style="flex-shrink:0;width:32px;height:32px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);color:var(--text2);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center">✕</button>
+        </div>
+
+        <!-- Stats -->
+        <div id="modal-stats" style="display:flex;border-bottom:1px solid var(--border)"></div>
+
+        <!-- Texto -->
+        <div style="padding:20px">
+          <div style="font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">Redação</div>
+          <div id="modal-texto" style="font-size:13px;color:var(--text);line-height:1.9;white-space:pre-wrap;background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px;max-height:55vh;overflow-y:auto"></div>
+        </div>
+
+        <!-- Ações -->
+        <div style="padding:0 20px 20px;display:flex;gap:8px">
+          <button onclick="redRetomarDoModal()" style="flex:1;padding:12px;border-radius:12px;border:none;background:var(--accent);color:#fff;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer">✍️ Continuar editando</button>
+          <button onclick="redExcluirDoModal()" style="padding:12px 16px;border-radius:12px;border:1px solid rgba(239,68,68,0.3);background:rgba(239,68,68,0.08);color:#ef4444;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer">🗑️ Excluir</button>
+        </div>
+
+      </div>
+    </div>
+    <!-- /modal -->
 
   </div>
 </div>

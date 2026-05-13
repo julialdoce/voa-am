@@ -72,6 +72,9 @@
 
 </div><!-- /app-wrapper -->
 
+<!-- Simulado Completo — fora do app-wrapper para não ser afetado pelo grid -->
+<div id="slot-sc-view"></div>
+
 
 <!-- ROUTER ───────────────────────────────────────────────────
      Injeta fragmentos e carrega módulos JS em ordem.
@@ -90,6 +93,7 @@ const Router = {
     'slot-aula-view':         'components/aula-view.html',
     'slot-exercicios-view':   'components/exercicios-view.html',
     'slot-bloqueado-view':    'components/bloqueado-view.html',
+    'slot-sc-view':           'components/simulado-completo-view.html',
     'slot-page-home':         'pages/home.html',
     'slot-page-vestibulares': 'pages/vestibulares.html',
     'slot-page-materia':      'pages/materia.html',
@@ -114,6 +118,8 @@ const Router = {
     'js/modules/exercicios-assuntos.js', // assuntos → nível → questões (extraído de script.js)
     'js/modules/exercicios.js',   // exercícios Duolingo
     'js/modules/auth.js',         // login/cadastro
+    'js/data/enem2025_mat.js',    // questões ENEM 2025 matemática
+    'js/modules/simulado_completo.js', // simulado completo
     'js/modules/redacao.js',      // página de redação
     'js/modules/nav.js',          // goTo, perfil, tema
     'js/app.js',                  // init final

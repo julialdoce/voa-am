@@ -1,0 +1,369 @@
+<!-- components/simulado-completo-view.html -->
+<style>
+/* ── Overlay principal ── */
+#sc-overlay {
+  position: fixed; inset: 0; z-index: 9000;
+  background: var(--bg);
+  display: none; flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── Telas de seleção (absolutas sobre o overlay) ── */
+.sc-tela {
+  position: absolute; inset: 0; z-index: 10;
+  background: var(--bg); overflow-y: auto;
+  display: none;
+}
+.sc-tela.ativa { display: block; }
+.sc-tela-inner { max-width: 540px; margin: 0 auto; padding: 0 16px 32px; }
+
+/* ── Corpo da prova ── */
+#sc-body {
+  flex: 1; display: flex; overflow: hidden;
+  display: none;
+}
+#sc-body.ativo { display: flex; }
+
+/* ── Coluna da questão ── */
+#sc-questao-col {
+  flex: 1; min-width: 0;
+  display: flex; flex-direction: column; overflow: hidden;
+}
+#sc-scroll {
+  flex: 1; overflow-y: auto;
+  padding: 16px 16px 0;
+}
+
+/* Desktop: centraliza o conteúdo com margens laterais */
+@media (min-width: 768px) {
+  #sc-scroll {
+    padding: 24px 0 0;
+  }
+  #sc-scroll-inner {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  #sc-nav {
+    padding: 12px 0;
+  }
+  #sc-nav-inner {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    gap: 8px;
+  }
+}
+
+/* ── Imagem da questão ── */
+.sc-img-box {
+  margin: 12px 0;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  background: var(--surface2);
+}
+.sc-img-box img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  display: block;
+  padding: 8px;
+  box-sizing: border-box;
+}
+.sc-img-box figcaption {
+  font-size: 10px; color: var(--text2);
+  padding: 5px 10px;
+  border-top: 1px solid var(--border);
+  font-style: italic;
+}
+
+/* ── Alternativa selecionada ── */
+.option-btn.sc-sel {
+  border-color: var(--accent);
+  background: rgba(59,130,246,0.09);
+}
+.option-btn.sc-sel .option-letter {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* ── Nav inferior ── */
+#sc-nav {
+  flex-shrink: 0; padding: 10px 14px;
+  border-top: 1px solid var(--border);
+  background: var(--card2);
+  display: flex; gap: 8px;
+}
+.sc-btn-pular {
+  flex: 1; padding: 11px; border-radius: 10px;
+  border: 1.5px solid rgba(245,158,11,0.35);
+  background: rgba(245,158,11,0.07); color: #f59e0b;
+  font-family: var(--font); font-size: 13px; font-weight: 700;
+  cursor: pointer; transition: background 0.15s;
+}
+.sc-btn-pular:hover { background: rgba(245,158,11,0.12); }
+.sc-btn-prox {
+  flex: 1.5; padding: 11px; border-radius: 10px;
+  border: none; background: var(--accent); color: #fff;
+  font-family: var(--font); font-size: 13px; font-weight: 800;
+  cursor: pointer;
+}
+
+/* ── Timer ── */
+.sc-timer {
+  font-size: 13px; font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent2);
+  background: rgba(59,130,246,0.08);
+  border: 1px solid rgba(59,130,246,0.18);
+  padding: 4px 10px; border-radius: 20px;
+  white-space: nowrap; flex-shrink: 0;
+}
+.sc-timer.urgente {
+  color: #ef4444;
+  background: rgba(239,68,68,0.08);
+  border-color: rgba(239,68,68,0.25);
+}
+
+/* ── Log lateral ── */
+#sc-log {
+  width: 220px; flex-shrink: 0;
+  border-left: 1px solid var(--border);
+  background: var(--card);
+  display: none; flex-direction: column;
+  overflow: hidden;
+}
+@media (min-width: 768px) {
+  #sc-log { display: flex; }
+  #sc-log-toggle { display: none !important; }
+}
+#sc-log.aberto {
+  display: flex !important;
+  position: absolute; inset: 0;
+  width: 100%; border-left: none; z-index: 20;
+}
+#sc-log-grid {
+  flex: 1; overflow-y: auto; padding: 10px;
+  display: flex; flex-wrap: wrap;
+  gap: 4px; align-content: flex-start;
+}
+.sc-log-q {
+  width: 30px; height: 30px; border-radius: 7px;
+  border: 1.5px solid var(--border);
+  background: var(--surface2); color: var(--text2);
+  font-size: 9px; font-weight: 800; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.1s;
+}
+.sc-log-q.atual  { background: var(--accent); color: #fff; border-color: var(--accent); }
+.sc-log-q.resp   { background: rgba(59,130,246,0.15); color: var(--accent2); border-color: rgba(59,130,246,0.35); }
+.sc-log-q.pulada { background: rgba(245,158,11,0.15); color: #f59e0b; border-color: rgba(245,158,11,0.4); }
+
+/* ── Resultado ── */
+#sc-resultado {
+  flex: 1; overflow-y: auto;
+  padding: 20px; display: none;
+}
+.sc-res-wrap {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  #sc-resultado { padding: 24px; }
+}
+
+/* Barra por assunto */
+.sc-ass-item { margin-bottom: 10px; }
+.sc-ass-row  { display: flex; justify-content: space-between; margin-bottom: 3px; }
+.sc-ass-bg   { height: 6px; border-radius: 3px; background: var(--surface2); overflow: hidden; }
+.sc-ass-fill { height: 100%; border-radius: 3px; transition: width 0.6s; }
+
+/* Gabarito row */
+.sc-gab-row {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  font-size: 11px;
+  margin-bottom: 4px;
+}
+</style>
+
+<div id="sc-overlay">
+
+  <!-- ═══════════════════════════════════════
+       TELA 1: SELETOR DE PROVA
+  ═══════════════════════════════════════ -->
+  <div class="sc-tela ativa" id="sc-tela-seletor">
+    <div class="sc-tela-inner">
+
+      <div class="aula-header" style="position:sticky;top:0;margin:0 -16px 20px;padding:14px 18px">
+        <button class="back-btn" onclick="scFechar()">←</button>
+        <div>
+          <div class="aula-title">Simulado Completo</div>
+          <div style="font-size:11px;color:var(--text2)">Provas oficiais com gabarito real</div>
+        </div>
+      </div>
+
+      <div style="font-size:11px;font-weight:700;color:var(--text2);
+        text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">
+        Selecione a prova
+      </div>
+      <div id="sc-seletor-grid" style="display:flex;flex-direction:column;gap:10px"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       TELA 2: CONFIRMAÇÃO
+  ═══════════════════════════════════════ -->
+  <div class="sc-tela" id="sc-tela-confirmar">
+    <div class="sc-tela-inner">
+
+      <div class="aula-header" style="position:sticky;top:0;margin:0 -16px 20px;padding:14px 18px">
+        <button class="back-btn" onclick="scTela('seletor')">←</button>
+        <div class="aula-title">Confirmar prova</div>
+      </div>
+
+      <div class="question-card" style="margin-bottom:16px">
+        <div class="quiz-badge" style="margin-bottom:8px;display:inline-block">🏆 Prova selecionada</div>
+        <div id="sc-conf-titulo" style="font-size:17px;font-weight:800;color:var(--text);margin-bottom:4px"></div>
+        <div id="sc-conf-info"   style="font-size:12px;color:var(--text2);margin-bottom:16px"></div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;gap:10px;font-size:13px;color:var(--text2)">
+            <span>⏱️</span><span>O cronômetro começa ao clicar em Iniciar</span>
+          </div>
+          <div style="display:flex;gap:10px;font-size:13px;color:var(--text2)">
+            <span>⏭</span><span>Você pode pular questões e voltar pelo painel lateral</span>
+          </div>
+          <div style="display:flex;gap:10px;font-size:13px;color:var(--text2)">
+            <span>📋</span><span>O painel mostra o status de cada questão em tempo real</span>
+          </div>
+          <div style="display:flex;gap:10px;font-size:13px;color:var(--text2)">
+            <span>✅</span><span>Gabarito e relatório só aparecem ao final</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <button onclick="scIniciar()" class="btn-primary" style="padding:15px;font-size:15px">
+          🚀 Iniciar Simulado
+        </button>
+        <button onclick="scTela('seletor')" style="
+          width:100%;padding:12px;border-radius:10px;
+          border:1px solid var(--border);background:transparent;
+          color:var(--text2);font-family:var(--font);font-size:13px;cursor:pointer">
+          ← Escolher outra prova
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       PROVA: HEADER + BODY + RESULTADO
+  ═══════════════════════════════════════ -->
+
+  <!-- Header da prova -->
+  <div class="aula-header" id="sc-header-prova" style="display:none">
+    <button class="back-btn" onclick="scConfirmarSaida()">←</button>
+    <div style="flex:1;min-width:0">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+        <span id="sc-prog-txt" style="font-size:12px;font-weight:700;color:var(--text2)">Questão 1 de 45</span>
+        <span id="sc-timer" class="sc-timer">05:00:00</span>
+      </div>
+      <div style="height:4px;border-radius:2px;background:var(--surface2);overflow:hidden">
+        <div id="sc-prog-fill" style="height:100%;width:0%;border-radius:2px;background:var(--accent);transition:width 0.3s"></div>
+      </div>
+    </div>
+    <button id="sc-log-toggle" class="back-btn" onclick="scToggleLog()" title="Ver questões"
+      style="font-size:14px;flex-shrink:0">📋</button>
+  </div>
+
+  <!-- Body -->
+  <div id="sc-body">
+
+    <!-- Coluna questão -->
+    <div id="sc-questao-col">
+      <div id="sc-scroll">
+       <div id="sc-scroll-inner">
+
+        <!-- Badge + assunto -->
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+          <span id="sc-badge" class="quiz-badge"></span>
+          <span id="sc-assunto" style="font-size:11px;color:var(--text2)"></span>
+        </div>
+
+        <!-- Card enunciado -->
+        <div class="question-card">
+          <p id="sc-enunciado" class="question-text" style="margin:0"></p>
+          <div id="sc-img-block"></div>
+        </div>
+
+        <!-- Alternativas -->
+        <div id="sc-opts" class="options-list" style="margin-bottom:16px"></div>
+
+       </div><!-- /sc-scroll-inner -->
+      </div><!-- /scroll -->
+
+      <!-- Nav -->
+      <div id="sc-nav">
+       <div id="sc-nav-inner">
+        <button class="back-btn" onclick="scAnterior()" style="flex-shrink:0">←</button>
+        <button id="sc-btn-pular" class="sc-btn-pular" onclick="scPular()">⏭ Pular</button>
+        <button id="sc-btn-prox"  class="sc-btn-prox"  onclick="scProximo()">Próxima →</button>
+       </div>
+      </div>
+    </div><!-- /questao-col -->
+
+    <!-- Log lateral -->
+    <div id="sc-log">
+
+      <div style="padding:10px 12px;border-bottom:1px solid var(--border);
+        display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+        <span style="font-size:12px;font-weight:700;color:var(--text)">📋 Questões</span>
+        <button class="back-btn" onclick="scToggleLog()" style="width:28px;height:28px;font-size:14px">✕</button>
+      </div>
+
+      <div style="padding:6px 10px;border-bottom:1px solid var(--border);
+        display:flex;gap:8px;flex-wrap:wrap;flex-shrink:0">
+        <span style="font-size:9px;color:var(--text2);display:flex;align-items:center;gap:3px">
+          <span style="width:8px;height:8px;border-radius:2px;background:var(--accent);display:inline-block"></span>Atual
+        </span>
+        <span style="font-size:9px;color:var(--text2);display:flex;align-items:center;gap:3px">
+          <span style="width:8px;height:8px;border-radius:2px;background:rgba(59,130,246,0.3);display:inline-block"></span>Resp.
+        </span>
+        <span style="font-size:9px;color:var(--text2);display:flex;align-items:center;gap:3px">
+          <span style="width:8px;height:8px;border-radius:2px;background:rgba(245,158,11,0.4);display:inline-block"></span>Pulada
+        </span>
+      </div>
+
+      <div id="sc-log-grid"></div>
+
+      <div style="padding:8px 10px;border-top:1px solid var(--border);
+        display:flex;flex-shrink:0;text-align:center">
+        <div style="flex:1">
+          <div id="sc-log-r" style="font-size:15px;font-weight:900;color:#10b981">0</div>
+          <div style="font-size:9px;color:var(--text2)">Resp.</div>
+        </div>
+        <div style="flex:1">
+          <div id="sc-log-p" style="font-size:15px;font-weight:900;color:#f59e0b">0</div>
+          <div style="font-size:9px;color:var(--text2)">Puladas</div>
+        </div>
+        <div style="flex:1">
+          <div id="sc-log-v" style="font-size:15px;font-weight:900;color:var(--text2)">45</div>
+          <div style="font-size:9px;color:var(--text2)">Restantes</div>
+        </div>
+      </div>
+
+    </div><!-- /log -->
+
+  </div><!-- /body -->
+
+  <!-- Resultado -->
+  <div id="sc-resultado"></div>
+
+</div><!-- /sc-overlay -->
