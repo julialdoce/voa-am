@@ -10,7 +10,7 @@ const etapasSIS = {
   dia2: { label:'Dia 2 — Exatas + Redação', materias:['Matemática','Física','Química','Biologia','Redação'], minutos: 180 },
 };
 const etadasPSC = {
-  tudo: { label:'Prova Única — Todas as matérias', materias:[], minutos: 240 },
+  tudo: { label:'Prova Única — Todas as matérias', materias:[], minutos: 120 },
 };
 
 function escolherEtapaSimulado(vest) {

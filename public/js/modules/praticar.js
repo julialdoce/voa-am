@@ -19,6 +19,32 @@ const simConfig = {
   SIS3:  { label:'SIS 3ª Etapa', emoji:'⭐', qs:15, horas:2, cor:'rgba(245,158,11,0.12)', corBorda:'rgba(245,158,11,0.3)', corNum:'var(--amber)' },
 };
 
+// ─── CATÁLOGO CENTRALIZADO DE PROVAS OFICIAIS ────────────────
+const provasOficiaisCatalogo = {
+  'ENEM': {
+    emoji: '🇧🇷', label: 'ENEM',
+    sub: 'Exame Nacional do Ensino Médio',
+    cor: 'rgba(34,197,94,0.08)', corBorda: 'rgba(34,197,94,0.25)', corNum: '#22c55e',
+    anos: [
+      {
+        key: 'ENEM2025_MAT', ano: '2025', qs: 45, horas: '5h',
+        temas: ['Álgebra','Funções','Geometria Plana','Geometria Espacial','Estatística','Probabilidade','Trigonometria','Combinatória','Logaritmos','Análise Dimensional'],
+        getData: () => typeof ENEM2025_MAT !== 'undefined' ? ENEM2025_MAT : null,
+      },
+      {
+        key: 'ENEM2024_MAT', ano: '2024', qs: 45, horas: '5h',
+        temas: ['Álgebra','Funções','Geometria Plana','Geometria Espacial','Estatística','Probabilidade','Trigonometria','Combinatória','Logaritmos','Análise Dimensional'],
+        getData: () => typeof ENEM2024_MAT !== 'undefined' ? ENEM2024_MAT : null,
+      },
+      {
+        key: 'ENEM2023_MAT', ano: '2023', qs: 45, horas: '5h',
+        temas: ['Álgebra','Funções','Geometria Plana','Geometria Espacial','Estatística','Probabilidade','Trigonometria','Combinatória','Logaritmos','Análise Dimensional'],
+        getData: () => typeof ENEM2023_MAT !== 'undefined' ? ENEM2023_MAT : null,
+      },
+    ],
+  },
+};
+
 function simModoAba(modo) {
   simModoAtual = modo;
   const btnSimples  = document.getElementById('simtab-simples');
@@ -41,41 +67,22 @@ function simModoAba(modo) {
   picker.style.display = 'block';
   if (cardsContainer) cardsContainer.innerHTML = '';
 
-  // ── MODO COMPLETO: mostra provas oficiais disponíveis ──────
+  // ── MODO COMPLETO: passo 1 — escolher vestibular ──────────
   if (modo === 'completo') {
-    if (label) label.textContent = '🏆 Escolha a prova oficial';
-
-    // Catálogo de provas — adicione novas provas aqui
-    const provasOficiais = [
-      {
-        key:      'ENEM2025_MAT',
-        emoji:    '🇧🇷',
-        label:    'ENEM 2025',
-        sub:      'Matemática e suas Tecnologias',
-        qs:       45,
-        horas:    '5h',
-        cor:      'rgba(34,197,94,0.08)',
-        corBorda: 'rgba(34,197,94,0.25)',
-        corNum:   '#22c55e',
-        temas:    ['Álgebra','Geometria','Estatística','Probabilidade','Funções','Trigonometria','Combinatória'],
-        getData:  () => typeof ENEM2025_MAT !== 'undefined' ? ENEM2025_MAT : null,
-      },
-    ];
-
-    grid.innerHTML = provasOficiais.map(p => `
-      <button onclick="simSelecionarProvaOficial('${p.key}')" style="
-        padding:14px 12px;border-radius:14px;border:1px solid ${p.corBorda};
-        background:${p.cor};color:var(--text);font-family:var(--font);
+    if (label) label.textContent = '🏆 Escolha o vestibular';
+    grid.innerHTML = Object.entries(provasOficiaisCatalogo).map(([vestKey, v]) => `
+      <button onclick="scSelecionarVestibularCompleto('${vestKey}')" style="
+        padding:14px 12px;border-radius:14px;border:1px solid ${v.corBorda};
+        background:${v.cor};color:var(--text);font-family:var(--font);
         cursor:pointer;text-align:left;transition:all 0.15s;
         display:flex;flex-direction:column;gap:4px">
-        <div style="font-size:20px">${p.emoji}</div>
-        <div style="font-size:13px;font-weight:700;color:${p.corNum}">${p.label}</div>
-        <div style="font-size:10px;color:var(--text2)">${p.sub}</div>
-        <div style="font-size:10px;color:var(--text2);margin-top:2px">${p.qs} questões · ${p.horas}</div>
+        <div style="font-size:20px">${v.emoji}</div>
+        <div style="font-size:13px;font-weight:700;color:${v.corNum}">${v.label}</div>
+        <div style="font-size:10px;color:var(--text2)">${v.sub}</div>
+        <div style="font-size:10px;color:var(--text2);margin-top:2px">${v.anos.length} prova${v.anos.length > 1 ? 's' : ''} disponível${v.anos.length > 1 ? 'veis' : ''}</div>
       </button>
     `).join('');
-
-    return; // não executa o fluxo do simples abaixo
+    return;
   }
 
   // ── MODO SIMPLES: picker de vestibular original ────────────
@@ -98,56 +105,72 @@ function simModoAba(modo) {
   }).join('');
 }
 
-function simSelecionarVestibular(vestKey) {
-  simVestAtual = vestKey;
+// ─── COMPLETO: passo 1 → escolheu vestibular, mostra anos ────
+function scSelecionarVestibularCompleto(vestKey) {
+  const v = provasOficiaisCatalogo[vestKey];
+  if (!v) return;
   const picker = document.getElementById('sim-vest-picker');
   if (picker) picker.style.display = 'none';
-  renderSimCardsNovo(vestKey, simModoAtual);
-}
-
-// ─── MODO COMPLETO: seleciona prova oficial e renderiza card ──
-function simSelecionarProvaOficial(provaKey) {
-  const picker = document.getElementById('sim-vest-picker');
-  if (picker) picker.style.display = 'none';
-
-  const provasOficiais = {
-    'ENEM2025_MAT': {
-      emoji: '🇧🇷', label: 'ENEM 2025',
-      sub: 'Matemática e suas Tecnologias',
-      qs: 45, horas: '5h',
-      cor: 'rgba(34,197,94,0.08)',
-      corBorda: 'rgba(34,197,94,0.25)',
-      corNum: '#22c55e',
-      temas: ['Álgebra','Funções','Geometria Plana','Geometria Espacial','Estatística','Probabilidade','Trigonometria','Combinatória','Logaritmos','Análise Dimensional'],
-    },
-  };
-
-  const p = provasOficiais[provaKey];
-  if (!p) return;
   const container = document.getElementById('sim-cards-container');
   if (!container) return;
 
   container.innerHTML = `
-    <div style="background:${p.cor};border:1px solid ${p.corBorda};border-radius:16px;padding:18px;margin-bottom:16px">
+    <div style="margin-bottom:12px;display:flex;align-items:center;gap:8px">
+      <button onclick="voltarParaModos()" style="
+        padding:7px 12px;border-radius:8px;border:1px solid var(--border);
+        background:transparent;color:var(--text2);font-family:var(--font);font-size:12px;cursor:pointer">
+        ← Voltar
+      </button>
+      <span style="font-size:13px;font-weight:700;color:var(--text)">${v.emoji} ${v.label} — Escolha o ano</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      ${v.anos.map(p => {
+        const disponivel = p.getData() !== null;
+        return `
+        <button onclick="${disponivel ? `scSelecionarAnoCompleto('${vestKey}','${p.key}')` : ''}" style="
+          padding:16px;border-radius:14px;border:1px solid ${disponivel ? v.corBorda : 'var(--border)'};
+          background:${disponivel ? v.cor : 'var(--surface)'};color:var(--text);font-family:var(--font);
+          cursor:${disponivel ? 'pointer' : 'not-allowed'};text-align:left;transition:all 0.15s;
+          opacity:${disponivel ? '1' : '0.5'};display:flex;align-items:center;justify-content:space-between">
+          <div>
+            <div style="font-size:15px;font-weight:800;color:${disponivel ? v.corNum : 'var(--text2)'}">${v.label} ${p.ano}</div>
+            <div style="font-size:11px;color:var(--text2);margin-top:3px">${p.qs} questões · ${p.horas} · Gabarito oficial</div>
+          </div>
+          <div style="font-size:20px;color:${disponivel ? v.corNum : 'var(--text2)'}">${disponivel ? '›' : '🔒'}</div>
+        </button>`;
+      }).join('')}
+    </div>`;
+}
+
+// ─── COMPLETO: passo 2 → escolheu ano, mostra card de confirmação ──
+function scSelecionarAnoCompleto(vestKey, provaKey) {
+  const v = provasOficiaisCatalogo[vestKey];
+  const p = v?.anos.find(a => a.key === provaKey);
+  if (!v || !p) return;
+  const container = document.getElementById('sim-cards-container');
+  if (!container) return;
+
+  container.innerHTML = `
+    <div style="background:${v.cor};border:1px solid ${v.corBorda};border-radius:16px;padding:18px;margin-bottom:16px">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
-        <div style="font-size:32px">${p.emoji}</div>
+        <div style="font-size:32px">${v.emoji}</div>
         <div>
-          <div style="font-size:16px;font-weight:800;color:${p.corNum}">${p.label}</div>
-          <div style="font-size:12px;color:var(--text2);margin-top:2px">${p.sub}</div>
+          <div style="font-size:16px;font-weight:800;color:${v.corNum}">${v.label} ${p.ano}</div>
+          <div style="font-size:12px;color:var(--text2);margin-top:2px">Matemática e suas Tecnologias</div>
         </div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px">
         <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:10px;text-align:center">
-          <div style="font-size:18px;font-weight:800;color:${p.corNum}">${p.qs}</div>
+          <div style="font-size:18px;font-weight:800;color:${v.corNum}">${p.qs}</div>
           <div style="font-size:10px;color:var(--text2)">Questões</div>
         </div>
         <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:10px;text-align:center">
-          <div style="font-size:18px;font-weight:800;color:${p.corNum}">${p.horas}</div>
+          <div style="font-size:18px;font-weight:800;color:${v.corNum}">${p.horas}</div>
           <div style="font-size:10px;color:var(--text2)">Tempo</div>
         </div>
         <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:10px;text-align:center">
-          <div style="font-size:18px;font-weight:800;color:${p.corNum}">Alto</div>
-          <div style="font-size:10px;color:var(--text2)">Nível</div>
+          <div style="font-size:18px;font-weight:800;color:${v.corNum}">Oficial</div>
+          <div style="font-size:10px;color:var(--text2)">Gabarito</div>
         </div>
       </div>
       <div style="font-size:11px;color:var(--text2);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Conteúdos abordados</div>
@@ -156,16 +179,23 @@ function simSelecionarProvaOficial(provaKey) {
       </div>
       <button onclick="scIniciarDireto('${provaKey}')" style="
         width:100%;padding:15px;border-radius:12px;border:none;
-        background:${p.corNum};color:#fff;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;
+        background:${v.corNum};color:#fff;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;
         display:flex;align-items:center;justify-content:center;gap:8px">
         🏆 Iniciar Simulado Completo
       </button>
-      <button onclick="voltarParaModos()" style="
+      <button onclick="scSelecionarVestibularCompleto('${vestKey}')" style="
         width:100%;padding:11px;margin-top:8px;border-radius:12px;border:1px solid var(--border);
         background:transparent;color:var(--text2);font-family:var(--font);font-size:13px;cursor:pointer">
-        ← Trocar prova
+        ← Trocar ano
       </button>
     </div>`;
+}
+
+function simSelecionarVestibular(vestKey) {
+  simVestAtual = vestKey;
+  const picker = document.getElementById('sim-vest-picker');
+  if (picker) picker.style.display = 'none';
+  renderSimCardsNovo(vestKey, simModoAtual);
 }
 
 function renderSimCardsNovo(vestKey, modo) {
@@ -243,8 +273,7 @@ function renderSimCardsNovo(vestKey, modo) {
 function voltarParaModos() {
   const container = document.getElementById('sim-cards-container');
   if (container) container.innerHTML = '';
-  const picker = document.getElementById('sim-vest-picker');
-  if (picker && simModoAtual) picker.style.display = 'block';
+  if (simModoAtual) simModoAba(simModoAtual);
 }
 
 function iniciarSimuladoNovo(vestKey, modo) {

@@ -21,6 +21,24 @@ const SC_PROVAS = {
     emoji:    '🇧🇷',
     get data() { return typeof ENEM2025_MAT !== 'undefined' ? ENEM2025_MAT : null; },
   },
+  'ENEM2024_MAT': {
+    label:    'ENEM 2024 — Matemática',
+    badge:    'ENEM 2024',
+    cor:      '#3b82f6',
+    corBg:    'rgba(59,130,246,0.08)',
+    corBorda: 'rgba(59,130,246,0.25)',
+    emoji:    '📘',
+    get data() { return typeof ENEM2024_MAT !== 'undefined' ? ENEM2024_MAT : null; },
+  },
+  'ENEM2023_MAT': {
+    label:    'ENEM 2023 — Matemática',
+    badge:    'ENEM 2023',
+    cor:      '#f59e0b',
+    corBg:    'rgba(245,158,11,0.08)',
+    corBorda: 'rgba(245,158,11,0.25)',
+    emoji:    '📙',
+    get data() { return typeof ENEM2023_MAT !== 'undefined' ? ENEM2023_MAT : null; },
+  },
 };
 
 // ─── NAVEGAÇÃO ENTRE TELAS INTERNAS ──────────────────────────
@@ -152,8 +170,14 @@ function scRenderQ() {
     imgBlock.innerHTML = `
       <figure class="sc-img-box" style="margin:12px 0">
         <img src="${q.img}" alt="Figura Q${q.num}" loading="lazy"
+          onclick="scZoomAbrir('${q.img}')"
           onerror="this.closest('figure').style.display='none'">
-        <figcaption>📊 Material de apoio — Q${q.num} · ENEM 2025</figcaption>
+        <figcaption>
+          <span>📊 Material de apoio — Q${q.num} · ${p.badge}</span>
+          <span class="sc-img-zoom-hint" onclick="scZoomAbrir('${q.img}')" style="cursor:pointer">
+            🔍 Ampliar
+          </span>
+        </figcaption>
       </figure>`;
   } else {
     imgBlock.innerHTML = '';
@@ -420,3 +444,19 @@ function scRecomear() {
 // ─── Utilitários ─────────────────────────────────────────────
 function _el(id) { return document.getElementById(id); }
 function _txt(id, t) { const e = _el(id); if (e) e.textContent = t; }
+
+// ─── Zoom de imagem ──────────────────────────────────────────
+function scZoomAbrir(src) {
+  const overlay = document.getElementById('sc-zoom-overlay');
+  const img     = document.getElementById('sc-zoom-img');
+  if (!overlay || !img) return;
+  img.src = src;
+  overlay.classList.add('aberto');
+  document.addEventListener('keydown', scZoomEsc);
+}
+function scZoomFechar() {
+  const overlay = document.getElementById('sc-zoom-overlay');
+  if (overlay) overlay.classList.remove('aberto');
+  document.removeEventListener('keydown', scZoomEsc);
+}
+function scZoomEsc(e) { if (e.key === 'Escape') scZoomFechar(); }
