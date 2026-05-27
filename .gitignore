@@ -1,1 +1,17 @@
-node_modules/\n.DS_Store\n.env\n.vscode/
+# Dependencies
+backend/node_modules/
+
+# Environment (contém chaves de API - não commitar)
+backend/.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*

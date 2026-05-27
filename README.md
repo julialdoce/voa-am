@@ -54,7 +54,17 @@ voa-am/
             ├── topics.js              ← mathTopics, redTopics (por série)
             ├── quizzes.js             ← Aulas e quizzes por tópico
             ├── simulados.js           ← Catálogo de simulados por vestibular
-            └── banco.js               ← Banco de questões reais (ENEM/PSC/SIS/MACRO)
+            ├── banco.js               ← Banco de questões reais (ENEM/PSC/SIS/MACRO)
+            ├── enem2025_mat.js        ← Questões ENEM 2025 Matemática (Q136-Q180)
+            ├── enem2024_mat.js        ← Questões ENEM 2024 Matemática
+            └── enem2023_mat.js        ← Questões ENEM 2023 Matemática
+```
+
+```
+backend/                               ← Servidor Node.js (Correção de Redação por IA)
+├── server.js                          ← API Express + Gemini AI
+├── package.json
+└── .env                               ← GEMINI_API_KEY
 ```
 
 ---
@@ -127,8 +137,8 @@ O `index.html` usa `fetch()` para carregar fragmentos — precisa de um servidor
 ```bash
 # Python (sem instalar nada)
 cd voa-am/public
-python3 -m http.server 3000
-# Acesse: http://localhost:3000
+python3 -m http.server 8080
+# Acesse: http://localhost:8080
 
 # Node.js
 npx serve public/
@@ -136,6 +146,39 @@ npx serve public/
 # VSCode
 # Instale "Live Server" → botão direito em public/index.html → Open with Live Server
 ```
+
+---
+
+## 🤖 Backend — Correção de Redação por IA
+
+O projeto inclui um backend Node.js com integração Gemini AI para correção automática de redações.
+
+```
+backend/
+├── server.js        ← API Express (porta 3000)
+├── package.json     ← Dependências: express, @google/genai, cors, dotenv
+└── .env             ← GEMINI_API_KEY=<sua-chave>
+```
+
+### Iniciar o backend
+
+```bash
+cd backend
+npm install
+npm run dev
+# API disponível em: http://localhost:3000
+```
+
+### Endpoint
+
+| Método | Rota                 | Descrição                       |
+|--------|----------------------|---------------------------------|
+| POST   | `/corrigir-redacao`  | Corrige redação via Gemini AI   |
+
+**Body:** `{ "tema": "...", "texto": "..." }`  
+**Resposta:** `{ "resultado": "..." }` (texto formatado com nota, competências e sugestões)
+
+> O frontend funciona normalmente sem o backend. Quando indisponível, exibe mensagem de aviso na área de correção.
 
 ---
 

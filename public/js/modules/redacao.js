@@ -210,13 +210,47 @@ function redLimpar() {
 }
 
 // ─── CORRIGIR COM IA (placeholder) ───────────────────────────
-function redCorrigir() {
+async function redCorrigir() {
   const textarea = document.getElementById('red-editor-textarea');
   if (!textarea || !textarea.value.trim()) {
     alert('Escreva sua redação antes de solicitar a correção.');
     return;
   }
-  alert('🤖 A correção por IA estará disponível em breve!\n\nPor enquanto, salve seu rascunho e revise usando a estrutura sugerida.');
+  const tema = textarea.getAttribute('data-titulo') || 'Tema não informado';
+  const texto = textarea.value;
+
+  let resultadoDiv = document.getElementById('red-resultado-ia');
+  if (!resultadoDiv) {
+    resultadoDiv = document.createElement('div');
+    resultadoDiv.id = 'red-resultado-ia';
+    resultadoDiv.style.cssText = [
+      'margin-top:16px', 'padding:16px', 'border-radius:14px',
+      'background:rgba(59,130,246,0.08)', 'border:1px solid rgba(59,130,246,0.2)',
+      'color:var(--text)', 'white-space:pre-wrap', 'line-height:1.7', 'font-size:13px'
+    ].join(';');
+    const editorPanel = document.getElementById('red-editor-panel');
+    if (editorPanel) editorPanel.appendChild(resultadoDiv);
+  }
+
+  resultadoDiv.innerHTML = '🤖 Corrigindo redação com IA...';
+  resultadoDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  try {
+    const resposta = await fetch('http://localhost:3000/corrigir-redacao', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tema, texto })
+    });
+    const dados = await resposta.json();
+    resultadoDiv.innerHTML = dados.resultado;
+    resultadoDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } catch (erro) {
+    console.warn('Backend de IA indisponível:', erro);
+    resultadoDiv.innerHTML =
+      '⚠️ A correção por IA requer o servidor backend em execução.\n\n' +
+      'Inicie o backend com:\n  cd backend && npm run dev\n\n' +
+      'Se preferir, salve seu rascunho e revise manualmente usando a estrutura sugerida.';
+  }
 }
 
 // ─── RENDERIZAR HISTÓRICO ────────────────────────────────────
