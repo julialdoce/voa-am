@@ -90,10 +90,10 @@ const ENEM2023_MAT = {
       "enunciado": "O mastro de uma bandeira foi instalado perpendicularmente	ao	solo	em	uma	região	plana.	Devido aos fortes ventos, três cabos de aço, de mesmo comprimento,	serão	instalados	para	dar	sustentação	ao	mastro.	Cada	cabo	de	aço	ficará	perfeitamente	esticado,	com uma extremidade num ponto P do mastro, a uma altura h do solo, e a outra extremidade, num ponto no chão,	como	mostra	a	figura.\nOs cabos de aço formam um ângulo a com o plano do	chão.\nPor medida de segurança, há apenas três opções de instalação:\n• opção	I:	h = 11 m e a = 30°\n• opção	II:	h = 12 m e a = 45°\n• opção	III:	h = 18 m e a = 60\nA	opção	a	ser	escolhida	é	aquela	em	que	a	medida	dos cabos seja a menor possível.\nQual será a medida, em metro, de cada um dos cabos a serem	instalados?",
       "img": "assets/documents/ENEM/2023/questions/q137.png",
       "alt": {
-        "A": "22[3]/3",
-        "B": "11[2]",
-        "C": "12[2]",
-        "D": "12[3]",
+        "A": "22√3/3",
+        "B": "11√2",
+        "C": "12√2",
+        "D": "12√3",
         "E": "22"
       }
     },
@@ -549,7 +549,7 @@ const ENEM2023_MAT = {
     // ── QUESTÃO 170 ──
     {
       "num": 170,
-      "enunciado": "Uma loja vende seus produtos de duas formas:  à	vista	ou	financiado	em	três	parcelas	mensais	iguais.	Para definir o valor dessas parcelas nas vendas financiadas,	a	loja	aumenta	em	20%	o	valor	do	produto	à vista e divide esse novo valor por 3. A primeira parcela deve ser paga no ato da compra, e as duas últimas, em 30 e 60 dias após a compra.\nUm	cliente	da	loja	decidiu	comprar,	de	forma	financiada,	um produto cujo valor à vista é R$ 1 500,00.\nUtilize	5,29	como	aproximação	para	[28].\nA taxa mensal de juros compostos praticada nesse financiamento	é	de",
+      "enunciado": "Uma loja vende seus produtos de duas formas:  à	vista	ou	financiado	em	três	parcelas	mensais	iguais.	Para definir o valor dessas parcelas nas vendas financiadas,	a	loja	aumenta	em	20%	o	valor	do	produto	à vista e divide esse novo valor por 3. A primeira parcela deve ser paga no ato da compra, e as duas últimas, em 30 e 60 dias após a compra.\nUm	cliente	da	loja	decidiu	comprar,	de	forma	financiada,	um produto cujo valor à vista é R$ 1 500,00.\nUtilize	5,29	como	aproximação	para	√28.\nA taxa mensal de juros compostos praticada nesse financiamento	é	de",
       "img": null,
       "alt": {
         "A": "6,7%",

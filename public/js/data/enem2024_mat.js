@@ -230,11 +230,11 @@ const ENEM2024_MAT = {
       "enunciado": "Um jardineiro dispõe de k metros lineares de cerca baixa para fazer um jardim ornamental. O jardim, delimitado por essa cerca, deve ter a forma de um triângulo equilátero, um quadrado ou um hexágono regular. A escolha será pela forma que resulte na maior área.\nO jardineiro escolherá a forma de",
       "img": null,
       "alt": {
-        "A": "hexágono regular, pois a área do jardim, em metro quadrado, será k^2 [3]/24",
-        "B": "hexágono regular, pois a área do jardim, em metro quadrado, será 3k^2 [3]/2",
+        "A": "hexágono regular, pois a área do jardim, em metro quadrado, será k^2 √3/24",
+        "B": "hexágono regular, pois a área do jardim, em metro quadrado, será 3k^2 √3/2",
         "C": "quadrado, pois a área do jardim, em metro quadrado, será k^2/16",
-        "D": "triângulo equilátero, pois a área do jardim, em metro quadrado, será k^2 [3]/36",
-        "E": "triângulo equilátero, pois a área do jardim, em metro quadrado, será k^2[3]/4"
+        "D": "triângulo equilátero, pois a área do jardim, em metro quadrado, será k^2 √3/36",
+        "E": "triângulo equilátero, pois a área do jardim, em metro quadrado, será k^2√3/4"
       }
     },
 
@@ -694,9 +694,9 @@ const ENEM2024_MAT = {
       "alt": {
         "A": "6",
         "B": "18",
-        "C": "6 [6]",
-        "D": "6^3[6]",
-        "E": "3^3[12]"
+        "C": "6 √6",
+        "D": "6^3√6",
+        "E": "3^3√12"
       }
     }
 

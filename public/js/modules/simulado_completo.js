@@ -11,51 +11,220 @@ const SC = {
   timer: null,
 };
 
+// ─── CATÁLOGO DE PROVAS ───────────────────────────────────────
 const SC_PROVAS = {
+
+  // ── ENEM ──────────────────────────────────────────────────
   'ENEM2025_MAT': {
-    label:    'ENEM 2025 — Matemática',
-    badge:    'ENEM 2025',
-    cor:      '#22c55e',
-    corBg:    'rgba(34,197,94,0.08)',
-    corBorda: 'rgba(34,197,94,0.25)',
-    emoji:    '🇧🇷',
+    label: 'ENEM 2025 — Matemática', badge: 'ENEM 2025',
+    cor: '#22c55e', corBg: 'rgba(34,197,94,0.08)', corBorda: 'rgba(34,197,94,0.25)', emoji: '🇧🇷',
+    tipo: 'linear',
     get data() { return typeof ENEM2025_MAT !== 'undefined' ? ENEM2025_MAT : null; },
   },
   'ENEM2024_MAT': {
-    label:    'ENEM 2024 — Matemática',
-    badge:    'ENEM 2024',
-    cor:      '#3b82f6',
-    corBg:    'rgba(59,130,246,0.08)',
-    corBorda: 'rgba(59,130,246,0.25)',
-    emoji:    '📘',
+    label: 'ENEM 2024 — Matemática', badge: 'ENEM 2024',
+    cor: '#3b82f6', corBg: 'rgba(59,130,246,0.08)', corBorda: 'rgba(59,130,246,0.25)', emoji: '📘',
+    tipo: 'linear',
     get data() { return typeof ENEM2024_MAT !== 'undefined' ? ENEM2024_MAT : null; },
   },
   'ENEM2023_MAT': {
-    label:    'ENEM 2023 — Matemática',
-    badge:    'ENEM 2023',
-    cor:      '#f59e0b',
-    corBg:    'rgba(245,158,11,0.08)',
-    corBorda: 'rgba(245,158,11,0.25)',
-    emoji:    '📙',
+    label: 'ENEM 2023 — Matemática', badge: 'ENEM 2023',
+    cor: '#f59e0b', corBg: 'rgba(245,158,11,0.08)', corBorda: 'rgba(245,158,11,0.25)', emoji: '📙',
+    tipo: 'linear',
     get data() { return typeof ENEM2023_MAT !== 'undefined' ? ENEM2023_MAT : null; },
+  },
+
+  // ── MACRO ─────────────────────────────────────────────────
+  'MACRO2025_MAT': {
+    label: 'MACRO 2025 — Conhecimentos Gerais e Conhecimentos Específicos', badge: 'MACRO 2025',
+    cor: '#ef4444', corBg: 'rgba(239,68,68,0.08)', corBorda: 'rgba(239,68,68,0.25)', emoji: '🏛️',
+    tipo: 'linear',
+    get data() { return typeof MACRO2025_MAT !== 'undefined' ? MACRO2025_MAT : null; },
+  },
+  'MACRO2024_MAT': {
+    label: 'MACRO 2024 — Conhecimentos Gerais e Conhecimentos Específicos', badge: 'MACRO 2024',
+    cor: '#8b5cf6', corBg: 'rgba(139,92,246,0.08)', corBorda: 'rgba(139,92,246,0.25)', emoji: '🏛️',
+    tipo: 'linear',
+    get data() { return typeof MACRO2024_MAT !== 'undefined' ? MACRO2024_MAT : null; },
+  },
+  'MACRO2023_MAT': {
+    label: 'MACRO 2023 — Conhecimentos Gerais e Conhecimentos Específicos', badge: 'MACRO 2023',
+    cor: '#f97316', corBg: 'rgba(249,115,22,0.08)', corBorda: 'rgba(249,115,22,0.25)', emoji: '🏛️',
+    tipo: 'linear',
+    get data() { return typeof MACRO2023_MAT !== 'undefined' ? MACRO2023_MAT : null; },
+  },
+
+  // ── PSC 1ª Etapa ──────────────────────────────────────────
+  'PSC1_2025': {
+    label: 'PSC 1ª Etapa — 2025', badge: 'PSC 1 · 2025',
+    cor: '#06b6d4', corBg: 'rgba(6,182,212,0.08)', corBorda: 'rgba(6,182,212,0.25)', emoji: '📗',
+    tipo: 'anual', arquivo: 'PSC1_MAT', ano: 2025,
+    get data() { return typeof PSC1_MAT !== 'undefined' ? PSC1_MAT : null; },
+  },
+  'PSC1_2024': {
+    label: 'PSC 1ª Etapa — 2024', badge: 'PSC 1 · 2024',
+    cor: '#06b6d4', corBg: 'rgba(6,182,212,0.08)', corBorda: 'rgba(6,182,212,0.2)', emoji: '📗',
+    tipo: 'anual', arquivo: 'PSC1_MAT', ano: 2024,
+    get data() { return typeof PSC1_MAT !== 'undefined' ? PSC1_MAT : null; },
+  },
+  'PSC1_2023': {
+    label: 'PSC 1ª Etapa — 2023', badge: 'PSC 1 · 2023',
+    cor: '#06b6d4', corBg: 'rgba(6,182,212,0.06)', corBorda: 'rgba(6,182,212,0.15)', emoji: '📗',
+    tipo: 'anual', arquivo: 'PSC1_MAT', ano: 2023,
+    get data() { return typeof PSC1_MAT !== 'undefined' ? PSC1_MAT : null; },
+  },
+
+  // ── PSC 2ª Etapa ──────────────────────────────────────────
+  'PSC2_2025': {
+    label: 'PSC 2ª Etapa — 2025', badge: 'PSC 2 · 2025',
+    cor: '#10b981', corBg: 'rgba(16,185,129,0.08)', corBorda: 'rgba(16,185,129,0.25)', emoji: '📘',
+    tipo: 'anual', arquivo: 'PSC2_MAT', ano: 2025,
+    get data() { return typeof PSC2_MAT !== 'undefined' ? PSC2_MAT : null; },
+  },
+  'PSC2_2024': {
+    label: 'PSC 2ª Etapa — 2024', badge: 'PSC 2 · 2024',
+    cor: '#10b981', corBg: 'rgba(16,185,129,0.08)', corBorda: 'rgba(16,185,129,0.2)', emoji: '📘',
+    tipo: 'anual', arquivo: 'PSC2_MAT', ano: 2024,
+    get data() { return typeof PSC2_MAT !== 'undefined' ? PSC2_MAT : null; },
+  },
+  'PSC2_2023': {
+    label: 'PSC 2ª Etapa — 2023', badge: 'PSC 2 · 2023',
+    cor: '#10b981', corBg: 'rgba(16,185,129,0.06)', corBorda: 'rgba(16,185,129,0.15)', emoji: '📘',
+    tipo: 'anual', arquivo: 'PSC2_MAT', ano: 2023,
+    get data() { return typeof PSC2_MAT !== 'undefined' ? PSC2_MAT : null; },
+  },
+
+  // ── PSC 3ª Etapa ──────────────────────────────────────────
+  'PSC3_2025': {
+    label: 'PSC 3ª Etapa — 2025', badge: 'PSC 3 · 2025',
+    cor: '#f59e0b', corBg: 'rgba(245,158,11,0.08)', corBorda: 'rgba(245,158,11,0.25)', emoji: '📙',
+    tipo: 'anual', arquivo: 'PSC3_MAT', ano: 2025,
+    get data() { return typeof PSC3_MAT !== 'undefined' ? PSC3_MAT : null; },
+  },
+  'PSC3_2024': {
+    label: 'PSC 3ª Etapa — 2024', badge: 'PSC 3 · 2024',
+    cor: '#f59e0b', corBg: 'rgba(245,158,11,0.08)', corBorda: 'rgba(245,158,11,0.2)', emoji: '📙',
+    tipo: 'anual', arquivo: 'PSC3_MAT', ano: 2024,
+    get data() { return typeof PSC3_MAT !== 'undefined' ? PSC3_MAT : null; },
+  },
+  'PSC3_2023': {
+    label: 'PSC 3ª Etapa — 2023', badge: 'PSC 3 · 2023',
+    cor: '#f59e0b', corBg: 'rgba(245,158,11,0.06)', corBorda: 'rgba(245,158,11,0.15)', emoji: '📙',
+    tipo: 'anual', arquivo: 'PSC3_MAT', ano: 2023,
+    get data() { return typeof PSC3_MAT !== 'undefined' ? PSC3_MAT : null; },
+  },
+
+  // ── SIS 1ª Etapa ──────────────────────────────────────────
+  'SIS1_2025': {
+    label: 'SIS 1ª Etapa — 2025', badge: 'SIS 1 · 2025',
+    cor: '#a855f7', corBg: 'rgba(168,85,247,0.08)', corBorda: 'rgba(168,85,247,0.25)', emoji: '📒',
+    tipo: 'anual', arquivo: 'SIS1_MAT', ano: 2025,
+    get data() { return typeof SIS1_MAT !== 'undefined' ? SIS1_MAT : null; },
+  },
+  'SIS1_2024': {
+    label: 'SIS 1ª Etapa — 2024', badge: 'SIS 1 · 2024',
+    cor: '#a855f7', corBg: 'rgba(168,85,247,0.08)', corBorda: 'rgba(168,85,247,0.2)', emoji: '📒',
+    tipo: 'anual', arquivo: 'SIS1_MAT', ano: 2024,
+    get data() { return typeof SIS1_MAT !== 'undefined' ? SIS1_MAT : null; },
+  },
+  'SIS1_2023': {
+    label: 'SIS 1ª Etapa — 2023', badge: 'SIS 1 · 2023',
+    cor: '#a855f7', corBg: 'rgba(168,85,247,0.06)', corBorda: 'rgba(168,85,247,0.15)', emoji: '📒',
+    tipo: 'anual', arquivo: 'SIS1_MAT', ano: 2023,
+    get data() { return typeof SIS1_MAT !== 'undefined' ? SIS1_MAT : null; },
+  },
+
+  // ── SIS 2ª Etapa ──────────────────────────────────────────
+  'SIS2_2025': {
+    label: 'SIS 2ª Etapa — 2025', badge: 'SIS 2 · 2025',
+    cor: '#ec4899', corBg: 'rgba(236,72,153,0.08)', corBorda: 'rgba(236,72,153,0.25)', emoji: '📓',
+    tipo: 'anual', arquivo: 'SIS2_MAT', ano: 2025,
+    get data() { return typeof SIS2_MAT !== 'undefined' ? SIS2_MAT : null; },
+  },
+  'SIS2_2024': {
+    label: 'SIS 2ª Etapa — 2024', badge: 'SIS 2 · 2024',
+    cor: '#ec4899', corBg: 'rgba(236,72,153,0.08)', corBorda: 'rgba(236,72,153,0.2)', emoji: '📓',
+    tipo: 'anual', arquivo: 'SIS2_MAT', ano: 2024,
+    get data() { return typeof SIS2_MAT !== 'undefined' ? SIS2_MAT : null; },
+  },
+  'SIS2_2023': {
+    label: 'SIS 2ª Etapa — 2023', badge: 'SIS 2 · 2023',
+    cor: '#ec4899', corBg: 'rgba(236,72,153,0.06)', corBorda: 'rgba(236,72,153,0.15)', emoji: '📓',
+    tipo: 'anual', arquivo: 'SIS2_MAT', ano: 2023,
+    get data() { return typeof SIS2_MAT !== 'undefined' ? SIS2_MAT : null; },
+  },
+
+  // ── SIS 3ª Etapa ──────────────────────────────────────────
+  'SIS3_2025': {
+    label: 'SIS 3ª Etapa — 2025', badge: 'SIS 3 · 2025',
+    cor: '#64748b', corBg: 'rgba(100,116,139,0.08)', corBorda: 'rgba(100,116,139,0.25)', emoji: '📔',
+    tipo: 'anual', arquivo: 'SIS3_MAT', ano: 2025,
+    get data() { return typeof SIS3_MAT !== 'undefined' ? SIS3_MAT : null; },
+  },
+  'SIS3_2024': {
+    label: 'SIS 3ª Etapa — 2024', badge: 'SIS 3 · 2024',
+    cor: '#64748b', corBg: 'rgba(100,116,139,0.08)', corBorda: 'rgba(100,116,139,0.2)', emoji: '📔',
+    tipo: 'anual', arquivo: 'SIS3_MAT', ano: 2024,
+    get data() { return typeof SIS3_MAT !== 'undefined' ? SIS3_MAT : null; },
+  },
+  'SIS3_2023': {
+    label: 'SIS 3ª Etapa — 2023', badge: 'SIS 3 · 2023',
+    cor: '#64748b', corBg: 'rgba(100,116,139,0.06)', corBorda: 'rgba(100,116,139,0.15)', emoji: '📔',
+    tipo: 'anual', arquivo: 'SIS3_MAT', ano: 2023,
+    get data() { return typeof SIS3_MAT !== 'undefined' ? SIS3_MAT : null; },
   },
 };
 
+// ─── GRUPOS para o seletor (abas) ─────────────────────────────
+const SC_GRUPOS = [
+  {
+    id: 'ENEM', label: 'ENEM', emoji: '🇧🇷',
+    provas: ['ENEM2025_MAT', 'ENEM2024_MAT', 'ENEM2023_MAT'],
+  },
+  {
+    id: 'MACRO', label: 'MACRO', emoji: '🏛️',
+    provas: ['MACRO2025_MAT', 'MACRO2024_MAT', 'MACRO2023_MAT'],
+  },
+  {
+    id: 'PSC1', label: 'PSC 1ª Etapa', emoji: '📗',
+    provas: ['PSC1_2025', 'PSC1_2024', 'PSC1_2023'],
+  },
+  {
+    id: 'PSC2', label: 'PSC 2ª Etapa', emoji: '📘',
+    provas: ['PSC2_2025', 'PSC2_2024', 'PSC2_2023'],
+  },
+  {
+    id: 'PSC3', label: 'PSC 3ª Etapa', emoji: '📙',
+    provas: ['PSC3_2025', 'PSC3_2024', 'PSC3_2023'],
+  },
+  {
+    id: 'SIS1', label: 'SIS 1ª Etapa', emoji: '📒',
+    provas: ['SIS1_2025', 'SIS1_2024', 'SIS1_2023'],
+  },
+  {
+    id: 'SIS2', label: 'SIS 2ª Etapa', emoji: '📓',
+    provas: ['SIS2_2025', 'SIS2_2024', 'SIS2_2023'],
+  },
+  {
+    id: 'SIS3', label: 'SIS 3ª Etapa', emoji: '📔',
+    provas: ['SIS3_2025', 'SIS3_2024', 'SIS3_2023'],
+  },
+];
+
+let SC_GRUPO_ATIVO = 'ENEM';
+
 // ─── NAVEGAÇÃO ENTRE TELAS INTERNAS ──────────────────────────
 function scTela(nome) {
-  // Esconde todas as telas
   document.querySelectorAll('.sc-tela').forEach(t => t.classList.remove('ativa'));
   const alvo = document.getElementById('sc-tela-' + nome);
   if (alvo) alvo.classList.add('ativa');
-
-  // Garante que body/header/resultado ficam ocultos quando nas telas de seleção
   const eSelecao = (nome === 'seletor' || nome === 'confirmar');
   _el('sc-header-prova').style.display = eSelecao ? 'none' : 'flex';
   _el('sc-body').style.display         = eSelecao ? 'none' : 'flex';
   _el('sc-resultado').style.display    = 'none';
 }
 
-// ─── ABRIR (chamado pelo botão na tela de Praticar) ──────────
+// ─── ABRIR SELETOR ────────────────────────────────────────────
 function scAbrirSeletor() {
   const overlay = _el('sc-overlay');
   if (!overlay) return;
@@ -64,59 +233,133 @@ function scAbrirSeletor() {
   scTela('seletor');
 }
 
+// ─── POPULAR SELETOR COM ABAS ─────────────────────────────────
 function scPopularSeletor() {
-  const grid = _el('sc-seletor-grid');
-  if (!grid) return;
-  grid.innerHTML = Object.entries(SC_PROVAS).map(([key, p]) => {
+  const container = _el('sc-seletor-grid');
+  if (!container) return;
+
+  // Abas de grupos
+  const tabsHtml = SC_GRUPOS.map(g => `
+    <button onclick="scMudarGrupo('${g.id}')" id="sc-tab-${g.id}"
+      class="sc-grupo-tab${g.id === SC_GRUPO_ATIVO ? ' active' : ''}"
+      style="padding:8px 14px;border-radius:20px;border:1px solid var(--border);
+        background:${g.id === SC_GRUPO_ATIVO ? 'var(--accent)' : 'transparent'};
+        color:${g.id === SC_GRUPO_ATIVO ? '#fff' : 'var(--text2)'};
+        font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.15s">
+      ${g.emoji} ${g.label}
+    </button>`).join('');
+
+  container.innerHTML = `
+    <div id="sc-grupo-tabs" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)">
+      ${tabsHtml}
+    </div>
+    <div id="sc-provas-lista"></div>`;
+
+  scRenderProvasList();
+}
+
+function scMudarGrupo(id) {
+  SC_GRUPO_ATIVO = id;
+  // Atualiza estilo das abas
+  SC_GRUPOS.forEach(g => {
+    const btn = _el(`sc-tab-${g.id}`);
+    if (!btn) return;
+    btn.style.background = g.id === id ? 'var(--accent)' : 'transparent';
+    btn.style.color      = g.id === id ? '#fff' : 'var(--text2)';
+    const isActive = g.id === id;
+    btn.className = 'sc-grupo-tab' + (isActive ? ' active' : '');
+  });
+  scRenderProvasList();
+}
+
+function scRenderProvasList() {
+  const lista = _el('sc-provas-lista');
+  if (!lista) return;
+  const grupo = SC_GRUPOS.find(g => g.id === SC_GRUPO_ATIVO);
+  if (!grupo) return;
+
+  lista.innerHTML = grupo.provas.map(key => {
+    const p = SC_PROVAS[key];
     const d = p.data;
+    const questoes = scGetQuestoes(p, d);
+    const totalQ   = questoes.length;
+    const temDados = totalQ > 0;
     return `
-    <div onclick="scSelecionarProva('${key}')" style="
-      padding:16px;border-radius:14px;cursor:pointer;transition:all 0.15s;
-      border:1px solid ${p.corBorda};background:${p.corBg}"
-      onmouseover="this.style.transform='translateY(-1px)'"
+    <div onclick="${temDados ? `scSelecionarProva('${key}')` : ''}"
+      style="padding:16px;border-radius:14px;cursor:${temDados ? 'pointer' : 'default'};
+        transition:all 0.15s;border:1px solid ${p.corBorda};background:${p.corBg};
+        margin-bottom:10px;opacity:${temDados ? '1' : '0.45'}"
+      onmouseover="this.style.transform='${temDados ? 'translateY(-1px)' : ''}'"
       onmouseout="this.style.transform=''">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
-        <span style="font-size:28px">${p.emoji}</span>
-        <div>
-          <div style="font-size:15px;font-weight:800;color:${p.cor}">${p.label}</div>
-          <div style="font-size:11px;color:var(--text2);margin-top:2px">
-            ${d?.totalQuestoes || 0} questões · ${d?.tempoMinutos || 0} min · Gabarito oficial
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="font-size:26px">${p.emoji}</span>
+        <div style="flex:1">
+          <div style="font-size:14px;font-weight:800;color:${p.cor}">${p.label}</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:3px">
+            ${temDados ? `${totalQ} questões · ${d?.tempoMinutos || 0} min · Gabarito oficial` : 'Sem questões cadastradas'}
           </div>
         </div>
+        ${temDados ? `<span style="color:var(--text2);font-size:18px">›</span>` : ''}
       </div>
-      <div style="font-size:11px;color:var(--text2)">${d?.caderno || ''}</div>
     </div>`;
   }).join('');
 }
 
+// ─── SELECIONAR PROVA ─────────────────────────────────────────
 function scSelecionarProva(key) {
   SC.provaKey = key;
   const p = SC_PROVAS[key];
   const d = p.data;
   if (!d) { alert('Dados da prova não carregados. Recarregue a página.'); return; }
+  const questoes = scGetQuestoes(p, d);
   _el('sc-conf-titulo').textContent = p.label;
-  _el('sc-conf-info').textContent   = `${d.totalQuestoes} questões · ${d.tempoMinutos} minutos · ${d.caderno}`;
+  _el('sc-conf-info').textContent   = `${questoes.length} questões · ${d.tempoMinutos} minutos · ${d.caderno || d.prova}`;
   scTela('confirmar');
 }
 
-// Chamado pelo botão "Iniciar" na tela de confirmação
+// ─── RESOLVER QUESTÕES (linear ou por ano) ────────────────────
+function scGetQuestoes(p, d) {
+  if (!d) return [];
+  if (p.tipo === 'anual') {
+    // PSC / SIS: questoes é objeto { 2023: [...], 2024: [...], 2025: [...] }
+    const lista = (d.questoes && d.questoes[p.ano]) || [];
+    return lista.filter(q => q.enunciado && q.enunciado.trim() !== '');
+  }
+  // ENEM / MACRO: questoes é array linear
+  return (d.questoes || []).filter(q => q.enunciado && q.enunciado.trim() !== '');
+}
+
+function scGetAssunto(p, d, num) {
+  if (!d) return '';
+  if (p.tipo === 'anual') {
+    return (d.assuntos?.[p.ano]?.[num]) || '';
+  }
+  return (d.assuntos?.[num]) || '';
+}
+
+function scGetGabarito(p, d, num) {
+  if (!d) return null;
+  if (p.tipo === 'anual') {
+    return (d.gabarito?.[p.ano]?.[num]) || null;
+  }
+  return (d.gabarito?.[num]) || null;
+}
+
+// ─── INICIAR ──────────────────────────────────────────────────
 function scIniciar() { scIniciarDireto(SC.provaKey); }
 
-// ─── INICIAR DIRETO (chamado pelo card em praticar.js) ────────
 function scIniciarDireto(key) {
   SC.provaKey    = key;
-  const d        = SC_PROVAS[key]?.data;
+  const p        = SC_PROVAS[key];
+  const d        = p?.data;
   if (!d) { alert('Dados da prova não carregados.'); return; }
 
-  SC.questoes    = d.questoes;
+  SC.questoes    = scGetQuestoes(p, d);
   SC.atual       = 0;
   SC.respostas   = {};
   SC.tempoInicio = Date.now();
 
-  // Garante que o overlay esteja aberto
   _el('sc-overlay').style.display = 'flex';
-
-  // Esconde telas de seleção, mostra prova
   document.querySelectorAll('.sc-tela').forEach(t => t.classList.remove('ativa'));
   _el('sc-header-prova').style.display = 'flex';
   _el('sc-body').style.display         = 'flex';
@@ -152,19 +395,15 @@ function scRenderQ() {
   const total = SC.questoes.length;
   const n     = SC.atual + 1;
 
-  // Progresso
   _txt('sc-prog-txt', `Questão ${n} de ${total}`);
   _el('sc-prog-fill').style.width = ((n / total) * 100) + '%';
 
-  // Badge
   const badge = _el('sc-badge');
   if (badge) { badge.textContent = `${p.badge} · Q${q.num}`; badge.style.color = p.cor; badge.style.background = p.corBg; }
-  _txt('sc-assunto', d.assuntos[q.num] || '');
+  _txt('sc-assunto', scGetAssunto(p, d, q.num));
 
-  // Enunciado
   _el('sc-enunciado').innerHTML = q.enunciado.replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
 
-  // Imagem
   const imgBlock = _el('sc-img-block');
   if (q.img) {
     imgBlock.innerHTML = `
@@ -183,7 +422,6 @@ function scRenderQ() {
     imgBlock.innerHTML = '';
   }
 
-  // Alternativas
   const resp = SC.respostas[q.num];
   _el('sc-opts').innerHTML = Object.entries(q.alt).map(([letra, txt]) => `
     <button onclick="scSelectAlt('${letra}')"
@@ -192,15 +430,11 @@ function scRenderQ() {
       <span>${txt}</span>
     </button>`).join('');
 
-  // Botões de nav
   _txt('sc-btn-pular', resp === 'pulada' ? '↩ Desfazer pulo' : '⏭ Pular');
   _txt('sc-btn-prox',  n < total ? 'Próxima →' : '✅ Encerrar');
 
-  // Scroll topo
   const sc = _el('sc-scroll'); if (sc) sc.scrollTop = 0;
 }
-
-// ─── SELECIONAR ALTERNATIVA ───────────────────────────────────
 function scSelectAlt(letra) {
   SC.respostas[SC.questoes[SC.atual].num] = letra;
   scRenderQ(); scRenderLog();
@@ -284,8 +518,8 @@ function scMostrarResultado() {
 
   SC.questoes.forEach(q => {
     const r   = SC.respostas[q.num];
-    const g   = d.gabarito[q.num];
-    const ass = d.assuntos[q.num] || 'Outros';
+    const g   = scGetGabarito(p, d, q.num);
+    const ass = scGetAssunto(p, d, q.num) || 'Outros';
     if (!assA[ass]) { assA[ass] = 0; assE[ass] = 0; }
     if (!r)            { vz++; assE[ass]++; }
     else if (r==='pulada') { pu++; assE[ass]++; }
@@ -312,12 +546,12 @@ function scMostrarResultado() {
   // Gabarito
   const gabHtml = SC.questoes.map(q => {
     const r = SC.respostas[q.num];
-    const g = d.gabarito[q.num];
+    const g = scGetGabarito(p, d, q.num);
     const [ico, cor] = !r || r==='pulada' ? ['—','#f59e0b'] : r===g ? ['✓','#10b981'] : ['✗','#ef4444'];
     return `
       <div class="sc-gab-row">
         <span style="font-weight:800;color:var(--text2);width:34px;flex-shrink:0">Q${q.num}</span>
-        <span style="flex:1;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${d.assuntos[q.num]}</span>
+        <span style="flex:1;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${scGetAssunto(p, d, q.num)}</span>
         <span style="font-weight:700;color:var(--text);width:16px;text-align:center">${r&&r!=='pulada'?r:'–'}</span>
         <span style="color:var(--border)">→</span>
         <span style="font-weight:800;color:var(--text);width:16px;text-align:center">${g}</span>

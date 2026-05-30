@@ -110,7 +110,7 @@ const ENEM2025_MAT = {
     {
       "num": 136,
       "enunciado": "No entorno de uma lagoa circular, cujo raio mede 1 km, há um uma ciclovia. Devido aosfrequentesroubos de bicicleta, a prefeitura planeja alocar policiais em posições estratégicas para patrulhar essa ciclovia, de forma a torná-la totalmente protegida. Um ponto da ciclovia é considerado protegido se houver pelo menos um policial a, no máximo, 200 m de distância daquele ponto, posicionado sobre a ciclovia. A figura ilustra um ponto P sobre a ciclovia, que estará protegido se houver pelo menos um policial posicionado sobre a região de cor cinza escuro.\nDesconsidere a largura da pista da ciclovia e utilize 3 como aproximação para pi.\nNessas condições, a quantidade mínima necessária de policiais a serem alocados ao longo dessa ciclovia para torná-la protegida é",
-      "img": "assets/enem2025/q136.jpeg",
+      "img": "assets/documents/ENEM/2025/questions/q136.png",
       "alt": {
         "A": "4",
         "B": "8",
@@ -194,7 +194,7 @@ const ENEM2025_MAT = {
     {
       "num": 142,
       "enunciado": "Pesquisas na área de neurobiologia confirmam que a prática meditativa é responsável por diminuir consideravelmente a frequência respiratória para praticantes avançados, que, após iniciarem a meditação, têm suas frequências respiratórias reduzidas até se estabilizarem em um nível mais baixo. O gráfico apresenta a relação da frequência respiratória, em incursões de respirações por minuto (rpm), em relação ao tempo, em minuto, de um praticante avançado, em que (f1) representa a frequência no instante t1, no qual se inicia a prática meditativa; e (f2), a frequência no instante t2, a partir do qual esta se estabiliza durante a meditação.\nA partir do instante t1, em que se inicia a prática meditativa, o comportamento da frequência respiratória, em relação ao tempo,",
-      "img": "assets/enem2025/q142.jpeg",
+      "img": "assets/documents/ENEM/2025/questions/q142.png",
       "alt": {
         "A": "mantém-se constante",
         "B": "é diretamente proporcional ao tempo",
@@ -222,7 +222,7 @@ const ENEM2025_MAT = {
     {
       "num": 144,
       "enunciado": "Em um jogo de computador, um cubo se encontra inicialmente posicionado conforme indicado na figura.\nCada deslocamento efetuado por esse cubo se dá sempre em uma das direções definidas pelos três eixos coordenados. Ao se movimentar a partir da posição inicial, esse cubo se aproximou 3 unidades do plano yz, se afastou 5 unidades do plano xz e se aproximou 4 unidades do plano xy.\nA figura que apresenta as projeções ortogonais desse cubo sobre os três planos coordenados, após efetuar as movimentações descritas, é",
-      "img": "assets/enem2025/q144.jpeg",
+      "img": "assets/documents/ENEM/2025/questions/q144.png",
       "alt": {
         "A": "A",
         "B": "B",
@@ -236,7 +236,7 @@ const ENEM2025_MAT = {
     {
       "num": 145,
       "enunciado": "A reportagem de uma revista abordou o uso de redes sociais pelos internautas brasileiros. Alguns dos dados apurados pela reportagem estão apresentados no infográfico.\nSegundo os dados do infográfico, ao se escolher aleatoriamente um internauta brasileiro no período ao qual se refere a reportagem, a probabilidade de ele ser um homem que acessa alguma rede social é",
-      "img": "assets/enem2025/q145.jpeg",
+      "img": "assets/documents/ENEM/2025/questions/q145.png",
       "alt": {
         "A": "30/90",
         "B": "36/100",
@@ -264,7 +264,7 @@ const ENEM2025_MAT = {
     {
       "num": 147,
       "enunciado": "Em um jogo digital, há três personagens: um herói e dois vilões. A programação é feita de tal forma que o herói sempre será atacado pelo vilão que estiver mais próximo dele. Uma das maneiras de “confundir” os vilões é movimentar o herói por trajetórias que o mantenha equidistante dos vilões, gerando indefinição entre eles e, com isso, não sendo atacado.\nPara a programação de uma das etapas desse jogo, o programador considerou, no plano cartesiano, o quadrado STUV como a região de movimentação dos personagens, onde V e T representam as posições fixas dos vilões, e S, a posição inicial do herói, como apresentado na figura.\nQual é a equação da trajetória em que o herói poderá se movimentar sem ser atacado?",
-      "img": "assets/enem2025/q147.jpeg",
+      "img": "assets/documents/ENEM/2025/questions/q147.png",
       "alt": {
         "A": "y = −3x + 20",
         "B": "y = −3x + 16",
@@ -278,7 +278,7 @@ const ENEM2025_MAT = {
     {
       "num": 148,
       "enunciado": "Uma livraria comercializa livros dos seguintes gêneros literários: ficção científica, autoajuda, romance e biografia. O gráfico apresenta o estoque dos livros que essa livraria tem, por gênero literário e por nacionalidade do autor, bem como a demanda por gênero literário, obtida por meio de uma enquete feita com seus clientes habituais.\nO gerente da livraria fará a encomenda de novos exemplares somente do gênero cuja quantidade em estoque seja insuficiente para atender a demanda constatada pela enquete.\nO gênero de livro do qual o gerente deverá encomendar mais exemplares é",
-      "img": "assets/enem2025/q148.jpeg",
+      "img": "assets/documents/ENEM/2025/questions/q148.png",
       "alt": {
         "A": "ficção, pois é o que apresenta maior demanda.",
         "B": "biografia, pois é o gênero que tem a menor demanda",
@@ -292,7 +292,7 @@ const ENEM2025_MAT = {
     {
       "num": 149,
       "enunciado": "Uma escola de idiomas oferece cursos de inglês, espanhol, francês e alemão. Os gráficos apresentam a distribuição percentual das matrículas, por idioma, em 2023, e a distribuição da quantidade de matrículas, por idioma, em 2024.\nPara planejar as atividades de 2025, o gerente da escola estimou que o total de matrículas será o mesmo de 2024, e a distribuição percentual das matrículas, por idioma, será igual à registrada em 2023.\nSegundo essa estimativa, o número de matrículas no curso de francês para o ano de 2025 será",
-      "img": "assets/enem2025/q149.jpeg",
+      "img": "assets/documents/ENEM/2025/questions/q149.png",
       "alt": {
         "A": "2",
         "B": "12",
@@ -320,7 +320,7 @@ const ENEM2025_MAT = {
     {
       "num": 151,
       "enunciado": "A cúpula pentagonal giralongada é um poliedro de Johnson, cujas faces são polígonos regulares, mas que não é um poliedro de Platão, de Arquimedes, prisma ou antiprisma.\nAs figuras apresentam esse poliedro em duas posições e uma de suas planificações.\nQuantos vértices tem esse poliedro?",
-      "img": "assets/enem2025/q151.jpeg",
+      "img": "assets/documents/ENEM/2025/questions/q151.png",
       "alt": {
         "A": "21",
         "B": "25",
@@ -376,7 +376,7 @@ const ENEM2025_MAT = {
     {
       "num": 155,
       "enunciado": "Em uma escola, todos os estudantes do ensino médio praticam uma das três modalidades esportivas oferecidas como atividade física, e cada um deles pratica somente uma dessas atividades. Os gráficos trazem alguns dados relativos aos quantitativos de estudantes que praticam essas modalidades esportivas nessa escola, apesar de algumas quantidades não terem sido informadas.\nQual é a quantidade de estudantes no ensino médio dessa escola?",
-      "img": "assets/enem2025/q155.jpeg",
+      "img": "assets/documents/ENEM/2025/questions/q155.png",
       "alt": {
         "A": "720",
         "B": "360",
@@ -390,7 +390,7 @@ const ENEM2025_MAT = {
     {
       "num": 156,
       "enunciado": "O dono de uma embarcação deve partir do ponto P e chegar ao ponto R por meio de dois deslocamentos lineares e navegando a uma velocidade constante. Essa viagem será feita durante a noite, e como ele dispõe somente de uma bússola e de um relógio, planejou sua rota da seguinte forma:\n1º – partir do ponto P na direção 110 e navegar por 4 horas, alcançando um ponto Q;\n2º – partir do ponto Q na direção 90 e navegar por 2 horas, alcançando o ponto de destino R.\nNo entanto, ao direcionar o barco para o primeiro deslocamento, o fez na direção 340, em vez de 110. Com isso, realizou os seguintes deslocamentos:\n1º – partiu do ponto P na direção 340 e navegou por 4 horas, alcançando um ponto S;\n2º – partiu do ponto S na direção 90 e navegou por 2 horas, alcançando o ponto T.\nA figura apresenta a bússola, a rota planejada e a rota executada.\nO dono da embarcação só percebeu o equívoco ao chegar ao ponto T. Com isso, agora ele precisa definir a direção e o tempo de navegação que lhe permita, partindo do ponto T, chegar ao ponto de destino R por meio de uma rota retilínea.\nConsidere 0,64 como aproximação para cos 50°.\nA direção e o tempo aproximado de navegação que o dono da embarcação deve utilizar são, respectivamente,",
-      "img": "assets/enem2025/q156.jpeg",
+      "img": "assets/documents/ENEM/2025/questions/q156.png",
       "alt": {
         "A": "135 e 7 horas e 15 minutos",
         "B": "45 e 7 horas e 15 minutos",
@@ -418,7 +418,7 @@ const ENEM2025_MAT = {
     {
       "num": 158,
       "enunciado": "Pace é um termo usado por um corredor para denominar o seu ritmo médio em uma corrida. Representa o tempo médio, em segundo, que esse corredor leva para percorrer 1 km.\nO esquema apresenta o tempo, em segundo, que um corredor levou para cruzar as marcas que definem os quatro primeiros trechos de 1 km, em uma corrida de 5 km, e o tempo gasto para percorrer cada trecho de 1 km.\nO melhor pace que esse corredor alcançou em corridas de 5 km foi 281 s/km.\nPara que consiga repetir nessa corrida seu melhor pace em corridas de 5 km, seu tempo, no 5º trecho, deve ser quantos segundos menor do que o que ele gastou para percorrer o 4º trecho?",
-      "img": "assets/enem2025/q158.jpeg",
+      "img": "assets/documents/ENEM/2025/questions/q158.png",
       "alt": {
         "A": "1",
         "B": "2",
@@ -432,7 +432,7 @@ const ENEM2025_MAT = {
     {
       "num": 159,
       "enunciado": "Um recipiente tem um formato que faz com que, ao ser enchido de água com uma vazão constante, a distância D da lâmina de água ao tampo da mesa, em centímetro, aumente em relação ao tempo T, em minuto, de acordo com uma função do tipo\nD = k + tg[p(T + m)],\nsendo os parâmetros k, p e m números reais, para T variando entre 0 e 4 minutos, conforme ilustrado na figura, na qual estão apresentadas assíntotas verticais da função tangente utilizada na definição de D.\nA expressão algébrica que representa a relação entre D e T é",
-      "img": "assets/enem2025/q159.jpeg",
+      "img": "assets/documents/ENEM/2025/questions/q159.png",
       "alt": {
         "A": "D = 2,5 + tg[30(T - 5-2pi/2)]",
         "B": "D = 4 + tg[30(T + 5/2)]",
@@ -446,7 +446,7 @@ const ENEM2025_MAT = {
     {
       "num": 160,
       "enunciado": "Os quadrados em cinza na figura representam os quarteirões de uma parte do bairro onde moram João e seu amigo. O quadrado pequeno (A), pintado em preto e localizado no canto superior esquerdo de um quadrado maior, indica a casa do amigo de João. João também mora em uma casa de esquina, mas na extremidade nordeste de um quarteirão. Para chegar à casa de seu amigo, ao sair de casa, João deve caminhar pelo quarteirão onde mora na direção oeste, dobrar à direita, caminhar por três quarteirões na direção norte e dobrar à esquerda. A casa de seu amigo fica no segundo quarteirão a oeste.\nO quarteirão onde se encontra a casa de João é representado pelo quadrado com a letra",
-      "img": "assets/enem2025/q160.jpeg",
+      "img": "assets/documents/ENEM/2025/questions/q160.png",
       "alt": {
         "A": "P",
         "B": "Q",
@@ -488,7 +488,7 @@ const ENEM2025_MAT = {
     {
       "num": 163,
       "enunciado": "Um artista, que costuma fazer desenhos com areia na praia, pediu a um banhista que fizesse um pequeno desenho, que serviria de esboço para uma grande obra de arte a ser feita na areia. Esse desenho está representado na figura.\nApós a conclusão, a obra de arte obtida manteve as mesmas proporções do desenho feito pelo banhista, sendo que as medidas indicadas na figura foram ampliadas para 30 m.\nEm qual escala esse desenho representa a obra de arte?",
-      "img": "assets/enem2025/q163.jpeg",
+      "img": "assets/documents/ENEM/2025/questions/q163.png",
       "alt": {
         "A": "1 : 1,5",
         "B": "1 : 2,25",
@@ -544,7 +544,7 @@ const ENEM2025_MAT = {
     {
       "num": 167,
       "enunciado": "A produtividade de soja em uma área cultivada é a média da quantidade de sacas de 50 quilogramas que são produzidas por hectare. O quadro apresenta a área cultivada e a produtividade de soja em certa propriedade, ao longo de cinco safras, com períodos de um ano, de 2011 a 2016.\nO gráfico de linhas que representa a produção de soja dessa propriedade, em tonelada, nessas cinco safras é",
-      "img": "assets/enem2025/q167.jpeg",
+      "img": "assets/documents/ENEM/2025/questions/q167.png",
       "alt": {
         "A": "A",
         "B": "B",
@@ -558,7 +558,7 @@ const ENEM2025_MAT = {
     {
       "num": 168,
       "enunciado": "A figura ilustra o projeto visual para confecção de uma medalha comemorativa, com a forma de um cilindro circular reto, de diâmetro 6 cm e espessura 3 mm.\nA figura ABCD tem a forma de um quadrado e é a base de um prisma que atravessa toda a medalha. A região da medalha externa a esse prisma será cunhada em ouro. Pretende-se cunhar 100 dessas medalhas.\nConsidere 3,1 como valor aproximado para pi.\nQual é o volume de ouro, em centímetro cúbico, necessário para a confecção dessas medalhas?",
-      "img": "assets/enem2025/q168.jpeg",
+      "img": "assets/documents/ENEM/2025/questions/q168.png",
       "alt": {
         "A": "288",
         "B": "297",
@@ -600,7 +600,7 @@ const ENEM2025_MAT = {
     {
       "num": 171,
       "enunciado": "Quatro amigos, cada um com 100 moedas, criaram um jogo, no qual cada um assume uma das quatro posições, 1, 2, 3 ou 4, indicadas na figura, e nela permanece até o final.\nO desenvolvimento do jogo se dá em rodadas e, em todas elas, cada jogador transfere e recebe uma quantidade de moedas, da seguinte maneira:\n• o jogador na posição 1 transfere 1 moeda para o jogador na posição 2;\n• o jogador na posição 2 transfere 2 moedas para o jogador na posição 3;\n• o jogador na posição 3 transfere 3 moedas para o jogador na posição 4;\n• o jogador na posição 4 transfere 4 moedas para o jogador na posição 1, completando a rodada.\nAo final da rodada n, qual é a expressão algébrica que representa o número de moedas do jogador na posição 1?",
-      "img": "assets/enem2025/q171.jpeg",
+      "img": "assets/documents/ENEM/2025/questions/q171.png",
       "alt": {
         "A": "103 + 4n",
         "B": "103 + 3n",
@@ -614,7 +614,7 @@ const ENEM2025_MAT = {
     {
       "num": 172,
       "enunciado": "Uma pessoa tem um carro bicombustível, que funciona a gás natural veicular (GNV) e a gasolina. O rendimento do carro, medido em km/m³, no caso do gás, ou medido em km/L, no caso da gasolina, depende, entre outros fatores, da velocidade, em km/h, em que o carro trafega. Essa relação está em conformidade com estes gráficos.\nDurante um feriado, essa pessoa realizou uma viagem de 240 km. Para obter uma estimativa de gasto de combustível, assuma que em todo o trajeto se manteve uma velocidade constante de 60 km/h. Considere que, durante metade do caminho, foi utilizado apenas GNV e, na outra metade, apenas gasolina. O que foi pago pelo metro cúbico de GNV e pelo litro de gasolina correspondeu, respectivamente, a R$ 2,00 e a R$ 3,00.\nQual foi a diferença, em real, entre os gastos totais com gasolina e com GNV?",
-      "img": "assets/enem2025/q172.png",
+      "img": "assets/documents/ENEM/2025/questions/q172.png",
       "alt": {
         "A": "4",
         "B": "8",
@@ -642,7 +642,7 @@ const ENEM2025_MAT = {
     {
       "num": 174,
       "enunciado": "Uma caixa de descarga, acoplada a um vaso sanitário, tem a forma de paralelepípedo reto retângulo cujas dimensões internas da base são 2,5 dm e 1,5 dm. Nessa caixa há uma boia que interrompe o abastecimento quando a altura da coluna de água atinge 2 dm, conforme a figura.\nA cada acionamento da descarga, todo o volume de água contida na caixa é despejado no vaso. Para reduzir o volume de água despejado a cada acionamento, uma pessoa colocará, no interior dessa caixa, garrafas de 300 mL, cheias de areia e tampadas, de modo a ficarem submersas quando o abastecimento for interrompido.\nPara garantir o funcionamento eficiente, o mínimo de água despejada a cada acionamento deve ser de 5 L.\nA quantidade máxima de garrafas que serão colocadas nessa caixa, garantindo um funcionamento eficiente, é igual a",
-      "img": "assets/enem2025/q174.jpeg",
+      "img": "assets/documents/ENEM/2025/questions/q174.png",
       "alt": {
         "A": "10",
         "B": "8",
@@ -684,7 +684,7 @@ const ENEM2025_MAT = {
     {
       "num": 177,
       "enunciado": "Em uma cidade, será construído um túnel que atravessa uma montanha para facilitar o trânsito de automóveis e bicicletas. Dois projetos foram elaborados e os esquemas com as vistas frontais desses projetos são apresentados na figura.\nO Projeto 1 conta com dois túneis, um exclusivo para bicicletas e o outro, para automóveis. O Projeto 2 conta com um único túnel, com espaços reservados para o trânsito exclusivo de bicicletas e automóveis. Nos dois projetos, os túneis têm o formato de semicilindro reto de mesma extensão, com vias de ida e volta para os dois tipos de veículos, separados por muretas.\nO projeto a ser aprovado será aquele que apresentar a menor área da seção transversal, pois implicará menor volume de material retirado da montanha.\nConsidere 3 como aproximação para p e desconsidere as espessuras das muretas.\nO projeto a ser aprovado é",
-      "img": "assets/enem2025/q177.jpeg",
+      "img": "assets/documents/ENEM/2025/questions/q177.png",
       "alt": {
         "A": "o 1, pois apresenta área de seção transversal medindo 67,5 m2",
         "B": "o 2, pois apresenta área de seção transversal medindo 121,5 m2",
