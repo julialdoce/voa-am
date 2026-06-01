@@ -54,16 +54,34 @@ const PSC1_MAT = {
   // ── ASSUNTOS (por ano) ──────────────────────────────────────
   assuntos: {
     "2023": {
-        "1": "" ,      "2": "" ,      "3": "" ,      "4": "" ,      "5": "" ,
-        "6": "" ,      "7": "" ,      "8": ""
+        "1": "Funções do 1º Grau – Gráfico",
+        "2": "Geometria Plana – Triângulos Congruentes",
+        "3": "Grandezas – Velocidade e Tempo",
+        "4": "Funções Quadráticas – Valor Mínimo",
+        "5": "Juros Simples",
+        "6": "Estatística – Média Ponderada",
+        "7": "Combinatória – Anagramas com Restrição",
+        "8": "Combinatória – Números com Algarismos Distintos"
     },
     "2024": {
-        "1": "" ,      "2": "" ,      "3": "" ,      "4": "" ,      "5": "" ,
-        "6": "" ,      "7": "" ,      "8": ""
+        "1": "Funções Quadráticas – Custo e Produção",
+        "2": "Geometria Plana – Triângulo Retângulo e Trigonometria",
+        "3": "Funções Quadráticas – Dimensões",
+        "4": "Juros Simples",
+        "5": "Geometria Plana – Semelhança de Triângulos",
+        "6": "Grandezas Proporcionais – Regra de Três Composta",
+        "7": "Funções – Composição",
+        "8": "Estatística – Média Aritmética"
     },
     "2025": {
-        "1": "" ,      "2": "" ,      "3": "" ,      "4": "" ,      "5": "" ,
-        "6": "" ,      "7": "" ,      "8": ""
+        "1": "Porcentagem – Desconto e Comparação",
+        "2": "Geometria Plana – Cabos de Aço (Pitágoras)",
+        "3": "Funções Quadráticas – Produtividade",
+        "4": "Grandezas – Velocidade de Download",
+        "5": "Geometria Espacial – Volume (Escada Prismática)",
+        "6": "Geometria Plana – Triângulo (Pitágoras)",
+        "7": "Geometria Espacial – Volume (Prisma)",
+        "8": "Combinatória – Contagem com Opções"
     }
   },
 

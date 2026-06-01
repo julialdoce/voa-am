@@ -213,11 +213,18 @@ function redLimpar() {
 async function redCorrigir() {
   const textarea = document.getElementById('red-editor-textarea');
   if (!textarea || !textarea.value.trim()) {
-    alert('Escreva sua redação antes de solicitar a correção.');
+    showXPToast('✍️ Escreva sua redação antes de solicitar a correção.');
+    return;
+  }
+  if (textarea.value.trim().length < 100) {
+    showXPToast('📝 Redação muito curta. Mínimo recomendado: 100 caracteres.');
     return;
   }
   const tema = textarea.getAttribute('data-titulo') || 'Tema não informado';
   const texto = textarea.value;
+  // Desabilita botão durante a requisição para evitar cliques duplos
+  const btnCorrigir = document.querySelector('[onclick*="redCorrigir"]');
+  if (btnCorrigir) { btnCorrigir.disabled = true; btnCorrigir.textContent = '🤖 Corrigindo...'; }
 
   let resultadoDiv = document.getElementById('red-resultado-ia');
   if (!resultadoDiv) {
@@ -236,13 +243,19 @@ async function redCorrigir() {
   resultadoDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
   try {
-    const resposta = await fetch('http://localhost:3000/corrigir-redacao', {
+    const API_BASE = window.VOAAM_API_URL || 'http://localhost:3000';
+    const resposta = await fetch(API_BASE + '/corrigir-redacao', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ tema, texto })
     });
     const dados = await resposta.json();
-    resultadoDiv.innerHTML = dados.resultado;
+    // Formata o resultado: converte quebras de linha em HTML e aplica markdown básico
+    const textoFormatado = dados.resultado
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\n/g, '<br>');
+    resultadoDiv.innerHTML = textoFormatado;
     resultadoDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
   } catch (erro) {
     console.warn('Backend de IA indisponível:', erro);
@@ -445,7 +458,8 @@ function redMostrarFeedback(id) {
   el._t = setTimeout(() => { el.style.display = 'none'; }, 3000);
 }
 function redMostrarFeedbackErro(msg) {
-  alert(msg);
+  // Usa toast em vez de alert() para não bloquear a interface
+  showXPToast('⚠️ ' + msg);
 }
 
 // ─── FECHAR MODAL AO CLICAR NO FUNDO ─────────────────────────

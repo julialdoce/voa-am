@@ -53,22 +53,34 @@ const SIS1_MAT = {
   // ── ASSUNTOS (por ano) ──────────────────────────────────────
   assuntos: {
     "2023": {
-        "1": "" ,      "2": "" ,      "3": "" ,      "4": "" ,      "5": "" ,
-        "6": "" ,      "7": "" ,      "8": "" ,      "9": "" ,      "10": "" ,
-        "11": "" ,      "12": "" ,      "13": "" ,      "14": "" ,      "15": "" ,
-        "16": "" ,      "17": "" ,      "18": "" ,      "19": "" ,      "20": ""
+        "1": "Grandezas Proporcionais – Regra de Três",
+        "2": "Estatística – Média Ponderada",
+        "3": "Funções do 1º Grau – Raiz e Lei",
+        "4": "Geometria Plana – Semelhança de Triângulos",
+        "5": "Geometria Plana – Área (Retângulos)",
+        "6": "Geometria Plana – Triângulo Inscrito em Circunferência",
+        "7": "Combinatória – Permutações",
+        "8": "Combinatória – Contagem com Opções"
     },
     "2024": {
-        "1": "" ,      "2": "" ,      "3": "" ,      "4": "" ,      "5": "" ,
-        "6": "" ,      "7": "" ,      "8": "" ,      "9": "" ,      "10": "" ,
-        "11": "" ,      "12": "" ,      "13": "" ,      "14": "" ,      "15": "" ,
-        "16": "" ,      "17": "" ,      "18": "" ,      "19": "" ,      "20": ""
+        "1": "Porcentagem – Regra de Três",
+        "2": "Estatística – Média Aritmética",
+        "3": "Funções Quadráticas – Análise de Raízes",
+        "4": "Geometria Plana – Semelhança de Triângulos",
+        "5": "Geometria Plana – Área (Retângulo Dividido)",
+        "6": "Combinatória – Arranjos com Restrição",
+        "7": "Estatística – Mediana (Distribuição de Frequência)",
+        "8": "Funções do 1º Grau – Gráfico"
     },
     "2025": {
-        "1": "" ,      "2": "" ,      "3": "" ,      "4": "" ,      "5": "" ,
-        "6": "" ,      "7": "" ,      "8": "" ,      "9": "" ,      "10": "" ,
-        "11": "" ,      "12": "" ,      "13": "" ,      "14": "" ,      "15": "" ,
-        "16": "" ,      "17": "" ,      "18": "" ,      "19": "" ,      "20": ""
+        "1": "Porcentagem – Comparação",
+        "2": "Estatística – Moda e Média",
+        "3": "Geometria Plana – Triângulo Retângulo (Pitágoras)",
+        "4": "Geometria Plana – Área (Figuras Compostas)",
+        "5": "Combinatória – Contagem com Restrição",
+        "6": "Funções do 1º Grau – Gráfico",
+        "7": "Estatística – Média Aritmética",
+        "8": "Funções Quadráticas – Mínimo e Máximo"
     }
   },
 

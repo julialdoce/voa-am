@@ -3,12 +3,12 @@
 
 // ─── NAVIGATION ───
 const SLOT_MAP = {
-  home:         'slot-page-home',
-  vestibulares: 'slot-page-vestibulares',
-  materia:      'slot-page-materia',
-  praticar:     'slot-page-praticar',
-  redacao:      'slot-page-redacao',
-  perfil:       'slot-page-perfil',
+  home:              'slot-page-home',
+  materia:           'slot-page-materia',
+  praticar:          'slot-page-praticar',
+  redacao:           'slot-page-redacao',
+  perfil:            'slot-page-perfil',
+  'banco-de-provas': 'slot-page-banco-de-provas',
 };
 
 function goTo(screen) {
@@ -17,14 +17,16 @@ function goTo(screen) {
   document.getElementById('screen-' + screen)?.classList.add('active');
   document.getElementById('nav-' + screen)?.classList.add('active');
   // Esconde todos os slots de página e mostra apenas o ativo (grid desktop)
+  const activeSlotId = SLOT_MAP[screen] || null;
   Object.entries(SLOT_MAP).forEach(([name, slotId]) => {
     const slot = document.getElementById(slotId);
-    if (slot) slot.style.display = (name === screen) ? 'block' : 'none';
+    if (slot) slot.style.display = (slotId === activeSlotId) ? 'block' : 'none';
   });
-  if (screen === 'materia')  renderTopics();
-  if (screen === 'perfil')   renderPerfil();
-  if (screen === 'praticar') pratAba('sim');
-  if (screen === 'redacao')  redAba('temas');
+  if (screen === 'materia')       renderTopics();
+  if (screen === 'perfil')        renderPerfil();
+  if (screen === 'praticar')      pratAba('sim');
+  if (screen === 'redacao')       redAba('temas');
+  if (screen === 'banco-de-provas') { if (typeof initBancoProvas === 'function') initBancoProvas(); }
 }
 
 // ─── MODAL SIMULADO (compatibilidade) ───
@@ -70,10 +72,7 @@ function editarPerfil() {
   localStorage.removeItem('voaam_perfil');
   location.reload();
 }
-function authLogout() {
-  localStorage.removeItem('voaam_perfil');
-  location.reload();
-}
+// authLogout() definido em auth.js
 
 // ─── THEME TOGGLE ───
 function toggleTheme() {
@@ -87,7 +86,8 @@ function toggleTheme() {
 })();
 
 // ─── INIT ───
-document.getElementById('xp-count').textContent = state.xp;
+const _xpEl = document.getElementById('xp-count');
+if (_xpEl) _xpEl.textContent = state.xp;
 if (perfil) {
   aplicarPerfil();
 }

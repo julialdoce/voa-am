@@ -33,3 +33,16 @@ function getDificuldade(q) {
   return 1;
 }
 
+
+// ─── SANITIZAÇÃO XSS ──────────────────────────────────────────
+// Escapa conteúdo HTML antes de injetar via innerHTML.
+// Usar em contextos onde o conteúdo não é HTML intencional.
+function escapeHTML(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}

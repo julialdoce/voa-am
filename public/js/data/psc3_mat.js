@@ -54,16 +54,28 @@ const PSC3_MAT = {
   // ── ASSUNTOS (por ano) ──────────────────────────────────────
   assuntos: {
     "2023": {
-        "1": "" ,      "2": "" ,      "3": "" ,      "4": "" ,      "5": "" ,
-        "6": "" ,      "7": "" ,      "8": ""
+        "1": "Geometria Analítica – Circunferência e Reta",
+        "2": "Polinômios – Divisibilidade",
+        "3": "Polinômios – Raízes e Relações de Girard",
+        "4": "Números Complexos – Potenciação",
+        "5": "Estatística – Média e Desvio Padrão",
+        "6": "Geometria Analítica – Circunferência"
     },
     "2024": {
-        "1": "" ,      "2": "" ,      "3": "" ,      "4": "" ,      "5": "" ,
-        "6": "" ,      "7": "" ,      "8": ""
+        "1": "Polinômios – Divisibilidade",
+        "2": "Números Complexos – Forma Trigonométrica",
+        "3": "Geometria Analítica – Posição Relativa de Circunferências",
+        "4": "Geometria Analítica – Elipse",
+        "5": "Estatística – Mediana e Média (Distribuição de Frequência)",
+        "6": "Geometria Analítica – Alinhamento de Pontos"
     },
     "2025": {
-        "1": "" ,      "2": "" ,      "3": "" ,      "4": "" ,      "5": "" ,
-        "6": "" ,      "7": "" ,      "8": ""
+        "1": "Matrizes – Igualdade de Matrizes",
+        "2": "Geometria Analítica – Coeficiente Angular e Ângulo de Inclinação",
+        "3": "Sistemas Lineares – Escalonamento",
+        "4": "Combinatória – Números com Restrição",
+        "5": "Probabilidade – Múltiplos",
+        "6": "Geometria Espacial – Volume (Cilindro e Cone)"
     }
   },
 

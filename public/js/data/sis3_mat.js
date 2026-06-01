@@ -53,22 +53,40 @@ const SIS3_MAT = {
   // ── ASSUNTOS (por ano) ──────────────────────────────────────
   assuntos: {
     "2023": {
-        "1": "" ,      "2": "" ,      "3": "" ,      "4": "" ,      "5": "" ,
-        "6": "" ,      "7": "" ,      "8": ""
+        "1": "Geometria Analítica – Ponto Médio e Distância",
+        "2": "Geometria Analítica – Quadrados e Área",
+        "3": "Números Complexos – Módulo e Argumento",
+        "4": "Números Complexos – Forma Trigonométrica",
+        "5": "Polinômios – Raízes Comuns",
+        "6": "Estatística – Média e Desvio Padrão",
+        "7": "Polinômios – Raízes e Relações de Girard",
+        "8": "Estatística – Moda e Frequência"
     },
     "2024": {
-        "1": "" ,      "2": "" ,      "3": "" ,      "4": "" ,      "5": "" ,
-        "6": "" ,      "7": "" ,      "8": ""
+        "1": "Matrizes – Elementos e Operações",
+        "2": "Matrizes – Determinante",
+        "3": "Combinatória – Escolha com Restrição",
+        "4": "Geometria Plana – Área (Triângulos em Quadrilátero)",
+        "5": "Geometria Espacial – Volume (Prisma e Pirâmide)",
+        "6": "Geometria Analítica – Coeficiente Angular e Equação da Reta",
+        "7": "Combinatória – Permutações com Restrição",
+        "8": "Probabilidade – Contagem e Comparação"
     },
     "2025": {
-        "1": "" ,      "2": "" ,      "3": "" ,      "4": "" ,      "5": "" ,
-        "6": "" ,      "7": "" ,      "8": ""
+        "1": "Combinatória – Contagem com Restrição",
+        "2": "Geometria Espacial – Volume (Prisma Composto)",
+        "3": "Matrizes – Operações e Soma de Elementos",
+        "4": "Estatística – Média e Porcentagem",
+        "5": "Geometria Analítica – Reflexão",
+        "6": "Probabilidade – Urna com Restrição",
+        "7": "Estatística – Gráfico de Barras e Média",
+        "8": "Geometria Plana – Área (Retângulo)"
     }
   },
 
   // ── QUESTÕES (por ano) ──────────────────────────────────────
   questoes: {
-    "2023": [
+        "2023": [
 
     // ── QUESTÃO 1 ──
     {
@@ -187,7 +205,7 @@ const SIS3_MAT = {
     // ── QUESTÃO 1 ──
     {
       "num": 1,
-      "enunciado": "Considere a matriz B = (bij)2×3, tal que bij = i + 2j – 2. SejamM e m, respectivamente, o maior e o menor elemento damatriz B. A diferença M – m é igual a",
+      "enunciado": "Considere a matriz B = (bij)2×3, tal que bij = i + 2j – 2. Sejam M e m, respectivamente, o maior e o menor elemento damatriz B. A diferença M – m é igual a",
       "img": null,
       "alt": {
         "A": "-12",

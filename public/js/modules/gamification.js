@@ -20,7 +20,8 @@ function verificarStreak() {
 function addXP(amount) {
   state.xp += amount;
   salvarState();
-  document.getElementById('xp-count').textContent = state.xp;
+  const xpCount = document.getElementById('xp-count');
+  if (xpCount) xpCount.textContent = state.xp;
   const rankXp = document.getElementById('rank-xp');
   if (rankXp) rankXp.textContent = state.xp + ' XP';
   showXPToast('+' + amount + ' XP');
@@ -60,12 +61,14 @@ function showVideoMsg() {
 }
 
 function updateStats() {
-  document.getElementById('stat-aulas').textContent = state.aulas;
-  document.getElementById('stat-quiz').textContent = state.quizDone;
-  document.getElementById('stat-correct').textContent = state.quizCorrect;
-  const pct = Math.min(100, Math.round((state.quizCorrect/Math.max(1,state.quizDone))*100));
-  document.getElementById('home-pct').textContent = pct + '%';
-  document.getElementById('home-bar').style.width = pct + '%';
+  const setEl = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  setEl('stat-aulas', state.aulas);
+  setEl('stat-quiz', state.quizDone);
+  setEl('stat-correct', state.quizCorrect);
+  const pct = Math.min(100, Math.round((state.quizCorrect / Math.max(1, state.quizDone)) * 100));
+  setEl('home-pct', pct + '%');
+  const bar = document.getElementById('home-bar');
+  if (bar) bar.style.width = pct + '%';
 }
 
 

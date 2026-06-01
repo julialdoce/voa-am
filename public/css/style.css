@@ -163,11 +163,18 @@ body {
     border-left: 1px solid var(--border);
   }
 
-  .screen {
+  .screen,
+  #slot-page-home,
+  #slot-page-materia,
+  #slot-page-praticar,
+  #slot-page-redacao,
+  #slot-page-perfil {
     grid-area: main;
     border-left: 1px solid var(--border);
     min-height: calc(100vh - 64px);
     padding-bottom: 40px;
+    min-width: 0;
+    width: 100%;
   }
 
   /* ── SIDEBAR ── */
@@ -866,7 +873,7 @@ body {
 
 .vest-full-body {
   display: none;
-  padding: 0 18px 18px;
+  padding: 18px 18px 18px;
   border-top: 1px solid var(--border);
 }
 .vest-full-card.open .vest-full-body { display: block; }
@@ -1042,6 +1049,35 @@ body {
   border: 1px solid var(--border);
   position: relative; overflow: hidden; cursor: pointer;
 }
+
+.video-redirect-hint {
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.65);
+  background: rgba(0,0,0,0.35);
+  padding: 3px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.2px;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.video-area:hover .video-redirect-hint {
+  color: rgba(255,255,255,0.95);
+}
+
+.video-area:hover .play-btn {
+  transform: scale(1.08);
+  transition: transform 0.18s ease;
+}
+
+.video-area .play-btn {
+  transition: transform 0.18s ease;
+}
+
 .video-thumb-bg {
   position: absolute; inset: 0;
   background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(0,0,0,0.4));
@@ -1448,3 +1484,22 @@ body {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 2px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--border-accent); }
+
+/* ═══════════════════════════════════════════
+   ACESSIBILIDADE — FOCO VISÍVEL
+   Garante indicador de foco para navegação
+   por teclado sem remover outline global
+═══════════════════════════════════════════ */
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--accent2);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.nav-btn:focus-visible,
+.option-btn:focus-visible,
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible {
+  outline: 2px solid var(--accent2);
+  outline-offset: 3px;
+}

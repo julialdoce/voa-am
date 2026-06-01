@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Voa AM — Vestibulares do Amazonas</title>
+  <meta name="description" content="Plataforma gratuita de estudos para PSC (UFAM), SIS (UEA), MACRO (UEA) e ENEM. Simulados, exercícios e banco de questões do Amazonas.">
+  <meta name="theme-color" content="#0f1117">
+  <meta property="og:title" content="Voa AM — Vestibulares do Amazonas">
+  <meta property="og:description" content="Simulados, exercícios e banco de questões para PSC, SIS, MACRO e ENEM.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦅</text></svg>">
 
   <!-- ── Fontes ── -->
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Fraunces:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
@@ -45,17 +51,16 @@
   <!-- ── PÁGINAS ────────────────────────────────────────────
        Uma por vez (.active).  Navegação: goTo('nome')
        pages/home.html          → Início
-       pages/vestibulares.html  → Vestibulares (PSC, SIS, MACRO, ENEM)
        pages/materia.html       → Estudar (matéria + tópicos)
        pages/praticar.html      → Praticar (simulados + exercícios)
        pages/perfil.html        → Perfil do aluno
   ──────────────────────────────────────────────────────────── -->
   <div id="slot-page-home"></div>
-  <div id="slot-page-vestibulares"></div>
   <div id="slot-page-materia"></div>
   <div id="slot-page-praticar"></div>
   <div id="slot-page-redacao"></div>   <!-- pages/redacao.html -->
   <div id="slot-page-perfil"></div>
+  <div id="slot-page-banco-de-provas"></div>
 
   <!-- ── OVERLAYS ───────────────────────────────────────────
        Ficam sobre tudo quando ativos (position: fixed).
@@ -95,11 +100,11 @@ const Router = {
     'slot-bloqueado-view':    'components/bloqueado-view.html',
     'slot-sc-view':           'components/simulado-completo-view.html',
     'slot-page-home':         'pages/home.html',
-    'slot-page-vestibulares': 'pages/vestibulares.html',
     'slot-page-materia':      'pages/materia.html',
     'slot-page-praticar':     'pages/praticar.html',
     'slot-page-redacao':      'pages/redacao.html',
     'slot-page-perfil':       'pages/perfil.html',
+    'slot-page-banco-de-provas': 'pages/banco-de-provas.html',
   },
 
   // Ordem estrita de dependência — NÃO reordene sem revisar
@@ -130,6 +135,7 @@ const Router = {
     'js/data/sis1_mat.js',        // questões SIS 1ª Etapa (2023–2025)
     'js/data/sis2_mat.js',        // questões SIS 2ª Etapa (2023–2025)
     'js/data/sis3_mat.js',        // questões SIS 3ª Etapa (2023–2025)
+    'js/modules/banco-provas.js',      // tela Banco de Provas
     'js/modules/simulado_completo.js', // simulado completo
     'js/modules/redacao.js',      // página de redação
     'js/modules/nav.js',          // goTo, perfil, tema

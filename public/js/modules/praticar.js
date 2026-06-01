@@ -67,21 +67,32 @@ function simModoAba(modo) {
   picker.style.display = 'block';
   if (cardsContainer) cardsContainer.innerHTML = '';
 
-  // ── MODO COMPLETO: passo 1 — escolher vestibular ──────────
+  // ── MODO COMPLETO: grid igual ao simples, dados do SC_PROVAS ─
   if (modo === 'completo') {
     if (label) label.textContent = '🏆 Escolha o vestibular';
-    grid.innerHTML = Object.entries(provasOficiaisCatalogo).map(([vestKey, v]) => `
-      <button onclick="scSelecionarVestibularCompleto('${vestKey}')" style="
-        padding:14px 12px;border-radius:14px;border:1px solid ${v.corBorda};
-        background:${v.cor};color:var(--text);font-family:var(--font);
-        cursor:pointer;text-align:left;transition:all 0.15s;
-        display:flex;flex-direction:column;gap:4px">
-        <div style="font-size:20px">${v.emoji}</div>
-        <div style="font-size:13px;font-weight:700;color:${v.corNum}">${v.label}</div>
-        <div style="font-size:10px;color:var(--text2)">${v.sub}</div>
-        <div style="font-size:10px;color:var(--text2);margin-top:2px">${v.anos.length} prova${v.anos.length > 1 ? 's' : ''} disponível${v.anos.length > 1 ? 'veis' : ''}</div>
-      </button>
-    `).join('');
+    const ordemVestCompleto = ['PSC1','SIS1','PSC2','SIS2','PSC3','SIS3','ENEM','MACRO'];
+    grid.innerHTML = ordemVestCompleto.map(key => {
+      const cfg = simConfig[key];
+      if (!cfg) return '';
+      // Info de questões via SC_PROVAS (quando disponível)
+      let sub = `${cfg.qs} questões`;
+      if (typeof SC_GRUPOS !== 'undefined' && typeof SC_PROVAS !== 'undefined') {
+        const chaves = SC_GRUPOS[key] || [];
+        const nProvas = chaves.filter(k => scGetQuestoes(k).length > 0).length;
+        if (nProvas > 0)
+          sub = chaves.length > 1
+            ? `${nProvas} ano${nProvas > 1 ? 's' : ''} disponível${nProvas > 1 ? 'veis' : ''}`
+            : `${scGetQuestoes(chaves[0]).length} questões`;
+      }
+      return `<button onclick="scMostrarAnos('${key}')" style="
+        padding:14px 12px;border-radius:14px;border:1px solid ${cfg.corBorda};
+        background:${cfg.cor};color:var(--text);font-family:var(--font);
+        cursor:pointer;text-align:left;transition:all 0.15s;display:flex;flex-direction:column;gap:4px">
+        <div style="font-size:20px">${cfg.emoji}</div>
+        <div style="font-size:13px;font-weight:700;color:${cfg.corNum}">${cfg.label}</div>
+        <div style="font-size:10px;color:var(--text2)">${sub}</div>
+      </button>`;
+    }).join('');
     return;
   }
 

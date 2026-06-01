@@ -1,24 +1,28 @@
 <!-- components/navbar.html — Navegação inferior (mobile) / sidebar (desktop) -->
 <!-- ========== BOTTOM NAV ========== -->
-<nav class="bottom-nav">
-  <button class="nav-btn active" id="nav-home" onclick="goTo('home')">
-    <div class="nav-icon">🏠</div>
+<nav class="bottom-nav" role="navigation" aria-label="Navegação principal">
+  <button class="nav-btn active" id="nav-home" onclick="goTo('home')" aria-label="Ir para Início">
+    <div class="nav-icon" aria-hidden="true">🏠</div>
     Início
   </button>
-  <button class="nav-btn" id="nav-materia" onclick="goTo('materia')">
-    <div class="nav-icon">📚</div>
+  <button class="nav-btn" id="nav-materia" onclick="goTo('materia')" aria-label="Ir para Estudar">
+    <div class="nav-icon" aria-hidden="true">📚</div>
     Estudar
   </button>
-  <button class="nav-btn" id="nav-praticar" onclick="goTo('praticar')">
-    <div class="nav-icon">⚡</div>
+  <button class="nav-btn" id="nav-praticar" onclick="goTo('praticar')" aria-label="Ir para Praticar">
+    <div class="nav-icon" aria-hidden="true">⚡</div>
     Praticar
   </button>
-  <button class="nav-btn" id="nav-redacao" onclick="goTo('redacao')">
-    <div class="nav-icon">✍️</div>
+  <button class="nav-btn" id="nav-redacao" onclick="goTo('redacao')" aria-label="Ir para Redação">
+    <div class="nav-icon" aria-hidden="true">✍️</div>
     Redação
   </button>
-  <button class="nav-btn" id="nav-perfil" onclick="goTo('perfil')">
-    <div class="nav-icon">👤</div>
+  <button class="nav-btn" id="nav-banco-de-provas" onclick="goTo('banco-de-provas')" aria-label="Ir para Banco de Provas">
+    <div class="nav-icon" aria-hidden="true">📥</div>
+    Provas
+  </button>
+  <button class="nav-btn" id="nav-perfil" onclick="goTo('perfil')" aria-label="Ir para Perfil">
+    <div class="nav-icon" aria-hidden="true">👤</div>
     Perfil
   </button>
 </nav>

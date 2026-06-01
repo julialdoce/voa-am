@@ -55,11 +55,31 @@ const MACRO2025_MAT = {
 
   // ── ASSUNTOS ────────────────────────────────────────────────
   assuntos: {
-        "1": "" ,      "2": "" ,      "3": "" ,      "4": "" ,      "5": "" ,
-        "6": "" ,      "7": "" ,      "8": "" ,      "9": "" ,      "10": "" ,
-        "11": "" ,      "12": "" ,      "13": "" ,      "14": "" ,      "15": "" ,
-        "16": "" ,      "17": "" ,      "18": "" ,      "19": "" ,      "20": "" ,
-        "21": "" ,      "22": "" ,      "23": "" ,      "24": "" ,      "25": ""
+    "1": "Grandezas Proporcionais – Regra de Três",
+    "2": "Porcentagem – Aumentos e Descontos Sucessivos",
+    "3": "Estatística – Média e Moda",
+    "4": "Funções do 1º Grau – Lei da Função",
+    "5": "Funções Quadráticas – Ponto de Mínimo",
+    "6": "Álgebra – Sistema de Equações",
+    "7": "Probabilidade",
+    "8": "Geometria Plana – Área (Retângulo Dividido)",
+    "9": "Trigonometria – Razões no Triângulo Retângulo",
+    "10": "Estatística – Média Aritmética",
+    "11": "Geometria Espacial – Volume (Prisma Retangular)",
+    "12": "Álgebra – Sistema de Equações",
+    "13": "Grandezas e Medidas – Velocidade",
+    "14": "Grandezas Proporcionais – Regra de Três",
+    "15": "Grandezas Proporcionais – Produção",
+    "16": "Álgebra – Equação do 1º Grau",
+    "17": "Trigonometria – Razões no Triângulo Retângulo",
+    "18": "Geometria Plana – Área de Figuras Compostas",
+    "19": "Funções do 1º Grau – Interseção com Eixos",
+    "20": "Grandezas Proporcionais – Divisão Proporcional",
+    "21": "Probabilidade – Conjuntos",
+    "22": "Álgebra – Sistema de Equações",
+    "23": "Trigonometria – Funções Trigonométricas",
+    "24": "Matrizes – Determinante",
+    "25": "Geometria Espacial – Cone (Fusão de Sólidos)"
   },
 
   // ── QUESTÕES ────────────────────────────────────────────────

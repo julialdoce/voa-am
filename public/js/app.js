@@ -45,14 +45,25 @@
   // Inicializa visibilidade dos slots de página (grid desktop)
   // Mostra apenas home; os demais ficam ocultos até goTo() ser chamado
   const slotMap = {
-    home:         'slot-page-home',
-    vestibulares: 'slot-page-vestibulares',
-    materia:      'slot-page-materia',
-    praticar:     'slot-page-praticar',
-    perfil:       'slot-page-perfil',
+    home:              'slot-page-home',
+    vestibulares:      'slot-page-vestibulares',
+    materia:           'slot-page-materia',
+    praticar:          'slot-page-praticar',
+    redacao:           'slot-page-redacao',
+    perfil:            'slot-page-perfil',
+    'banco-de-provas': 'slot-page-banco-de-provas',
   };
   Object.entries(slotMap).forEach(([name, slotId]) => {
     const slot = document.getElementById(slotId);
     if (slot) slot.style.display = (name === 'home') ? 'block' : 'none';
+  });
+  // Fecha aula-view com tecla Escape (acessibilidade teclado)
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      const aulaView = document.getElementById('aula-view');
+      if (aulaView && aulaView.classList.contains('open')) {
+        closeAula();
+      }
+    }
   });
 })();

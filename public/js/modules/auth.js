@@ -45,21 +45,30 @@ function authCadastrar() {
   var senha = document.getElementById('cad-senha').value;
   var serie = parseInt(document.getElementById('cad-serie').value) || 0;
   var err   = document.getElementById('auth-cad-error');
-  if (!nome || !email || senha.length < 6 || !serie) {
-    err.textContent   = 'Preencha todos os campos. Senha mínima de 6 caracteres.';
+  var emailValido = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
+  if (!nome || !email || !emailValido || senha.length < 6 || !serie) {
+    err.textContent   = !emailValido && email ? 'E-mail inválido.' : 'Preencha todos os campos. Senha mínima de 6 caracteres.';
+    err.style.display = 'block';
+    return;
+  }
+  var contas     = JSON.parse(localStorage.getItem('voaam_contas') || '[]');
+  if (contas.find(function(c) { return c.email === email; })) {
+    err.textContent   = 'Este e-mail já está cadastrado.';
     err.style.display = 'block';
     return;
   }
   err.style.display = 'none';
   var vests      = authVestsSelecionados.length ? authVestsSelecionados : ['SIS'];
   var novoPerfil = { nome: nome, serie: serie, vests: vests, dific: 'ambos' };
-  var contas     = JSON.parse(localStorage.getItem('voaam_contas') || '[]');
+  // AVISO DE SEGURANÇA: senhas armazenadas em texto puro no localStorage.
+  // Em produção, use autenticação via backend com hashing (bcrypt) e JWT.
   contas.push({ email: email, senha: senha, perfil: novoPerfil });
   localStorage.setItem('voaam_contas', JSON.stringify(contas));
   authEntrarComPerfil(novoPerfil);
 }
 
 function authGoogle() {
+  // NOTA: login Google simulado (placeholder). Em produção, integrar OAuth real.
   var novoPerfil = { nome: 'Estudante Google', serie: 3, vests: ['SIS', 'ENEM'], dific: 'ambos' };
   authEntrarComPerfil(novoPerfil);
 }

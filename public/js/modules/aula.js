@@ -49,11 +49,12 @@ function renderAulaContent() {
   if(currentQuizIdx === 0) {
     // Show lesson intro first
     document.getElementById('aula-content').innerHTML = `
-      <div class="video-area" onclick="showVideoMsg()">
+      <div class="video-area" onclick="openPlaylist('${quiz.playlistUrl || '#'}')">
         <div class="video-thumb-bg">
           <div class="play-btn">▶</div>
           <div class="video-label">${quiz.video}</div>
         </div>
+        <div class="video-redirect-hint">Toque para assistir a playlist ↗</div>
       </div>
       <div class="topic-desc">${quiz.desc}</div>
       <div class="quiz-title-bar">
@@ -66,6 +67,27 @@ function renderAulaContent() {
   } else {
     renderQuestion();
   }
+}
+
+/**
+ * Abre a playlist no YouTube (ou qualquer URL) em uma nova aba.
+ * Para alterar o link de cada assunto, edite a propriedade `playlistUrl`
+ * no objeto correspondente em js/data/quizzes.js.
+ *
+ * Exemplo:
+ *   funcao_afim: {
+ *     ...
+ *     playlistUrl: 'https://www.youtube.com/playlist?list=SEU_ID_AQUI',
+ *     ...
+ *   }
+ */
+function openPlaylist(url) {
+  if(!url || url === '#' || url.includes('SUBSTITUA_AQUI')) {
+    // Playlist ainda não configurada — exibe aviso amigável
+    showXPToast('📺 Playlist em breve! Configure a URL no arquivo quizzes.js.');
+    return;
+  }
+  window.open(url, '_blank', 'noopener,noreferrer');
 }
 
 function renderQuestion() {
@@ -196,4 +218,3 @@ function closeAula() {
   document.getElementById('aula-view').classList.remove('open');
   pararCronometro();
 }
-

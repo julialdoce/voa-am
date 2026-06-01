@@ -9,12 +9,12 @@ const etapasSIS = {
   dia1: { label:'Dia 1 — Linguagens + Humanas', materias:['Português','Inglês','Espanhol','Literatura','História','Geografia'], minutos: 180 },
   dia2: { label:'Dia 2 — Exatas + Redação', materias:['Matemática','Física','Química','Biologia','Redação'], minutos: 180 },
 };
-const etadasPSC = {
-  tudo: { label:'Prova Única — Todas as matérias', materias:[], minutos: 120 },
+const etapasPSC = {
+  tudo: { label:'Prova Única — Todas as matérias', materias:[], minutos: 240 },
 };
 
 function escolherEtapaSimulado(vest) {
-  const etapas = vest === 'SIS' ? etapasSIS : etadasPSC;
+  const etapas = vest === 'SIS' ? etapasSIS : etapasPSC;
   document.getElementById('modal-etapa-title').textContent = `Simulado ${vest}`;
   document.getElementById('modal-etapa-sub').textContent = 'Escolha qual etapa da prova quer simular';
   const opts = document.getElementById('modal-etapa-opcoes');
@@ -36,11 +36,15 @@ function fecharModalEtapa() {
 }
 
 function startSimuladoComEtapa(vest, etapaKey) {
-  const etapas = vest === 'SIS' ? etapasSIS : etadasPSC;
+  const etapas = vest === 'SIS' ? etapasSIS : etapasPSC;
   const etapa = etapas[etapaKey];
   let pool = bancoDB.filter(q => q.vest === vest && q.opcoes.length > 0);
   if (etapa.materias.length > 0) pool = pool.filter(q => etapa.materias.includes(q.materia));
-  const embaralhadas = pool.sort(() => Math.random()-0.5).slice(0, 15);
+  // Calcula quantidade de questões proporcional ao tempo da etapa (1 questão a cada ~8 min)
+  const qtdQuestoes = etapa.materias.length > 0
+    ? Math.min(pool.length, Math.max(10, Math.round(etapa.minutos / 8)))
+    : Math.min(pool.length, 15);
+  const embaralhadas = pool.sort(() => Math.random()-0.5).slice(0, qtdQuestoes);
   const qs = embaralhadas.map(q => ({
     q: q.enunciado, opts: q.opcoes, correct: q.correta,
     explanation: q.contexto || `Gabarito: ${q.gabarito}`, materia: q.materia, id: q.id

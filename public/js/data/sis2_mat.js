@@ -53,16 +53,34 @@ const SIS2_MAT = {
   // ── ASSUNTOS (por ano) ──────────────────────────────────────
   assuntos: {
     "2023": {
-        "1": "" ,      "2": "" ,      "3": "" ,      "4": "" ,      "5": "" ,
-        "6": "" ,      "7": "" ,      "8": ""
+        "1": "Funções Logarítmicas – Gráfico",
+        "2": "Funções – Análise de Algoritmo",
+        "3": "Sequências – PA",
+        "4": "Geometria Espacial – Volume (Prisma de Base Pentagonal)",
+        "5": "Estatística – Gráfico de Setores",
+        "6": "Trigonometria – Funções Trigonométricas",
+        "7": "Geometria Espacial – Cilindro (Seção)",
+        "8": "Estatística – Média e Desvio Padrão"
     },
     "2024": {
-        "1": "" ,      "2": "" ,      "3": "" ,      "4": "" ,      "5": "" ,
-        "6": "" ,      "7": "" ,      "8": ""
+        "1": "Sequências – PA",
+        "2": "Grandezas Proporcionais – Produção",
+        "3": "Funções do 1º Grau – Gráfico",
+        "4": "Juros Simples",
+        "5": "Geometria Espacial – Volume (Paralelepípedo)",
+        "6": "Geometria Plana – Área (Trapézio)",
+        "7": "Estatística – Média e Desvio Padrão",
+        "8": "Álgebra – Equação do 1º Grau"
     },
     "2025": {
-        "1": "" ,      "2": "" ,      "3": "" ,      "4": "" ,      "5": "" ,
-        "6": "" ,      "7": "" ,      "8": ""
+        "1": "Porcentagem – Tabela e Comparação",
+        "2": "Grandezas Proporcionais – Regra de Três Composta",
+        "3": "Geometria Espacial – Volume (Prisma de Base Quadrada)",
+        "4": "Funções do 1º Grau – Análise de Gráfico",
+        "5": "Grandezas Proporcionais – Velocidade Média",
+        "6": "Funções – Análise de Algoritmo",
+        "7": "Geometria Espacial – Poliedros (Euler)",
+        "8": "Estatística – Média Aritmética"
     }
   },
 

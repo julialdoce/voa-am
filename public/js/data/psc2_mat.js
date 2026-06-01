@@ -54,16 +54,30 @@ const PSC2_MAT = {
   // ── ASSUNTOS (por ano) ──────────────────────────────────────
   assuntos: {
     "2023": {
-        "1": "" ,      "2": "" ,      "3": "" ,      "4": "" ,      "5": "" ,
-        "6": "" ,      "7": "" ,      "8": ""
+        "1": "Matrizes – Determinante",
+        "2": "Combinatória – Análise Combinatória",
+        "3": "Geometria Espacial – Volume (Piscina)",
+        "4": "Geometria Espacial – Volume (Pirâmide)",
+        "5": "Geometria Analítica – Mediatriz",
+        "6": "Funções Quadráticas – Análise",
+        "7": "Geometria Espacial – Cilindro (Área e Volume)",
+        "8": "Combinatória – Anagramas com Restrição"
     },
     "2024": {
-        "1": "" ,      "2": "" ,      "3": "" ,      "4": "" ,      "5": "" ,
-        "6": "" ,      "7": "" ,      "8": ""
+        "1": "Funções Exponenciais – Crescimento Populacional",
+        "2": "Funções Exponenciais",
+        "3": "Estatística – Mediana (Distribuição de Frequência)",
+        "4": "Geometria Espacial – Volume (Pirâmide)",
+        "5": "Grandezas Proporcionais – Árvores",
+        "6": "Trigonometria – Domínio da Função",
+        "7": "Sequências – PG",
+        "8": "Funções Quadráticas – Análise"
     },
     "2025": {
-        "1": "" ,      "2": "" ,      "3": "" ,      "4": "" ,      "5": "" ,
-        "6": "" ,      "7": "" ,      "8": ""
+        "1": "Funções Logarítmicas – Nível Sonoro",
+        "2": "Geometria Analítica – Coeficiente Angular",
+        "3": "Juros Simples",
+        "4": "Sequências – Análise de Padrão"
     }
   },
 

@@ -210,3 +210,266 @@
   box-shadow: 0 4px 16px rgba(0,0,0,0.12);
 }
 .red-hist-card:active { transform: scale(0.99); }
+
+
+/* ═══════════════════════════════════════════
+   BANCO DE PROVAS
+   pages/banco-provas.html + js/modules/banco-provas.js
+═══════════════════════════════════════════ */
+
+/* ── Aviso informativo no topo ── */
+.bp-aviso {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(59,130,246,0.06);
+  border: 1px solid rgba(59,130,246,0.18);
+  border-radius: var(--r2);
+  padding: 12px 14px;
+  margin-bottom: 18px;
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.5;
+}
+.bp-aviso-icon { font-size: 16px; flex-shrink: 0; line-height: 1.4; }
+
+/* ── Barra colorida superior por vestibular (reutiliza vest-full-card + ::before) ── */
+.bp-vest-card { position: relative; overflow: hidden; }
+.bp-vest-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.bp-vest-card--enem::before   { background: var(--emerald); }
+.bp-vest-card--macro::before  { background: var(--rose); }
+.bp-vest-card--psc::before    { background: var(--accent); }
+.bp-vest-card--sis::before    { background: var(--amber); }
+
+/* ── Corpo do vest-full-body para banco de provas ── */
+.bp-vest-body { padding: 0 !important; border-top: 1px solid var(--border); }
+
+/* ── Lista de anos ── */
+.bp-anos-lista {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Card de ano (accordion interno) ── */
+.bp-ano-card {
+  border-bottom: 1px solid var(--border);
+}
+.bp-ano-card:last-child { border-bottom: none; }
+
+.bp-ano-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 18px;
+  cursor: pointer;
+  transition: background var(--transition);
+  user-select: none;
+  -webkit-user-select: none;
+}
+.bp-ano-header:hover  { background: var(--surface2); }
+.bp-ano-header:active { background: var(--surface2); }
+
+.bp-ano-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.2px;
+}
+
+.bp-ano-chevron {
+  font-size: 12px;
+  color: var(--text3);
+  transition: transform 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+.bp-ano-card.open .bp-ano-chevron { transform: rotate(180deg); }
+
+/* ── Corpo do ano (oculto por padrão) ── */
+.bp-ano-body {
+  display: none;
+  padding: 4px 18px 16px;
+  background: var(--bg);
+}
+.bp-ano-card.open .bp-ano-body { display: block; }
+
+/* ── Subseção (1ª Etapa, Conh. Gerais, etc.) ── */
+.bp-subsecao { margin-top: 12px; }
+.bp-subsecao:first-child { margin-top: 8px; }
+
+.bp-subsecao-titulo {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 8px;
+}
+
+/* ── Linha de botões Prova + Gabarito ── */
+.bp-dl-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Quando não há subseção (ENEM simples), adiciona espaço */
+.bp-ano-body > .bp-dl-row {
+  margin-top: 10px;
+}
+
+/* ── Botão de download ── */
+.bp-dl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  flex: 1;
+  min-width: 0;
+  justify-content: center;
+  white-space: nowrap;
+}
+.bp-dl-btn:hover  { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.15); }
+.bp-dl-btn:active { transform: scale(0.97); }
+
+/* Variante: Prova */
+.bp-dl-btn--prova {
+  background: rgba(59,130,246,0.08);
+  border-color: rgba(59,130,246,0.22);
+  color: var(--accent2);
+}
+.bp-dl-btn--prova:hover {
+  background: rgba(59,130,246,0.14);
+  border-color: rgba(59,130,246,0.4);
+}
+
+/* Variante: Gabarito */
+.bp-dl-btn--gabarito {
+  background: rgba(16,185,129,0.07);
+  border-color: rgba(16,185,129,0.2);
+  color: var(--emerald);
+}
+.bp-dl-btn--gabarito:hover {
+  background: rgba(16,185,129,0.13);
+  border-color: rgba(16,185,129,0.35);
+}
+
+/* Estado: indisponível */
+.bp-dl-btn--disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: auto; /* mantém para mostrar o toast */
+}
+.bp-dl-btn--disabled:hover { transform: none; box-shadow: none; }
+.bp-dl-btn--disabled:active { transform: none; }
+
+.bp-dl-icon  { font-size: 15px; flex-shrink: 0; }
+.bp-dl-arrow {
+  margin-left: 2px;
+  font-size: 13px;
+  font-weight: 900;
+  opacity: 0.8;
+}
+.bp-dl-arrow--lock { font-size: 11px; opacity: 0.5; }
+
+/* ── Responsivo: mobile estreito ── */
+@media (max-width: 360px) {
+  .bp-dl-btn { font-size: 12px; padding: 8px 10px; gap: 4px; }
+  .bp-dl-icon { font-size: 13px; }
+}
+
+/* ── Responsivo: desktop (>=768px) — padding aumentado pelos padrões do projeto ── */
+@media (min-width: 768px) {
+  .bp-ano-header { padding: 14px 24px; }
+  .bp-ano-body   { padding: 4px 24px 18px; }
+  .bp-aviso      { margin-bottom: 20px; }
+}
+
+/* ═══════════════════════════════════════════
+   BANCO DE PROVAS — accordion de anos e PDFs
+═══════════════════════════════════════════ */
+.bp-ano {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.bp-ano-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--surface);
+  cursor: pointer;
+  user-select: none;
+  transition: background .15s;
+}
+.bp-ano-header:hover { background: var(--card); }
+.bp-ano-titulo { font-size: 14px; font-weight: 800; color: var(--text); }
+.bp-ano-chevron { font-size: 11px; color: var(--text2); transition: transform .2s; }
+.bp-ano.open .bp-ano-chevron { transform: rotate(180deg); }
+.bp-ano-corpo {
+  display: none;
+  padding: 12px 14px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+.bp-ano.open .bp-ano-corpo { display: block; }
+
+.bp-etapa-titulo {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text2);
+  margin: 12px 0 6px;
+}
+.bp-etapa-titulo:first-child { margin-top: 0; }
+
+.bp-dl-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  margin-bottom: 6px;
+  transition: border-color .15s;
+}
+.bp-dl-row:last-child { margin-bottom: 0; }
+.bp-dl-row:hover { border-color: var(--border-accent); }
+.bp-dl-nome { flex: 1; font-size: 13px; font-weight: 600; color: var(--text); min-width: 0; }
+.bp-dl-btns { display: flex; gap: 6px; flex-shrink: 0; }
+
+.bp-dl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 11px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity .15s;
+}
+.bp-dl-btn:hover { opacity: .75; }
+.bp-dl-btn-prova { background: rgba(59,130,246,.12); color: #60a5fa; border: 1px solid rgba(59,130,246,.2); }
+.bp-dl-btn-gab   { background: rgba(16,185,129,.10); color: #34d399; border: 1px solid rgba(16,185,129,.2); }

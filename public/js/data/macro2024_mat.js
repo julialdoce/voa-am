@@ -55,11 +55,31 @@ const MACRO2024_MAT = {
 
   // ── ASSUNTOS ────────────────────────────────────────────────
   assuntos: {
-        "1": "" ,      "2": "" ,      "3": "" ,      "4": "" ,      "5": "" ,
-        "6": "" ,      "7": "" ,      "8": "" ,      "9": "" ,      "10": "" ,
-        "11": "" ,      "12": "" ,      "13": "" ,      "14": "" ,      "15": "" ,
-        "16": "" ,      "17": "" ,      "18": "" ,      "19": "" ,      "20": "" ,
-        "21": "" ,      "22": "" ,      "23": "" ,      "24": "" ,      "25": ""
+    "1": "Combinatória – Contagem",
+    "2": "Sequências – PA",
+    "3": "Porcentagem – Regra de Três",
+    "4": "Probabilidade",
+    "5": "Funções – Sistema (1º e 2º Grau)",
+    "6": "Combinatória – Arranjos",
+    "7": "Álgebra – Sistema de Equações",
+    "8": "Estatística – Gráfico de Barras",
+    "9": "Geometria Plana – Área (Triângulo e Retângulo)",
+    "10": "Geometria Plana – Semelhança",
+    "11": "Geometria Espacial – Volume (Prisma de Base Quadrada)",
+    "12": "Grandezas Proporcionais – Divisão",
+    "13": "Funções – Análise de Gráfico (Relógio)",
+    "14": "Álgebra – Sistema de Equações",
+    "15": "Geometria Plana – Área de Figuras Compostas",
+    "16": "Trigonometria – Funções Trigonométricas",
+    "17": "Álgebra – Sistema de Equações e Porcentagem",
+    "18": "Probabilidade",
+    "19": "Funções – Sistema (1º e 2º Grau)",
+    "20": "Álgebra – Sistema de Equações",
+    "21": "Combinatória – Contagem com Restrição",
+    "22": "Juros Simples",
+    "23": "Combinatória – Arranjos com Restrição",
+    "24": "Funções – Interseção de Gráficos",
+    "25": "Geometria Espacial – Cilindro (Área e Volume)"
   },
 
   // ── QUESTÕES ────────────────────────────────────────────────

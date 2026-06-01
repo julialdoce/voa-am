@@ -77,6 +77,8 @@ backend/                               ← Servidor Node.js (Correção de Reda�
 | Vestibulares     | `public/pages/vestibulares.html` | `goTo('vestibulares')` |
 | Estudar          | `public/pages/materia.html`    | `goTo('materia')`    |
 | Praticar         | `public/pages/praticar.html`   | `goTo('praticar')`   |
+| Redação          | `public/pages/redacao.html`    | `goTo('redacao')`    |
+| Banco de Provas  | `public/pages/banco-de-provas.html` | `goTo('banco-de-provas')` |
 | Perfil           | `public/pages/perfil.html`     | `goTo('perfil')`     |
 | Login/Cadastro   | `public/pages/auth.html`       | automático (sem sessão) |
 
@@ -157,7 +159,7 @@ O projeto inclui um backend Node.js com integração Gemini AI para correção a
 backend/
 ├── server.js        ← API Express (porta 3000)
 ├── package.json     ← Dependências: express, @google/genai, cors, dotenv
-└── .env             ← GEMINI_API_KEY=<sua-chave>
+└── .env             ← GEMINI_API_KEY (NÃO versionar! Copie de .env.example)=<sua-chave>
 ```
 
 ### Iniciar o backend

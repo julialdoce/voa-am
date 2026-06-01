@@ -39,12 +39,18 @@ function atualizarBannerReforco() {
 
 function exFiltrar(mat, btn) {
   exMateriaAtual = mat;
-  document.getElementById('exf-mat').style.borderColor = mat === 'Matemática' ? 'rgba(0,180,216,0.4)' : 'rgba(255,255,255,0.08)';
-  document.getElementById('exf-mat').style.background = mat === 'Matemática' ? 'rgba(0,180,216,0.1)' : 'rgba(255,255,255,0.04)';
-  document.getElementById('exf-mat').style.color = mat === 'Matemática' ? 'var(--cyan)' : 'var(--text2)';
-  document.getElementById('exf-red').style.borderColor = mat === 'Redação' ? 'rgba(244,168,51,0.4)' : 'rgba(255,255,255,0.08)';
-  document.getElementById('exf-red').style.background = mat === 'Redação' ? 'rgba(244,168,51,0.1)' : 'rgba(255,255,255,0.04)';
-  document.getElementById('exf-red').style.color = mat === 'Redação' ? 'var(--gold)' : 'var(--text2)';
+  const elMat = document.getElementById('exf-mat');
+  const elRed = document.getElementById('exf-red');
+  if (elMat) {
+    elMat.style.borderColor = mat === 'Matemática' ? 'rgba(0,180,216,0.4)' : 'rgba(255,255,255,0.08)';
+    elMat.style.background  = mat === 'Matemática' ? 'rgba(0,180,216,0.1)' : 'rgba(255,255,255,0.04)';
+    elMat.style.color       = mat === 'Matemática' ? 'var(--cyan)' : 'var(--text2)';
+  }
+  if (elRed) {
+    elRed.style.borderColor = mat === 'Redação' ? 'rgba(244,168,51,0.4)' : 'rgba(255,255,255,0.08)';
+    elRed.style.background  = mat === 'Redação' ? 'rgba(244,168,51,0.1)' : 'rgba(255,255,255,0.04)';
+    elRed.style.color       = mat === 'Redação' ? 'var(--gold)' : 'var(--text2)';
+  }
   renderExercicios();
 }
 
@@ -111,11 +117,12 @@ function abrirExercicio(id) {
   if (!q) return;
   const letras = ['A','B','C','D','E'];
   document.getElementById('aula-title').textContent = `${q.vest} ${q.ano} • ${q.serie}ª • Q${q.num}`;
+  // escapeHTML definido em utils.js
   let html = `
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:12px;color:var(--text2)">📌 ${q.contexto||''}</div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:12px;color:var(--text2)">📌 ${escapeHTML(q.contexto||'')}  </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:14px">
-      <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">${q.materia}</div>
-      <div style="font-size:15px;font-weight:500;line-height:1.6;color:var(--text)">${q.enunciado}</div>
+      <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">${escapeHTML(q.materia)}</div>
+      <div style="font-size:15px;font-weight:500;line-height:1.6;color:var(--text)">${escapeHTML(q.enunciado)}</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px">`;
   q.opcoes.forEach((op, i) => {

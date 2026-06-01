@@ -55,11 +55,31 @@ const MACRO2023_MAT = {
 
   // ── ASSUNTOS ────────────────────────────────────────────────
   assuntos: {
-        "1": "" ,      "2": "" ,      "3": "" ,      "4": "" ,      "5": "" ,
-        "6": "" ,      "7": "" ,      "8": "" ,      "9": "" ,      "10": "" ,
-        "11": "" ,      "12": "" ,      "13": "" ,      "14": "" ,      "15": "" ,
-        "16": "" ,      "17": "" ,      "18": "" ,      "19": "" ,      "20": "" ,
-        "21": "" ,      "22": "" ,      "23": "" ,      "24": "" ,      "25": ""
+    "1": "Combinatória – Contagem",
+    "2": "Porcentagem – Regra de Três",
+    "3": "Funções Exponenciais – Crescimento Salarial",
+    "4": "Combinatória – Arranjos",
+    "5": "Funções Quadráticas – Vértice",
+    "6": "Geometria Plana – Área de Figuras Compostas",
+    "7": "Estatística – Média Ponderada",
+    "8": "Geometria Espacial – Volume (Cubo)",
+    "9": "Funções do 1º Grau – Análise",
+    "10": "Estatística – Tabela e Comparação",
+    "11": "Geometria Plana – Semelhança e Área",
+    "12": "Juros Simples",
+    "13": "Grandezas Proporcionais – Velocidade",
+    "14": "Grandezas Proporcionais – Produção",
+    "15": "Funções Quadráticas – Raízes",
+    "16": "Sequências – PA",
+    "17": "Funções do 1º Grau – Sistema",
+    "18": "Combinatória – Arranjos com Restrição",
+    "19": "Geometria Plana – Área (Retângulo e Quadrado)",
+    "20": "Trigonometria – Funções Trigonométricas",
+    "21": "Polinômios – Valor Numérico",
+    "22": "Geometria Espacial – Volume (Prisma de Base Quadrada)",
+    "23": "Estatística – Média Aritmética",
+    "24": "Juros Simples",
+    "25": "Probabilidade"
   },
 
   // ── QUESTÕES ────────────────────────────────────────────────

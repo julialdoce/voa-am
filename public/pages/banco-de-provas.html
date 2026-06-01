@@ -1,0 +1,230 @@
+<!-- pages/banco-de-provas.html — Banco de Provas e Gabaritos -->
+<div class="screen" id="screen-banco-de-provas">
+  <div class="vest-screen">
+
+    <div class="vest-screen-title">📥 Provas Anteriores</div>
+    <div class="vest-screen-sub">Baixe provas e gabaritos oficiais · 2016 – 2025</div>
+
+    <!-- ── ENEM ── -->
+    <div class="vest-full-card" id="bp-enem">
+      <div class="vest-full-header" onclick="toggleVest('bp-enem')">
+        <div class="vest-badge badge-enem">🌿</div>
+        <div class="vest-full-info">
+          <div class="vest-full-name">ENEM</div>
+          <div class="vest-full-inst">Exame Nacional do Ensino Médio</div>
+        </div>
+        <div class="vest-expand-btn">▾</div>
+      </div>
+      <div class="vest-full-body">
+        <div id="bp-enem-anos"></div>
+      </div>
+    </div>
+
+    <!-- ── PSC ── -->
+    <div class="vest-full-card" id="bp-psc">
+      <div class="vest-full-header" onclick="toggleVest('bp-psc')">
+        <div class="vest-badge badge-psc">🎓</div>
+        <div class="vest-full-info">
+          <div class="vest-full-name">PSC — UFAM</div>
+          <div class="vest-full-inst">Processo Seletivo Contínuo · Seriado</div>
+        </div>
+        <div class="vest-expand-btn">▾</div>
+      </div>
+      <div class="vest-full-body">
+        <div id="bp-psc-anos"></div>
+      </div>
+    </div>
+
+    <!-- ── MACRO ── -->
+    <div class="vest-full-card" id="bp-macro">
+      <div class="vest-full-header" onclick="toggleVest('bp-macro')">
+        <div class="vest-badge badge-macro">🔥</div>
+        <div class="vest-full-info">
+          <div class="vest-full-name">MACRO — UEA</div>
+          <div class="vest-full-inst">Vestibular Tradicional</div>
+        </div>
+        <div class="vest-expand-btn">▾</div>
+      </div>
+      <div class="vest-full-body">
+        <div id="bp-macro-anos"></div>
+      </div>
+    </div>
+
+    <!-- ── SIS ── -->
+    <div class="vest-full-card" id="bp-sis">
+      <div class="vest-full-header" onclick="toggleVest('bp-sis')">
+        <div class="vest-badge badge-sis">⭐</div>
+        <div class="vest-full-info">
+          <div class="vest-full-name">SIS — UEA</div>
+          <div class="vest-full-inst">Sistema de Ingresso Seriado</div>
+        </div>
+        <div class="vest-expand-btn">▾</div>
+      </div>
+      <div class="vest-full-body">
+        <div id="bp-sis-anos"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+.bp-ano {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.bp-ano:last-child { margin-bottom: 0; }
+.bp-ano-hdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--surface);
+  cursor: pointer;
+  user-select: none;
+  transition: background .15s;
+}
+.bp-ano-hdr:hover { background: var(--card); }
+.bp-ano-hdr-txt { font-size: 14px; font-weight: 800; color: var(--text); }
+.bp-chev { font-size: 11px; color: var(--text2); transition: transform .2s; }
+.bp-ano.open .bp-chev { transform: rotate(180deg); }
+.bp-ano-body {
+  display: none;
+  padding: 12px 14px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+.bp-ano.open .bp-ano-body { display: block; }
+
+.bp-sub {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text2);
+  margin: 12px 0 6px;
+}
+.bp-sub:first-child { margin-top: 0; }
+
+.bp-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  margin-bottom: 5px;
+  transition: border-color .15s;
+}
+.bp-row:last-child { margin-bottom: 0; }
+.bp-row:hover { border-color: var(--border-accent); }
+.bp-row-nome { flex: 1; font-size: 13px; font-weight: 600; color: var(--text); min-width: 0; }
+.bp-row-btns { display: flex; gap: 6px; flex-shrink: 0; }
+
+.bp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 5px 11px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity .15s;
+  cursor: pointer;
+}
+.bp-btn:hover { opacity: .75; }
+.bp-btn-p { background: rgba(59,130,246,.12); color: #60a5fa; border: 1px solid rgba(59,130,246,.2); }
+.bp-btn-g { background: rgba(16,185,129,.10); color: #34d399; border: 1px solid rgba(16,185,129,.2); }
+</style>
+
+<script>
+// ── Toggle dos cards principais ───────────────────────────────
+function toggleVest(id) {
+  document.getElementById(id)?.classList.toggle('open');
+}
+
+// ── Toggle dos anos (accordion interno) ──────────────────────
+function bpAno(id) {
+  document.getElementById(id)?.classList.toggle('open');
+}
+
+// ── Render ───────────────────────────────────────────────────
+(function renderBancoDeProvas() {
+  const ANOS = Array.from({ length: 10 }, (_, i) => 2025 - i);
+
+  function row(nome, p, g) {
+    return `<div class="bp-row">
+      <span class="bp-row-nome">${nome}</span>
+      <div class="bp-row-btns">
+        <a href="${p}" target="_blank" rel="noopener noreferrer" class="bp-btn bp-btn-p">📄 Prova</a>
+        <a href="${g}" target="_blank" rel="noopener noreferrer" class="bp-btn bp-btn-g">✅ Gabarito</a>
+      </div>
+    </div>`;
+  }
+
+  function sub(t) { return `<div class="bp-sub">${t}</div>`; }
+
+  function blocoAno(id, ano, html) {
+    return `<div class="bp-ano" id="${id}">
+      <div class="bp-ano-hdr" onclick="bpAno('${id}')">
+        <span class="bp-ano-hdr-txt">${ano}</span>
+        <span class="bp-chev">▾</span>
+      </div>
+      <div class="bp-ano-body">${html}</div>
+    </div>`;
+  }
+
+  // ENEM
+  document.getElementById('bp-enem-anos').innerHTML = ANOS.map(y =>
+    blocoAno(`bpa-enem-${y}`, y,
+      row('Matemática e Ciências da Natureza',
+        `assets/documents/ENEM/${y}/PROVA-ENEM-${y}.pdf`,
+        `assets/documents/ENEM/${y}/GABARITO-ENEM-${y}.pdf`)
+    )
+  ).join('');
+
+  // PSC
+  document.getElementById('bp-psc-anos').innerHTML = ANOS.map(y =>
+    blocoAno(`bpa-psc-${y}`, y,
+      [1, 2, 3].map(e =>
+        sub(`${e}ª Etapa`) +
+        row(`PSC ${e}ª Etapa ${y}`,
+          `assets/documents/PSC/${y}/${e}-ETAPA/PROVA-PSC-${e}-ETAPA-${y}.pdf`,
+          `assets/documents/PSC/${y}/${e}-ETAPA/GABARITO-PSC-${e}-ETAPA-${y}.pdf`)
+      ).join('')
+    )
+  ).join('');
+
+  // MACRO
+  document.getElementById('bp-macro-anos').innerHTML = ANOS.map(y =>
+    blocoAno(`bpa-macro-${y}`, y,
+      sub('Conhecimentos Gerais') +
+      row(`MACRO ${y} — Conhecimentos Gerais`,
+        `assets/documents/MACRO/${y}/CONHECIMENTOS-GERAIS/PROVACG-MACRO-${y}.pdf`,
+        `assets/documents/MACRO/${y}/CONHECIMENTOS-GERAIS/GABARITOCG-MACRO-${y}.pdf`) +
+      sub('Conhecimentos Específicos') +
+      row(`MACRO ${y} — Conhecimentos Específicos`,
+        `assets/documents/MACRO/${y}/CONHECIMENTOS-ESPECIFICOS/PROVACE-MACRO-${y}.pdf`,
+        `assets/documents/MACRO/${y}/CONHECIMENTOS-ESPECIFICOS/GABARITOCE-MACRO-${y}.pdf`)
+    )
+  ).join('');
+
+  // SIS
+  document.getElementById('bp-sis-anos').innerHTML = ANOS.map(y =>
+    blocoAno(`bpa-sis-${y}`, y,
+      [1, 2, 3].map(e =>
+        sub(`${e}ª Etapa`) +
+        row(`SIS ${e}ª Etapa ${y}`,
+          `assets/documents/SIS/${y}/${e}-ETAPA/PROVA-SIS-${e}-ETAPA-${y}.pdf`,
+          `assets/documents/SIS/${y}/${e}-ETAPA/GABARITO-SIS-${e}-ETAPA-${y}.pdf`)
+      ).join('')
+    )
+  ).join('');
+})();
+</script>

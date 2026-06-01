@@ -294,6 +294,7 @@
   #slot-page-materia,
   #slot-page-praticar,
   #slot-page-redacao,
+  #slot-page-banco-de-provas,
   #slot-page-perfil {
     grid-column: 2;
     grid-row: 2;
@@ -309,6 +310,7 @@
   #slot-page-materia:not(:has(.screen.active)),
   #slot-page-praticar:not(:has(.screen.active)),
   #slot-page-redacao:not(:has(.screen.active)),
+  #slot-page-banco-de-provas:not(:has(.screen.active)),
   #slot-page-perfil:not(:has(.screen.active)) {
     display: none;
   }
@@ -357,6 +359,7 @@
   #slot-page-materia,
   #slot-page-praticar,
   #slot-page-redacao,
+  #slot-page-banco-de-provas,
   #slot-page-perfil {
     grid-column: 2;
   }
