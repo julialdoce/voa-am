@@ -1,0 +1,183 @@
+/* Voa AM — autenticação premium, desktop e mobile */
+#auth-wrapper {
+  background:
+    radial-gradient(ellipse at 12% 12%, rgba(120,91,255,.13), transparent 32%),
+    radial-gradient(ellipse at 88% 88%, rgba(53,119,255,.10), transparent 34%),
+    #f4f6fb !important;
+  color: #18213b;
+  padding: 24px;
+}
+#auth-wrapper .auth-screen {
+  color: #18213b;
+  background: #fff;
+  border: 1px solid rgba(20,35,70,.07);
+  box-shadow: 0 28px 90px rgba(28,42,84,.13);
+}
+#auth-wrapper .auth-title { color:#151b2e; letter-spacing:-1.1px; }
+#auth-wrapper .auth-sub { color:#778099; }
+#auth-wrapper .auth-label { color:#59647e; font-size:11px; }
+#auth-wrapper .auth-input,
+#auth-wrapper .auth-select {
+  background:#f7f8fc;
+  border:1px solid #e2e6f0;
+  border-radius:12px;
+  color:#18213b;
+  min-height:52px;
+  transition:border-color .2s, box-shadow .2s, background .2s;
+}
+#auth-wrapper .auth-input:focus,
+#auth-wrapper .auth-select:focus {
+  background:#fff;
+  border-color:#6475f5;
+  box-shadow:0 0 0 4px rgba(100,117,245,.12);
+}
+#auth-wrapper .auth-input::placeholder { color:#a2a9ba; opacity:1; }
+#auth-wrapper .auth-btn-primary {
+  min-height:54px;
+  border-radius:12px;
+  background:linear-gradient(110deg,#5269ed,#7658e9);
+  box-shadow:0 10px 22px rgba(91,103,235,.22);
+  font-size:15px;
+  letter-spacing:.1px;
+}
+#auth-wrapper .auth-btn-primary:hover { filter:brightness(1.04); transform:translateY(-1px); }
+#auth-wrapper .auth-btn-google {
+  min-height:50px;
+  border-radius:12px;
+  background:#fff;
+  border:1px solid #e2e6f0;
+  color:#35405a;
+}
+#auth-wrapper .auth-bottom-link { color:#788199; }
+#auth-wrapper .auth-bottom-link span { color:#655de8; }
+#auth-wrapper .auth-logo-icon { background:linear-gradient(135deg,#5269ed,#8b5cf6); box-shadow:0 8px 20px rgba(91,103,235,.22); }
+#auth-wrapper .auth-logo-text span { color:#6570ed; }
+#auth-wrapper .auth-forgot { color:#655de8; }
+#auth-wrapper .auth-error { color:#c33d54; }
+
+@media (min-width: 900px) {
+  #auth-wrapper {
+    min-height:100vh;
+    align-items:center;
+    justify-content:center;
+    padding:32px;
+  }
+  #auth-wrapper .auth-screen {
+    position:relative;
+    display:none;
+    grid-template-columns:minmax(0, .92fr) minmax(440px, 1.08fr);
+    grid-template-rows:auto 1fr auto;
+    width:min(1120px, 100%);
+    max-width:1120px;
+    min-height:min(760px, calc(100vh - 64px));
+    border-radius:26px;
+    overflow:hidden;
+    border:1px solid rgba(20,35,70,.06);
+    box-shadow:0 30px 100px rgba(31,43,78,.16);
+  }
+  #auth-wrapper .auth-screen.auth-active { display:grid; }
+  #auth-wrapper .auth-screen::before {
+    content:"VOA AM\\A\\A Sua preparação começa\\A com um próximo passo.\\A\\A Uma plataforma feita para\\A quem sonha conquistar uma vaga\\A nas universidades do Amazonas.";
+    white-space:pre-line;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    grid-column:1;
+    grid-row:1 / 4;
+    min-height:100%;
+    padding:54px 48px;
+    color:#fff;
+    font-size:clamp(22px,2.2vw,31px);
+    line-height:1.35;
+    font-weight:700;
+    letter-spacing:-.7px;
+    background:
+      radial-gradient(circle at 76% 18%, rgba(255,255,255,.24), transparent 22%),
+      radial-gradient(circle at 20% 78%, rgba(137,111,255,.65), transparent 35%),
+      linear-gradient(145deg,#435fe5 0%,#5c63ed 48%,#7654d9 100%);
+  }
+  #auth-wrapper .auth-screen::after {
+    content:"✦";
+    position:absolute;
+    left:48px;
+    top:48px;
+    width:52px;
+    height:52px;
+    display:grid;
+    place-items:center;
+    border:1px solid rgba(255,255,255,.35);
+    border-radius:16px;
+    color:#fff;
+    font-size:26px;
+    background:rgba(255,255,255,.12);
+    backdrop-filter:blur(8px);
+  }
+  #auth-wrapper .auth-header {
+    grid-column:2;
+    grid-row:1;
+    padding:54px 64px 0 !important;
+  }
+  #auth-wrapper .auth-logo-row { margin-bottom:30px !important; }
+  #auth-wrapper .auth-title { font-size:34px !important; }
+  #auth-wrapper .auth-sub { margin-bottom:26px !important; }
+  #auth-wrapper .auth-form {
+    grid-column:2;
+    grid-row:2;
+    padding:0 64px !important;
+    gap:15px !important;
+  }
+  #auth-wrapper .auth-bottom-link {
+    grid-column:2;
+    grid-row:3;
+    padding:24px 64px 40px !important;
+  }
+  #auth-wrapper .auth-terms { color:#8992a8; }
+}
+
+@media (min-width:768px) and (max-width:899px) {
+  #auth-wrapper { padding:20px; }
+  #auth-wrapper .auth-screen {
+    max-width:520px;
+    border-radius:22px;
+  }
+}
+
+@media (max-width:767px) {
+  #auth-wrapper {
+    display:none;
+    align-items:stretch;
+    justify-content:flex-start;
+    padding:0;
+    background:
+      radial-gradient(ellipse at 50% -5%, rgba(126,91,255,.22), transparent 38%),
+      #fff !important;
+  }
+  #auth-wrapper[style*="block"],
+  #auth-wrapper[style*="flex"] { display:flex !important; }
+  #auth-wrapper .auth-screen {
+    width:100%;
+    max-width:520px;
+    min-height:100dvh;
+    margin:0 auto;
+    padding-bottom:max(12px, env(safe-area-inset-bottom));
+    border:0;
+    border-radius:0;
+    box-shadow:none;
+    background:transparent;
+  }
+  #auth-wrapper .auth-header { padding:clamp(42px,9vh,76px) 28px 0 !important; }
+  #auth-wrapper .auth-logo-row { margin-bottom:clamp(42px,8vh,68px) !important; }
+  #auth-wrapper .auth-title { font-size:32px !important; }
+  #auth-wrapper .auth-sub { margin-bottom:30px !important; }
+  #auth-wrapper .auth-form { padding:0 28px !important; gap:15px !important; }
+  #auth-wrapper .auth-bottom-link { padding:28px 24px 26px !important; }
+  #auth-wrapper .auth-btn-primary { margin-top:8px; }
+  #auth-wrapper .auth-divider { margin:8px 0; }
+  #auth-wrapper .auth-terms { color:#8992a8; }
+}
+
+@media (max-width:380px) {
+  #auth-wrapper .auth-header { padding-left:22px !important; padding-right:22px !important; }
+  #auth-wrapper .auth-form { padding-left:22px !important; padding-right:22px !important; }
+  #auth-wrapper .auth-title { font-size:29px !important; }
+}
