@@ -83,6 +83,12 @@ function toggleTheme() {
   const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   html.setAttribute('data-theme', next);
   localStorage.setItem('voaam_theme', next);
+  const control = document.getElementById('theme-toggle');
+  if (control) {
+    control.setAttribute('aria-pressed', String(next === 'dark'));
+    control.setAttribute('aria-label', next === 'dark' ? 'Alternar para modo claro' : 'Alternar para modo escuro');
+    control.title = next === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro';
+  }
 }
 (function() {
   document.documentElement.setAttribute('data-theme', localStorage.getItem('voaam_theme') || 'dark');
