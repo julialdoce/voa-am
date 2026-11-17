@@ -1,28 +1,11 @@
-<!-- pages/materia.html — Seleção de matéria, série e tópicos -->
-<!-- ========== MATÉRIA ========== -->
-<div class="screen" id="screen-materia">
-  <div class="materia-screen">
-    <div class="subject-tabs">
-      <div class="subject-tab active" id="tab-mat" onclick="selectSubject('mat')">
-        <span>📐</span>Matemática
-      </div>
-      <div class="subject-tab" id="tab-red" onclick="selectSubject('red')">
-        <span>✏️</span>Redação
-      </div>
-    </div>
-
-    <div class="serie-selector" id="serie-selector-mat">
-      <button class="serie-btn active" onclick="selectSerie(1)">1º ano</button>
-      <button class="serie-btn" onclick="selectSerie(2)">2º ano</button>
-      <button class="serie-btn" onclick="selectSerie(3)">3º ano</button>
-    </div>
-
-    <div class="serie-selector" id="serie-selector-red" style="display:none">
-      <button class="serie-btn active" onclick="selectSerieRed(1)">Fundamentos</button>
-      <button class="serie-btn" onclick="selectSerieRed(2)">Estrutura</button>
-      <button class="serie-btn" onclick="selectSerieRed(3)">ENEM/PSC</button>
-    </div>
-
-    <div class="topics-list" id="topics-list"></div>
-  </div>
-</div>
+<div class="screen" id="screen-materia"><div class="course-wrap"><header class="course-hero"><span class="dash-eyebrow">BIBLIOTECA DE APRENDIZAGEM</span><h1>Seus cursos</h1><p>Organize sua preparação por objetivos e avance no seu ritmo.</p></header>
+<section class="course-group"><div class="course-group-head"><div><span class="dash-eyebrow">01 · ENSINO E PREPARAÇÃO</span><h2>Preparatório para vestibulares</h2><p>Conteúdos para apoiar sua preparação para SIS, PSC, MACRO e ENEM.</p></div><span class="course-count">Preparação principal</span></div>
+<div class="course-feature" onclick="selectSubject('mat')"><div class="course-feature-icon">∑</div><div><h3>Matemática</h3><p>Estude por série, revise assuntos e acompanhe suas aulas.</p><span class="course-link">Acessar conteúdos →</span></div></div>
+<div class="course-feature" onclick="goTo('redacao')"><div class="course-feature-icon">✎</div><div><h3>Redação</h3><p>Fundamentos, estrutura textual, repertório e prática.</p><span class="course-link">Acessar redação →</span></div></div>
+<div class="course-shortcuts"><button onclick="goTo('praticar')">◉ Simulados e exercícios <span>→</span></button><button onclick="goTo('banco-de-provas')">▣ Banco de provas <span>→</span></button></div></section>
+<section class="course-group"><div class="course-group-head"><div><span class="dash-eyebrow">02 · DESENVOLVIMENTO</span><h2>Atividades extracurriculares</h2><p>Aprenda novas habilidades além da preparação tradicional.</p></div><span class="course-count">Trilhas complementares</span></div>
+<div class="course-feature course-extra" onclick="goTo('programacao')"><div class="course-feature-icon">⌘</div><div><h3>Programação</h3><p>Lógica de programação e primeiros passos com Python em módulos práticos.</p><span class="course-link">Explorar trilhas →</span></div></div></section>
+<section class="course-group course-content"><div class="course-group-head"><div><span class="dash-eyebrow">CONTEÚDOS</span><h2>Matemática por série</h2><p>Selecione sua série para visualizar os assuntos disponíveis.</p></div></div>
+<div class="subject-tabs"><div class="subject-tab active" id="tab-mat" onclick="selectSubject('mat')"><span>📐</span>Matemática</div><div class="subject-tab" id="tab-red" onclick="selectSubject('red')"><span>✏️</span>Redação</div></div>
+<div class="serie-selector" id="serie-selector-mat"><button class="serie-btn active" onclick="selectSerie(1)">1º ano</button><button class="serie-btn" onclick="selectSerie(2)">2º ano</button><button class="serie-btn" onclick="selectSerie(3)">3º ano</button></div>
+<div class="serie-selector" id="serie-selector-red" style="display:none"><button class="serie-btn active" onclick="selectSerieRed(1)">Fundamentos</button><button class="serie-btn" onclick="selectSerieRed(2)">Estrutura</button><button class="serie-btn" onclick="selectSerieRed(3)">ENEM/PSC</button></div><div class="topics-list" id="topics-list"></div></section></div></div>
