@@ -1,16 +1,13 @@
-<!-- components/header.html — Header com logo, XP e tema -->
-<!-- Header -->
-
+<!-- Header Voa AM -->
 <div class="header">
   <div class="logo">
-    <div class="logo-icon">🚀</div>
+    <div class="logo-icon" aria-hidden="true"><svg viewBox="0 0 48 48" width="27" height="27"><path d="M8 29c7-1 11-8 15-15 6 2 12 8 14 15-6 0-10 2-13 7-4-4-9-6-16-7Z" fill="#fff"/><circle cx="29" cy="22" r="2" fill="#315c55"/><path d="m35 26 7 2-7 3" fill="#e9bd68"/></svg></div>
     <div class="logo-text">Voa<span>AM</span></div>
   </div>
   <div class="header-right">
-    <div class="header-xp" id="xp-display">⭐ <span id="xp-count">0</span> XP</div>
-    <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Alternar tema" aria-label="Alternar tema">
-      <span class="theme-toggle-label theme-toggle-label-light">☀️ CLARO</span>
-      <span class="theme-toggle-label theme-toggle-label-dark">🌙 ESCURO</span>
+    <div class="header-xp" id="xp-display"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 2 2.4 6.8L21 11l-6.6 2.2L12 20l-2.4-6.8L3 11l6.6-2.2L12 2Z"/></svg><span id="xp-count">0</span> XP</div>
+    <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Alternar tema" aria-label="Alternar para modo claro" aria-pressed="false">
+      <span class="theme-toggle-sun" aria-hidden="true">☼</span><span class="theme-toggle-moon" aria-hidden="true">☾</span><span class="theme-toggle-thumb"></span>
     </button>
   </div>
 </div>
