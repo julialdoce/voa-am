@@ -116,3 +116,8 @@
 @media(prefers-reduced-motion:reduce){.voa-bird,.bird-wing,.mascot-spark{animation:none!important}}
 [data-theme="dark"] .dash-mascot{filter:drop-shadow(0 4px 20px rgba(66,145,220,.13))}
 [data-theme="dark"] .mascot-caption{color:#9bc8f3}
+
+/* Piscada natural do mascote */
+.bird-eye{transform-box:fill-box;transform-origin:center;animation:bird-blink 5.2s infinite}
+@keyframes bird-blink{0%,44%,48%,100%{transform:scaleY(1)}46%{transform:scaleY(.08)}}
+@media(prefers-reduced-motion:reduce){.bird-eye{animation:none}}
