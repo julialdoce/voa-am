@@ -36,7 +36,8 @@
   }
 
   // Renderiza tópicos na tela de matéria
-  if (typeof renderTopics === 'function') renderTopics();\n  if (typeof renderDashboard === 'function') renderDashboard();
+  if (typeof renderTopics === 'function') renderTopics();
+  if (typeof renderDashboard === 'function') renderDashboard();
 
   // Aplica tema salvo
   const savedTheme = localStorage.getItem('voaam_theme');
