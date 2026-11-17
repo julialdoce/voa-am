@@ -48,6 +48,7 @@
     home:              'slot-page-home',
     vestibulares:      'slot-page-vestibulares',
     materia:           'slot-page-materia',
+    programacao:       'slot-page-programacao',
     praticar:          'slot-page-praticar',
     redacao:           'slot-page-redacao',
     perfil:            'slot-page-perfil',
