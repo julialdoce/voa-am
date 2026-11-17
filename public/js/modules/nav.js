@@ -9,6 +9,7 @@ const SLOT_MAP = {
   redacao:           'slot-page-redacao',
   perfil:            'slot-page-perfil',
   'banco-de-provas': 'slot-page-banco-de-provas',
+  programacao:       'slot-page-programacao',
 };
 
 function goTo(screen) {
@@ -23,6 +24,7 @@ function goTo(screen) {
     if (slot) slot.style.display = (slotId === activeSlotId) ? 'block' : 'none';
   });
   if (screen === 'materia')       renderTopics();
+  if (screen === 'programacao' && typeof progRender === 'function') progRender();
   if (screen === 'perfil')        renderPerfil();
   if (screen === 'praticar')      pratAba('sim');
   if (screen === 'redacao')       redAba('temas');
