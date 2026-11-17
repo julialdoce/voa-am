@@ -181,3 +181,24 @@
   #auth-wrapper .auth-form { padding-left:22px !important; padding-right:22px !important; }
   #auth-wrapper .auth-title { font-size:29px !important; }
 }
+
+
+/* Paleta azul Voa AM e compatibilidade com o modo noturno */
+#auth-wrapper{background:radial-gradient(ellipse at 12% 12%,rgba(110,177,235,.18),transparent 34%),radial-gradient(ellipse at 88% 88%,rgba(57,121,201,.12),transparent 36%),#f4f8fd!important}
+#auth-wrapper .auth-btn-primary{background:linear-gradient(110deg,#3979c9,#5b9be0);box-shadow:0 10px 22px rgba(57,121,201,.22)}
+#auth-wrapper .auth-input:focus,#auth-wrapper .auth-select:focus{border-color:#4d91d4;box-shadow:0 0 0 4px rgba(77,145,212,.14)}
+#auth-wrapper .auth-bottom-link span,#auth-wrapper .auth-forgot{color:#3979c9}
+#auth-wrapper .auth-logo-icon{background:linear-gradient(135deg,#3979c9,#78afe8);box-shadow:0 8px 20px rgba(57,121,201,.22)}
+#auth-wrapper .auth-logo-text span{color:#3979c9}
+@media(min-width:900px){#auth-wrapper .auth-screen::before{background:radial-gradient(circle at 76% 18%,rgba(255,255,255,.24),transparent 22%),radial-gradient(circle at 20% 78%,rgba(151,202,245,.55),transparent 35%),linear-gradient(145deg,#2864a8 0%,#3979c9 52%,#69a7df 100%)}}
+[data-theme="dark"] #auth-wrapper{background:radial-gradient(ellipse at 12% 12%,rgba(57,121,201,.20),transparent 34%),#101a29!important;color:#e8f1fb}
+[data-theme="dark"] #auth-wrapper .auth-screen{background:#172538;color:#e8f1fb;border-color:rgba(174,210,245,.13);box-shadow:0 28px 90px rgba(0,0,0,.42)}
+[data-theme="dark"] #auth-wrapper .auth-title{color:#f2f7fd}
+[data-theme="dark"] #auth-wrapper .auth-sub,[data-theme="dark"] #auth-wrapper .auth-bottom-link{color:#a8bad0}
+[data-theme="dark"] #auth-wrapper .auth-label{color:#b6c9df}
+[data-theme="dark"] #auth-wrapper .auth-input,[data-theme="dark"] #auth-wrapper .auth-select{background:#101d2e;color:#edf5ff;border-color:#2a405a}
+[data-theme="dark"] #auth-wrapper .auth-input:focus,[data-theme="dark"] #auth-wrapper .auth-select:focus{background:#14243a;border-color:#6da9e2}
+[data-theme="dark"] #auth-wrapper .auth-input::placeholder{color:#8da3bc}
+[data-theme="dark"] #auth-wrapper .auth-btn-google{background:#1b2c42;border-color:#354c67;color:#e7f1fb}
+[data-theme="dark"] #auth-wrapper .auth-terms{color:#8fa5bf}
+@media(max-width:767px){[data-theme="dark"] #auth-wrapper{background:radial-gradient(ellipse at 50% -5%,rgba(57,121,201,.22),transparent 38%),#101a29!important}}
