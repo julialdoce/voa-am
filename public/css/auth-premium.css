@@ -202,3 +202,43 @@
 [data-theme="dark"] #auth-wrapper .auth-btn-google{background:#1b2c42;border-color:#354c67;color:#e7f1fb}
 [data-theme="dark"] #auth-wrapper .auth-terms{color:#8fa5bf}
 @media(max-width:767px){[data-theme="dark"] #auth-wrapper{background:radial-gradient(ellipse at 50% -5%,rgba(57,121,201,.22),transparent 38%),#101a29!important}}
+
+
+/* Mascote e linguagem visual refinada — azul sereno, sem apelo promocional */
+#auth-wrapper{background:#f3f7fc!important}
+#auth-wrapper .auth-screen{background:#fff;border-color:#e4edf7;box-shadow:0 24px 80px rgba(37,75,116,.12)}
+#auth-wrapper .auth-title{font-size:clamp(27px,2.4vw,34px)!important;letter-spacing:-1.15px;line-height:1.16;color:#203a56}
+#auth-wrapper .auth-sub{color:#71849a;max-width:360px;line-height:1.65}
+#auth-wrapper .auth-logo-icon{background:linear-gradient(145deg,#3979c9,#78afe8)!important;border-radius:14px;box-shadow:0 7px 17px rgba(57,121,201,.18)!important}
+#auth-wrapper .auth-logo-text span{color:#3979c9!important}
+#auth-wrapper .auth-btn-primary{background:#3979c9!important;box-shadow:0 8px 18px rgba(57,121,201,.18)!important;border-radius:12px}
+#auth-wrapper .auth-btn-primary:hover{background:#2f6db9!important;filter:none}
+#auth-wrapper .auth-input,#auth-wrapper .auth-select{background:#f7faff;border-color:#dce7f3;color:#263f59}
+#auth-wrapper .auth-input:focus,#auth-wrapper .auth-select:focus{background:#fff;border-color:#6da9e2;box-shadow:0 0 0 4px rgba(109,169,226,.14)}
+#auth-wrapper .auth-bottom-link span,#auth-wrapper .auth-forgot{color:#3979c9!important}
+#auth-wrapper .auth-vest-badge.sis,#auth-wrapper .auth-vest-badge.psc,#auth-wrapper .auth-vest-badge.enem,#auth-wrapper .auth-vest-badge.macro{background:#edf5fd;border-color:#d9e9f8;color:#3979c9}
+@media(min-width:900px){
+ #auth-wrapper .auth-screen{grid-template-columns:minmax(0,1fr) minmax(440px,1fr)}
+ #auth-wrapper .auth-screen::before{content:"";background:linear-gradient(155deg,#e8f3ff 0%,#d8eaff 54%,#c5def7 100%)!important;position:relative}
+ #auth-wrapper .auth-screen::after{content:"";position:absolute;left:0;top:0;width:50%;height:100%;border:0;border-radius:0;background:radial-gradient(circle at 25% 22%,rgba(255,255,255,.9),transparent 27%),radial-gradient(circle at 80% 75%,rgba(102,164,220,.2),transparent 35%);pointer-events:none}
+ #auth-wrapper .auth-header{position:relative;z-index:1}
+ #auth-wrapper .auth-header:after{content:"Aprender abre caminhos.";display:block;margin-top:18px;color:#52799f;font-size:14px;font-weight:600;letter-spacing:.01em}
+ #auth-wrapper .auth-screen::before{grid-column:1;grid-row:1/4}
+ #auth-wrapper .auth-screen::after{grid-column:1;grid-row:1/4}
+ #auth-wrapper .auth-header,#auth-wrapper .auth-form,#auth-wrapper .auth-bottom-link{grid-column:2}
+}
+@media(max-width:767px){
+ #auth-wrapper{background:linear-gradient(180deg,#edf5fd 0%,#f8fbff 32%,#fff 100%)!important}
+ #auth-wrapper .auth-screen{background:transparent!important}
+ #auth-wrapper .auth-logo-row{margin-bottom:34px!important}
+ #auth-wrapper .auth-title{font-size:29px!important}
+}
+[data-theme="dark"] #auth-wrapper{background:#101d2d!important}
+[data-theme="dark"] #auth-wrapper .auth-screen{background:#17283b!important;border-color:#263e58}
+[data-theme="dark"] #auth-wrapper .auth-title{color:#eff6ff!important}
+[data-theme="dark"] #auth-wrapper .auth-sub,[data-theme="dark"] #auth-wrapper .auth-label{color:#a9bfd6!important}
+[data-theme="dark"] #auth-wrapper .auth-input,[data-theme="dark"] #auth-wrapper .auth-select{background:#102136!important;border-color:#304b68!important;color:#edf5ff!important}
+[data-theme="dark"] #auth-wrapper .auth-btn-google{background:#1c3047!important;border-color:#344e69!important;color:#eaf3fc!important}
+[data-theme="dark"] #auth-wrapper .auth-bottom-link{color:#a9bfd6!important}
+[data-theme="dark"] #auth-wrapper .auth-vest-badge.sis,[data-theme="dark"] #auth-wrapper .auth-vest-badge.psc,[data-theme="dark"] #auth-wrapper .auth-vest-badge.enem,[data-theme="dark"] #auth-wrapper .auth-vest-badge.macro{background:#203a55;border-color:#355775;color:#b9d9f7}
+@media(min-width:900px){[data-theme="dark"] #auth-wrapper .auth-screen::before{background:linear-gradient(155deg,#1b3855,#23496e 60%,#2a5680)!important}[data-theme="dark"] #auth-wrapper .auth-header:after{color:#b6d4f1}}
