@@ -1,72 +1,8 @@
-<!-- pages/home.html — Tela inicial: progresso, vestibulares e ações -->
-<!-- ========== HOME ========== -->
-<div class="screen active" id="screen-home">
-  <div class="home-hero">
-    <div class="home-greeting" id="home-greeting">Olá, estudante! 👋</div>
-    <div class="home-title">Bora <span class="hi">voar</span> no vestibular do Amazonas?</div>
-  </div>
-
-  <div class="progress-card" style="margin: 0 20px 20px;">
-    <div class="progress-header">
-      <span class="progress-label">Seu progresso geral</span>
-      <span class="progress-pct" id="home-pct">0%</span>
-    </div>
-    <div class="progress-bar"><div class="progress-fill" id="home-bar" style="width:0%"></div></div>
-    <div class="progress-stats">
-      <div class="pstat">
-        <div class="pstat-val" id="stat-aulas">0</div>
-        <div class="pstat-lbl">Aulas vistas</div>
-      </div>
-      <div class="pstat">
-        <div class="pstat-val" id="stat-quiz">0</div>
-        <div class="pstat-lbl">Questões feitas</div>
-      </div>
-      <div class="pstat">
-        <div class="pstat-val" id="stat-correct">0</div>
-        <div class="pstat-lbl">Acertos</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-title" id="home-vest-title">Meu vestibular</div>
-  <div class="vestibulares-row" id="home-vest-cards">
-    <!-- preenchido dinamicamente -->
-  </div>
-
-  <div class="section-title">Estudar agora</div>
-  <div class="action-cards">
-    <div class="action-card" onclick="goTo('materia')">
-      <div class="action-icon mat">📐</div>
-      <div class="action-info">
-        <div class="action-name">Matemática</div>
-        <div class="action-sub" id="home-mat-sub">Comece pelo 1º conteúdo</div>
-      </div>
-      <div class="action-arrow">›</div>
-    </div>
-    <div class="action-card" onclick="goTo('materia')">
-      <div class="action-icon red">✏️</div>
-      <div class="action-info">
-        <div class="action-name">Redação</div>
-        <div class="action-sub">Estrutura e repertório</div>
-      </div>
-      <div class="action-arrow">›</div>
-    </div>
-    <div class="action-card" onclick="goTo('praticar')">
-      <div class="action-icon sim">🎯</div>
-      <div class="action-info">
-        <div class="action-name">Simulado</div>
-        <div class="action-sub" id="home-sim-sub">Questões reais do seu vestibular</div>
-      </div>
-      <div class="action-arrow">›</div>
-    </div>
-  </div>
-
-  <div class="streak-banner" style="margin-top: 16px;">
-    <div class="streak-fire">🔥</div>
-    <div class="streak-text">
-      <div class="streak-days" id="streak-days">0 dias seguidos</div>
-      <div class="streak-sub">Não perca sua sequência — estude hoje!</div>
-    </div>
-  </div>
-</div>
-
+<div class="screen active" id="screen-home"><div class="dash-wrap">
+<header class="dash-hero"><div class="dash-hero-copy"><span class="dash-eyebrow">PAINEL DO ESTUDANTE</span><h1 id="home-greeting">Olá, estudante!</h1><p>Acompanhe sua preparação e continue avançando rumo à aprovação.</p><button class="dash-primary" onclick="goTo('materia')">Explorar cursos <span>→</span></button></div><div class="dash-mascot" role="img" aria-label="Mascote passarinho azul do Voa AM"><span class="mascot-spark mascot-spark-one">✦</span><span class="mascot-spark mascot-spark-two">✧</span><svg class="voa-bird" viewBox="0 0 220 190" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><ellipse cx="112" cy="166" rx="62" ry="10" fill="#557f76" opacity=".12"/><path class="bird-wing" d="M66 100Q28 77 39 48Q74 56 91 91Z" fill="#83c9df"/><path d="M58 112Q51 68 88 44Q122 19 158 49Q190 76 173 122Q163 158 116 160Q70 158 58 112Z" fill="#a9e3ef"/><path d="M82 117Q89 81 126 81Q159 81 165 116Q164 146 124 151Q88 148 82 117Z" fill="#c8f0f3"/><path d="M157 104Q184 91 197 106Q184 119 159 119Z" fill="#83c9df"/><path d="M106 105q-7-12 2-18 10-5 16 3 5 8-2 16-8 7-16-1Z" fill="#f1c94f"/><ellipse cx="94" cy="105" rx="12" ry="8" fill="#f39bb0" opacity=".9"/><ellipse cx="145" cy="105" rx="12" ry="8" fill="#f39bb0" opacity=".9"/><path d="M94 84q8-13 16 0M130 84q8-13 16 0" fill="none" stroke="#33434b" stroke-width="7" stroke-linecap="round"/><path d="M97 151L91 165M137 151L143 165" stroke="#edc84f" stroke-width="8" stroke-linecap="round"/><path d="M83 56Q109 27 143 47" fill="none" stroke="#d2f1f4" stroke-width="6" stroke-linecap="round" opacity=".9"/></svg><span class="mascot-caption">Vamos aprender juntos!</span></div></header>
+<section class="dash-section"><div class="dash-section-head"><div><span class="dash-eyebrow">VISÃO GERAL</span><h2>Seu desempenho</h2></div><span class="dash-muted">Dados acumulados</span></div><div class="dash-stats">
+<article class="dash-stat"><span class="dash-stat-icon">✦</span><div><strong id="dash-xp">0</strong><small>XP conquistados</small></div></article><article class="dash-stat"><span class="dash-stat-icon">✓</span><div><strong id="dash-questions">0</strong><small>Questões respondidas</small></div></article><article class="dash-stat"><span class="dash-stat-icon">◎</span><div><strong id="dash-accuracy">—</strong><small>Taxa de acerto</small></div></article><article class="dash-stat"><span class="dash-stat-icon">♨</span><div><strong id="dash-streak">0</strong><small>Dias de sequência</small></div></article></div></section>
+<div class="dash-columns"><section class="dash-panel"><div class="dash-section-head"><div><span class="dash-eyebrow">SUA JORNADA</span><h2>Preparação para vestibulares</h2></div></div><div id="home-vest-cards" class="dash-vest-list"><p class="dash-muted">Seus vestibulares selecionados aparecerão aqui.</p></div><div class="dash-progress-block"><div class="dash-progress-label"><span>Precisão nas questões</span><strong id="dash-accuracy-label">Sem dados ainda</strong></div><div class="dash-progress-track"><i id="dash-accuracy-bar"></i></div><p class="dash-muted">Indicador calculado com suas respostas registradas.</p></div></section>
+<section class="dash-panel"><div class="dash-section-head"><div><span class="dash-eyebrow">CONTINUE DE ONDE PAROU</span><h2>Acesso rápido</h2></div></div>
+<button class="dash-action" onclick="goTo('materia')"><span class="dash-action-icon">▤</span><span><b>Cursos</b><small>Conteúdos e trilhas de aprendizagem</small></span><i>→</i></button><button class="dash-action" onclick="goTo('praticar')"><span class="dash-action-icon">◉</span><span><b>Simulados e exercícios</b><small>Pratique com questões dos vestibulares</small></span><i>→</i></button><button class="dash-action" onclick="goTo('redacao')"><span class="dash-action-icon">✎</span><span><b>Redação</b><small>Temas, estrutura e repertório</small></span><i>→</i></button><button class="dash-action" onclick="goTo('banco-de-provas')"><span class="dash-action-icon">▣</span><span><b>Banco de provas</b><small>Explore provas anteriores</small></span><i>→</i></button></section></div>
+<section class="dash-panel dash-focus"><div><span class="dash-eyebrow">PRÓXIMO PASSO</span><h2>Construa sua rotina de estudos</h2><p>Alterne entre conteúdo, prática e revisão. Seu painel será atualizado conforme você estuda e responde às atividades.</p></div><button class="dash-primary" onclick="goTo('materia')">Ver meus cursos →</button></section></div></div>

@@ -37,6 +37,7 @@
 
   // Renderiza tópicos na tela de matéria
   if (typeof renderTopics === 'function') renderTopics();
+  if (typeof renderDashboard === 'function') renderDashboard();
 
   // Aplica tema salvo
   const savedTheme = localStorage.getItem('voaam_theme');
@@ -48,6 +49,7 @@
     home:              'slot-page-home',
     vestibulares:      'slot-page-vestibulares',
     materia:           'slot-page-materia',
+    programacao:       'slot-page-programacao',
     praticar:          'slot-page-praticar',
     redacao:           'slot-page-redacao',
     perfil:            'slot-page-perfil',

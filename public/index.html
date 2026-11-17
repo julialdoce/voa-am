@@ -25,6 +25,9 @@
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/auth.css">
   <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/auth-premium.css">
+  <link rel="stylesheet" href="css/programacao.css">
+  <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
 
@@ -57,6 +60,7 @@
   ──────────────────────────────────────────────────────────── -->
   <div id="slot-page-home"></div>
   <div id="slot-page-materia"></div>
+  <div id="slot-page-programacao"></div>
   <div id="slot-page-praticar"></div>
   <div id="slot-page-redacao"></div>   <!-- pages/redacao.html -->
   <div id="slot-page-perfil"></div>
@@ -101,6 +105,7 @@ const Router = {
     'slot-sc-view':           'components/simulado-completo-view.html',
     'slot-page-home':         'pages/home.html',
     'slot-page-materia':      'pages/materia.html',
+    'slot-page-programacao':  'pages/programacao.html',
     'slot-page-praticar':     'pages/praticar.html',
     'slot-page-redacao':      'pages/redacao.html',
     'slot-page-perfil':       'pages/perfil.html',
@@ -135,9 +140,13 @@ const Router = {
     'js/data/sis1_mat.js',        // questões SIS 1ª Etapa (2023–2025)
     'js/data/sis2_mat.js',        // questões SIS 2ª Etapa (2023–2025)
     'js/data/sis3_mat.js',        // questões SIS 3ª Etapa (2023–2025)
+    'js/data/conteudo-juliano.js', // temas, provas oficiais e catálogo do pacote original
     'js/modules/banco-provas.js',      // tela Banco de Provas
     'js/modules/simulado_completo.js', // simulado completo
     'js/modules/redacao.js',      // página de redação
+    'js/data/programacao.js',    // conteúdo das trilhas de programação
+    'js/modules/programacao.js', // aulas, exercícios e progresso de programação
+    'js/modules/dashboard.js', // indicadores do painel do estudante
     'js/modules/nav.js',          // goTo, perfil, tema
     'js/app.js',                  // init final
   ],

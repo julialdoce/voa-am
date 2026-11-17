@@ -54,6 +54,7 @@ function redAba(aba) {
   });
 
   if (aba === 'historico') redRenderHistorico();
+  if (aba === 'temas' && typeof redRenderTemasJuliano === 'function') redRenderTemasJuliano();
 }
 
 // ─── FILTROS POR VESTIBULAR ──────────────────────────────────
@@ -479,3 +480,17 @@ document.addEventListener('click', function(e) {
     }
   }, 200);
 })();
+
+
+// ─── TEMAS DO PACOTE ORIGINAL JULIANO ────────────────────────
+function redRenderTemasJuliano(){
+  const host=document.getElementById('red-temas-juliano');
+  if(!host||!Array.isArray(window.JULIANO_TEMAS_REDACAO))return;
+  const existing=Array.from(document.querySelectorAll('#red-temas-lista .red-tema-card')).map(el=>(el.textContent||'').toLocaleLowerCase('pt-BR'));
+  const missing=JULIANO_TEMAS_REDACAO.filter(t=>!existing.some(txt=>txt.includes(t.tema.toLocaleLowerCase('pt-BR'))));
+  host.innerHTML=missing.map(t=>{
+    const badge=t.vestibular+(t.etapa?' '+t.etapa+'ª etapa':'')+' '+t.ano;
+    const title=t.tema.replace(/[&<>"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
+    return '<article class="red-tema-card" data-vest="'+t.vestibular+'" data-tema-id="juliano-'+t.id+'" onclick="redSelecionarTema(this)" style="border:1px solid var(--border);border-radius:14px;padding:15px;margin:0 0 10px;background:var(--card)"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px"><div style="min-width:0"><span class="red-vest-badge">'+badge+'</span><div style="font-size:14px;font-weight:700;line-height:1.45;margin-top:8px;color:var(--text)">'+title+'</div><div style="font-size:11px;color:var(--text2);margin-top:6px">'+t.modalidade+'</div></div><span style="color:var(--accent2);font-size:19px">✍</span></div><div class="red-motivadores" style="display:none;margin-top:12px;padding:12px;border-radius:10px;background:var(--surface2)"><div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px">'+title+'</div><p style="font-size:11px;color:var(--text2);margin:0">Tema recuperado do catálogo original. Consulte a fonte para acessar o contexto e os materiais de referência.</p><a href="'+t.fonte+'" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:8px;font-size:11px;color:var(--accent2)">Consultar fonte do tema ↗</a></div><button type="button" onclick="redEscreverTema(event,this)" style="margin-top:12px;border:0;border-radius:9px;background:var(--accent);color:white;padding:9px 13px;font-size:11px;font-weight:700;cursor:pointer">Escrever sobre este tema</button></article>';
+  }).join('');
+}

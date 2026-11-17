@@ -28,20 +28,20 @@ function authToggleVest(el, vest) {
 }
 
 function authEntrar() {
-  var email = document.getElementById('login-email').value.trim();
+  var email = document.getElementById('login-email').value.trim().toLowerCase();
   var senha = document.getElementById('login-senha').value;
   var err   = document.getElementById('auth-login-error');
   if (!email || !senha) { err.style.display = 'block'; return; }
   var contas = JSON.parse(localStorage.getItem('voaam_contas') || '[]');
-  var conta  = contas.find(function(c) { return c.email === email && c.senha === senha; });
+  var conta  = contas.find(function(c) { return String(c.email || '').toLowerCase() === email && c.senha === senha; });
   if (!conta) { err.style.display = 'block'; return; }
   err.style.display = 'none';
-  authEntrarComPerfil(conta.perfil);
+  authEntrarComPerfil(Object.assign({}, conta.perfil, { email: conta.email }));
 }
 
 function authCadastrar() {
   var nome  = document.getElementById('cad-nome').value.trim();
-  var email = document.getElementById('cad-email').value.trim();
+  var email = document.getElementById('cad-email').value.trim().toLowerCase();
   var senha = document.getElementById('cad-senha').value;
   var serie = parseInt(document.getElementById('cad-serie').value) || 0;
   var err   = document.getElementById('auth-cad-error');
@@ -52,14 +52,14 @@ function authCadastrar() {
     return;
   }
   var contas     = JSON.parse(localStorage.getItem('voaam_contas') || '[]');
-  if (contas.find(function(c) { return c.email === email; })) {
+  if (contas.find(function(c) { return String(c.email || '').toLowerCase() === email; })) {
     err.textContent   = 'Este e-mail já está cadastrado.';
     err.style.display = 'block';
     return;
   }
   err.style.display = 'none';
   var vests      = authVestsSelecionados.length ? authVestsSelecionados : ['SIS'];
-  var novoPerfil = { nome: nome, serie: serie, vests: vests, dific: 'ambos' };
+  var novoPerfil = { nome: nome, email: email, serie: serie, vests: vests, dific: 'ambos' };
   // AVISO DE SEGURANÇA: senhas armazenadas em texto puro no localStorage.
   // Em produção, use autenticação via backend com hashing (bcrypt) e JWT.
   contas.push({ email: email, senha: senha, perfil: novoPerfil });
@@ -68,9 +68,9 @@ function authCadastrar() {
 }
 
 function authGoogle() {
-  // NOTA: login Google simulado (placeholder). Em produção, integrar OAuth real.
-  var novoPerfil = { nome: 'Estudante Google', serie: 3, vests: ['SIS', 'ENEM'], dific: 'ambos' };
-  authEntrarComPerfil(novoPerfil);
+  // Não simula uma autenticação Google: OAuth ainda precisa ser configurado no backend.
+  var err = document.getElementById('auth-login-error');
+  if (err) { err.textContent = 'O acesso com Google ainda não está configurado. Entre com seu e-mail e senha.'; err.style.display = 'block'; }
 }
 
 function authEntrarComPerfil(p) {
@@ -80,6 +80,7 @@ function authEntrarComPerfil(p) {
 }
 
 function authLogout() {
+  // Encerra somente a sessão atual. A conta e o progresso permanecem neste dispositivo.
   localStorage.removeItem('voaam_perfil');
   location.reload();
 }
