@@ -33,7 +33,7 @@ function authEntrar() {
   var err   = document.getElementById('auth-login-error');
   if (!email || !senha) { err.style.display = 'block'; return; }
   var contas = JSON.parse(localStorage.getItem('voaam_contas') || '[]');
-  var conta  = contas.find(function(c) { return c.email === email && c.senha === senha; });
+  var conta  = contas.find(function(c) { return String(c.email || '').toLowerCase() === email && c.senha === senha; });
   if (!conta) { err.style.display = 'block'; return; }
   err.style.display = 'none';
   authEntrarComPerfil(Object.assign({}, conta.perfil, { email: conta.email }));
@@ -52,7 +52,7 @@ function authCadastrar() {
     return;
   }
   var contas     = JSON.parse(localStorage.getItem('voaam_contas') || '[]');
-  if (contas.find(function(c) { return c.email === email; })) {
+  if (contas.find(function(c) { return String(c.email || '').toLowerCase() === email; })) {
     err.textContent   = 'Este e-mail já está cadastrado.';
     err.style.display = 'block';
     return;
@@ -68,9 +68,9 @@ function authCadastrar() {
 }
 
 function authGoogle() {
-  // NOTA: login Google simulado (placeholder). Em produção, integrar OAuth real.
-  var novoPerfil = { nome: 'Estudante Google', serie: 3, vests: ['SIS', 'ENEM'], dific: 'ambos' };
-  authEntrarComPerfil(novoPerfil);
+  // Não simula uma autenticação Google: OAuth ainda precisa ser configurado no backend.
+  var err = document.getElementById('auth-login-error');
+  if (err) { err.textContent = 'O acesso com Google ainda não está configurado. Entre com seu e-mail e senha.'; err.style.display = 'block'; }
 }
 
 function authEntrarComPerfil(p) {
