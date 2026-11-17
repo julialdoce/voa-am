@@ -77,7 +77,7 @@
   }
   #auth-wrapper .auth-screen.auth-active { display:grid; }
   #auth-wrapper .auth-screen::before {
-    content:"VOA AM\\A\\A Sua preparação começa\\A com um próximo passo.\\A\\A Uma plataforma feita para\\A quem sonha conquistar uma vaga\\A nas universidades do Amazonas.";
+    content:"VOA AM\A\A Sua preparação começa\A com um próximo passo.\A\A Uma plataforma feita para\A quem sonha conquistar uma vaga\A nas universidades do Amazonas.";
     white-space:pre-line;
     display:flex;
     flex-direction:column;
