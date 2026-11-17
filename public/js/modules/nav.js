@@ -23,7 +23,8 @@ function goTo(screen) {
     const slot = document.getElementById(slotId);
     if (slot) slot.style.display = (slotId === activeSlotId) ? 'block' : 'none';
   });
-  if (screen === 'home' && typeof renderDashboard === 'function') renderDashboard();\n  if (screen === 'materia')       renderTopics();
+  if (screen === 'home' && typeof renderDashboard === 'function') renderDashboard();
+  if (screen === 'materia')       renderTopics();
   if (screen === 'programacao' && typeof progRender === 'function') progRender();
   if (screen === 'perfil')        renderPerfil();
   if (screen === 'praticar')      pratAba('sim');
