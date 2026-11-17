@@ -73,6 +73,7 @@ function _bpBlocoAno(id, ano, conteudo) {
 
 // ─── RENDER PRINCIPAL ─────────────────────────────────────────
 function initBancoProvas() {
+  bpRenderOficiaisJuliano();
   const anos = _bpAnos();
 
   // ── ENEM ──────────────────────────────────────────────────
@@ -137,4 +138,13 @@ function initBancoProvas() {
     ).join('');
     elSis.dataset.rendered = '1';
   }
+}
+
+
+// Referências oficiais recuperadas do catálogo original do Juliano.
+function bpRenderOficiaisJuliano(){
+  const host=document.getElementById('bp-oficiais-lista');
+  if(!host||!Array.isArray(window.JULIANO_PROVAS_OFICIAIS)||host.dataset.rendered)return;
+  host.innerHTML=JULIANO_PROVAS_OFICIAIS.map(p=>'<a class="bp-oficial-link" href="'+p.url+'" target="_blank" rel="noopener noreferrer"><span><strong>'+p.titulo+'</strong><small>'+p.instituicao+' · '+p.observacao+'</small></span><span aria-hidden="true">↗</span></a>').join('');
+  host.dataset.rendered='1';
 }
