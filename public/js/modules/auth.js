@@ -28,7 +28,7 @@ function authToggleVest(el, vest) {
 }
 
 function authEntrar() {
-  var email = document.getElementById('login-email').value.trim();
+  var email = document.getElementById('login-email').value.trim().toLowerCase();
   var senha = document.getElementById('login-senha').value;
   var err   = document.getElementById('auth-login-error');
   if (!email || !senha) { err.style.display = 'block'; return; }
@@ -36,12 +36,12 @@ function authEntrar() {
   var conta  = contas.find(function(c) { return c.email === email && c.senha === senha; });
   if (!conta) { err.style.display = 'block'; return; }
   err.style.display = 'none';
-  authEntrarComPerfil(conta.perfil);
+  authEntrarComPerfil(Object.assign({}, conta.perfil, { email: conta.email }));
 }
 
 function authCadastrar() {
   var nome  = document.getElementById('cad-nome').value.trim();
-  var email = document.getElementById('cad-email').value.trim();
+  var email = document.getElementById('cad-email').value.trim().toLowerCase();
   var senha = document.getElementById('cad-senha').value;
   var serie = parseInt(document.getElementById('cad-serie').value) || 0;
   var err   = document.getElementById('auth-cad-error');
@@ -59,7 +59,7 @@ function authCadastrar() {
   }
   err.style.display = 'none';
   var vests      = authVestsSelecionados.length ? authVestsSelecionados : ['SIS'];
-  var novoPerfil = { nome: nome, serie: serie, vests: vests, dific: 'ambos' };
+  var novoPerfil = { nome: nome, email: email, serie: serie, vests: vests, dific: 'ambos' };
   // AVISO DE SEGURANÇA: senhas armazenadas em texto puro no localStorage.
   // Em produção, use autenticação via backend com hashing (bcrypt) e JWT.
   contas.push({ email: email, senha: senha, perfil: novoPerfil });
@@ -80,6 +80,7 @@ function authEntrarComPerfil(p) {
 }
 
 function authLogout() {
+  // Encerra somente a sessão atual. A conta e o progresso permanecem neste dispositivo.
   localStorage.removeItem('voaam_perfil');
   location.reload();
 }
