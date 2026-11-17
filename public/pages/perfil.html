@@ -1,54 +1,33 @@
-<!-- pages/perfil.html — Perfil do aluno: stats, ranking e configurações -->
-<!-- ========== PERFIL ========== -->
+<!-- Perfil do estudante — dados, desempenho e sessão -->
 <div class="screen" id="screen-perfil">
-  <div style="padding:24px 20px">
-    <div style="text-align:center;margin-bottom:20px">
-      <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--violet));display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 12px">🎓</div>
-      <div style="font-family:var(--font-display);font-size:20px;font-weight:800" id="perfil-nome">—</div>
-      <div style="font-size:13px;color:var(--text2);margin-top:3px" id="perfil-info">—</div>
-    </div>
-
-    <!-- Stats -->
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:20px">
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center">
-        <div style="font-size:22px;font-weight:700;color:var(--gold)" id="perfil-xp">0</div>
-        <div style="font-size:10px;color:var(--text2)">XP total</div>
-      </div>
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center">
-        <div style="font-size:22px;font-weight:700;color:var(--green)" id="perfil-acertos">0%</div>
-        <div style="font-size:10px;color:var(--text2)">acertos</div>
-      </div>
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center">
-        <div style="font-size:22px;font-weight:700;color:var(--red)" id="perfil-streak">🔥0</div>
-        <div style="font-size:10px;color:var(--text2)">streak</div>
-      </div>
-    </div>
-
-    <!-- Dificuldades observadas -->
-    <div style="background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.15);border-radius:14px;padding:16px;margin-bottom:14px">
-      <div style="font-size:12px;font-weight:700;color:var(--red);margin-bottom:10px">⚠️ Pontos a reforçar</div>
-      <div id="perfil-dificuldades" style="font-size:13px;color:var(--text2);line-height:1.9">
-        <span style="color:var(--text2);font-size:12px">Nenhum erro registrado ainda. Continue praticando!</span>
-      </div>
-    </div>
-
-    <!-- Ranking -->
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px">
-      <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:12px">🏆 Ranking da semana</div>
-      <div class="ranking-list">
-        <div class="rank-item"><div class="rank-pos gold">🥇</div><div class="rank-avatar">👩</div><div class="rank-name">Ana Paula M.</div><div class="rank-xp">1.240 XP</div></div>
-        <div class="rank-item"><div class="rank-pos silver">🥈</div><div class="rank-avatar">👦</div><div class="rank-name">Carlos R.</div><div class="rank-xp">980 XP</div></div>
-        <div class="rank-item"><div class="rank-pos bronze">🥉</div><div class="rank-avatar">👧</div><div class="rank-name">Isabela S.</div><div class="rank-xp">875 XP</div></div>
-        <div class="rank-item" style="border-color:var(--border-accent);background:rgba(59,130,246,0.05)">
-          <div class="rank-pos" style="color:var(--cyan)">—</div>
-          <div class="rank-avatar">😎</div>
-          <div class="rank-name" id="rank-nome">Você</div>
-          <div class="rank-xp" id="rank-xp">0 XP</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Editar perfil -->
-    <button onclick="editarPerfil()" style="width:100%;padding:14px;border-radius:12px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font);font-size:14px;cursor:pointer">✏️ Editar série e vestibular</button>
+  <div class="profile-page">
+    <header class="profile-heading">
+      <div><span class="profile-eyebrow">MINHA CONTA</span><h1>Meu perfil</h1><p>Seus dados e sua evolução no VOA AM.</p></div>
+      <button class="profile-edit-trigger" type="button" onclick="perfilAbrirEdicao()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/></svg>Editar perfil</button>
+    </header>
+    <section class="profile-identity">
+      <div class="profile-avatar" id="perfil-avatar">A</div>
+      <div class="profile-identity-copy"><h2 id="perfil-nome">Estudante</h2><p id="perfil-email">E-mail não informado</p><div class="profile-tags"><span id="perfil-serie-tag">Série não definida</span><span id="perfil-vest-tag">Vestibulares não definidos</span></div></div>
+      <div class="profile-member"><span class="profile-member-dot"></span>Conta ativa</div>
+    </section>
+    <section class="profile-stats" aria-label="Desempenho">
+      <article><span class="profile-stat-label">XP acumulado</span><strong id="perfil-xp">0</strong><small>pontos de experiência</small></article>
+      <article><span class="profile-stat-label">Aproveitamento</span><strong id="perfil-acertos">—</strong><small>nas questões respondidas</small></article>
+      <article><span class="profile-stat-label">Sequência</span><strong id="perfil-streak">0 dias</strong><small>de estudos</small></article>
+    </section>
+    <section class="profile-panel"><div class="profile-panel-title"><div><h3>Conteúdos para reforçar</h3><p>Assuntos em que você registrou mais erros.</p></div><span class="profile-panel-icon">↗</span></div><div id="perfil-dificuldades" class="profile-difficulties">Ainda não há erros registrados. Continue praticando para acompanhar seus pontos de atenção.</div></section>
+    <section class="profile-panel profile-account-panel"><div class="profile-panel-title"><div><h3>Dados da conta</h3><p>Informações usadas para identificar seu acesso.</p></div></div><div class="profile-account-row"><span>E-mail de acesso</span><strong id="perfil-email-detalhe">—</strong></div><div class="profile-account-row"><span>Tipo de acesso</span><strong id="perfil-tipo-acesso">Conta local</strong></div></section>
+    <section class="profile-edit-panel" id="perfil-edit-panel" hidden>
+      <div class="profile-panel-title"><div><h3>Editar informações</h3><p>Atualize seus dados de estudante e o e-mail de acesso.</p></div><button type="button" class="profile-close" onclick="perfilFecharEdicao()" aria-label="Fechar">×</button></div>
+      <form id="perfil-edit-form" onsubmit="perfilSalvarEdicao(event)">
+        <label for="perfil-edit-nome">Nome completo</label><input id="perfil-edit-nome" maxlength="80" autocomplete="name" required>
+        <label for="perfil-edit-email">E-mail de acesso</label><input id="perfil-edit-email" type="email" autocomplete="email" required>
+        <div class="profile-form-grid"><div><label for="perfil-edit-serie">Escolaridade</label><select id="perfil-edit-serie"><option value="1">1ª série do Ensino Médio</option><option value="2">2ª série do Ensino Médio</option><option value="3">3ª série do Ensino Médio</option><option value="4">Ensino Médio completo</option></select></div><div><label for="perfil-edit-dific">Foco de estudo</label><select id="perfil-edit-dific"><option value="ambos">Teoria e exercícios</option><option value="teoria">Mais teoria</option><option value="pratica">Mais exercícios</option></select></div></div>
+        <fieldset class="profile-vest-field"><legend>Vestibulares de interesse</legend><div class="profile-vest-options"><label><input type="checkbox" name="perfil-vest" value="SIS"> SIS</label><label><input type="checkbox" name="perfil-vest" value="PSC"> PSC</label><label><input type="checkbox" name="perfil-vest" value="MACRO"> MACRO</label><label><input type="checkbox" name="perfil-vest" value="ENEM"> ENEM</label></div></fieldset>
+        <p class="profile-form-error" id="perfil-edit-error" role="alert"></p>
+        <div class="profile-form-actions"><button type="button" class="profile-cancel" onclick="perfilFecharEdicao()">Cancelar</button><button type="submit" class="profile-save">Salvar alterações</button></div>
+      </form>
+    </section>
+    <section class="profile-logout-panel"><div><h3>Sair da conta</h3><p>Encerra sua sessão neste dispositivo. Seus dados de acesso salvos neste navegador não serão apagados.</p></div><button type="button" onclick="authLogout()" class="profile-logout-btn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3m9-9h6a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3h-6"/></svg>Sair da conta</button></section>
   </div>
 </div>
